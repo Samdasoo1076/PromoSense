@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{fragments/settings_layout.html}" xmlns:cu="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>SKB DOMS</title>
+</head>
+<body>
+    <div class="local-body" layout:fragment="content">
+        <!-- content -->
+        <div id="content">
+            <!-- content-body -->
+            <div class="content-head">
+                <h3 class="content-subject" id="contentSubject"><span class="content-name">계정관리</span></h3>
+            </div>
+            <!-- //content-body -->
+
+            <!-- content-path -->
+            <div class="content-path">
+                <!-- section-->
+                <div class="section breadcrumb">
+                    <div class="section-wrap">
+                        <div class="section-head">
+                            <p class="section-subject"><strong class="section-name">위치정보</strong></p>
+                        </div>
+                        <div class="section-body">
+                            <!-- data-display -->
+                            <div class="data-display">
+                                <div class="data-list">
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">홈</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">설정</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="">계정관리</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //data-display -->
+                        </div>
+                    </div>
+                </div>
+                <!-- section-->
+            </div>
+            <!-- //content-path -->
+
+            <!-- content-body -->
+            <div class="content-body">
+                <!-- posts-display -->
+                <div class="posts-display module-a style-a type-a">
+                    <form method="get" id="frm" th:action="@{/settings/account/list.do}">
+                        <input type="hidden" name="size" id="size" th:value="${accounts.pageable.pageSize}" />
+                        <input type="hidden" name="admFlag" id="admFlag" th:value="${param.admFlag}" />
+                        <input type="hidden" id="acl" name="acl" th:value="${param.acl}" />
+                        <input type="hidden" id="page" name="page" th:value="${param.page}" />
+                    <!-- data-finder -->
+                    <div class="data-finder module-a style-b type-d">
+                        <div class="data-form">
+                            <!-- submit-form -->
+                            <fieldset class="submit-form module-b style-c large-4x direct-column">
+                                <legend>게시물 검색 서식</legend>
+                                <div class="form-list">
+                                    <div class="form-item flex">
+                                        <div class="form-wrap">
+                                            <div class="form-head"><p class="form-subject"><span class="form-name">이름 및 아이디</span></p></div>
+                                            <div class="form-body">
+                                                <div class="form-area">
+                                                    <span class="form textfield module-b style-b type-line normal-01 large-4x flex">
+                                                        <input type="text" class="form-elem" placeholder="이름 및 아이디를 입력해주세요"
+                                                               onfocus="buiFormFunc(this);" onmouseover="buiFormFunc(this);"
+                                                               data-bui-form-cancel="" name="keyword" id="keyword"
+                                                               th:value="${param.keyword}" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-item">
+                                        <div class="form-wrap">
+                                            <div class="form-head"><p class="form-subject"><span class="form-name">날짜</span></p></div>
+                                            <div class="form-body">
+                                                <div class="form-area">
+                                                    <span class="form datepicker module-b style-b type-line normal-01 large-4x flex">
+                                                        <input type="text" class="form-elem" name="startDate" id="startDate"
+                                                               data-bui-form-date-start="campaignPostedRange" autocomplete="off"
+                                                               th:value="${param.startDate}" />
+                                                    </span>
+                                                    <span class="sign">~</span>
+                                                    <span class="form datepicker module-b style-b type-line normal-01 large-4x flex">
+                                                        <input type="text" class="form-elem" name="endDate" id="endDate"
+                                                               data-bui-form-date-end="campaignPostedRange" autocomplete="off"
+                                                               th:value="${param.endDate}" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-util">
+                                    <div class="button-display">
+                                        <span class="button-area">
+                                            <button id="btnSearch" class="btn module-b style-b type-fill accent-01 large-4x flex" type="button" sec:authorize="hasPermission('', 'read')">
+                                                <span class="btn-text">검색</span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <!-- //submit-form -->
+                        </div>
+                        <!-- data-info -->
+                        <div class="data-info">
+                            <p class="data-list">
+                                <span class="data-item">
+                                    <span class="head">전체 게시물 :</span>
+                                    <span class="body">
+                                        <span th:if="${accountTotal == accounts.totalElements}" class="em normal-03">All</span>
+                                        <span th:unless="${accountTotal == accounts.totalElements}"
+                                              th:text="${accounts.totalElements}" class="em normal-03">All</span>
+
+                                        of <span th:text="${accountTotal}"></span>
+                                    </span>
+                                </span>
+                            </p>
+                        </div>
+                        <!-- //data-info -->
+                        <!-- data-func -->
+                        <div class="data-func">
+<!--                            <span class="button-area">-->
+<!--                                <a class="btn module-b style-b type-line normal-01 medium symbol-ltr-excel flex" href="javascript:accountList.excelDown();" sec:authorize="hasPermission('', 'download')"><span class="btn-text">엑셀다운</span></a>-->
+<!--                            </span>-->
+                            <div class="data-sort">
+                                <div class="dropdown module-c style-b type-line normal-01 medium" style="width: 108rem">
+                                    <div class="dropdown-wrap">
+                                        <div class="dropdown-head">
+                                            <p class="dropdown-subject" data-bui-dropdown-selected="상태 기준"><span class="dropdown-name">상태기준</span></p>
+                                        </div>
+                                        <div class="dropdown-body">
+                                            <ul class="navi-list">
+                                                <li th:if="${#strings.equals(#strings.defaultString(param.admFlag, ''), '')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(admFlag=)}">전체</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(#strings.defaultString(param.admFlag, ''), '')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(admFlag=)}">전체</a>
+                                                </li>
+                                                <th:block th:each="codeStat, status : ${@commCodeUtils.getCodeList('APPR_STAT')}">
+                                                    <li th:if="${#strings.equals(param.admFlag, codeStat.dcode)}" class="navi-item" title="선택됨">
+                                                        <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(admFlag=${codeStat.dcode})}"
+                                                            th:text="${codeStat.dcodeNm}">승인대기</a>
+                                                    </li>
+                                                    <li th:unless="${#strings.equals(param.admFlag, codeStat.dcode)}" class="navi-item">
+                                                        <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(admFlag=${codeStat.dcode})}"
+                                                           th:text="${codeStat.dcodeNm}">승인대기</a>
+                                                    </li>
+                                                </th:block>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown module-c style-b type-line normal-01 medium" style="width: 148rem">
+                                    <div class="dropdown-wrap">
+                                        <div class="dropdown-head">
+                                            <p class="dropdown-subject" data-bui-dropdown-selected="노출개수"><span class="dropdown-name">노출개수</span></p>
+                                        </div>
+                                        <div class="dropdown-body">
+                                            <ul class="navi-list">
+                                                <th:block th:each="codeSize, status : ${@commCodeUtils.getCodeList('PAGE_SIZE')}">
+                                                    <li th:if="${#strings.equals(accounts.pageable.pageSize, codeSize.dcode)}" class="navi-item" title="선택됨">
+                                                        <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(size=${codeSize.dcode})}"
+                                                            th:text="${codeSize.dcodeNm}">10개씩 보기</a>
+                                                    </li>
+                                                    <li th:unless="${#strings.equals(accounts.pageable.pageSize, codeSize.dcode)}" class="navi-item">
+                                                        <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(size=${codeSize.dcode})}"
+                                                            th:text="${codeSize.dcodeNm}">10개씩 보기</a>
+                                                    </li>
+                                                </th:block>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //data-func -->
+                    </div>
+                    <!-- //data-finder -->
+                    </form>
+                    <!-- info-board no data-->
+                    <div th:if="${accounts.content.size() == 0}" class="info-board module-a type-c attr-nodata">
+                        <div class="board-wrap">
+                            <div class="board-head">
+                                <p class="board-summary">검색 결과가 없습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //info-board -->
+                    <!-- data-table -->
+                    <div th:unless="${accounts.content.size() == 0}" class="data-table module-c style-a type-c attr-scroll">
+                        <table>
+                            <caption>계정 관리 목록</caption>
+                            <colgroup>
+                                <col style="width: 64rem" />
+                                <col style="width: 10.8%" />
+                                <col style="width: 10.8%" />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col style="width: 8.6%" />
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>아이디</th>
+                                <th>이름</th>
+                                <th>부서</th>
+                                <th>그룹</th>
+                                <th>휴대폰</th>
+                                <th>등록일</th>
+                                <th>최근편집일</th>
+                                <th>상태</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="account, statat : ${accounts.content}">
+                                <td th:text="${accounts.totalElements - statat.count + 1 - (accounts.pageable.pageSize * accounts.pageable.pageNumber)}">74</td>
+                                <td>
+                                    <a cu:href="@{/settings/account/detail.do(acl=${param.acl},id=${account.admNo})}" class="em normal-01" th:text="${account.admId}">abcde</a>
+<!--                                    <a cu:href="@{/settings/account/detail/{id}(id=${account.admNo})}" class="em accent-01" th:if="${not #strings.isEmpty(param.keyword) and #strings.contains(account.admId, param.keyword)}">-->
+<!--                                        <strong th:text="${@viewCommonUtils.getMaskAdmId(account.admId)}">abc****</strong>-->
+<!--                                    </a>-->
+<!--                                    <a cu:href="@{/settings/account/detail/{id}(id=${account.admNo})}" class="em normal-01" th:unless="${not #strings.isEmpty(param.keyword) and #strings.contains(account.admId, param.keyword)}"-->
+<!--                                       th:text="${@viewCommonUtils.getMaskAdmId(account.admId)}">-->
+<!--                                        abc****-->
+<!--                                    </a>-->
+                                </td>
+                                <td>
+                                    <a cu:href="@{/settings/account/detail.do(acl=${param.acl},id=${account.admNo})}" class="em normal-01" th:text="${account.admName}">홍길동</a>
+<!--                                    <a cu:href="@{/settings/account/detail/{id}(id=${account.admNo})}" class="em accent-01" th:if="${not #strings.isEmpty(param.keyword) and #strings.contains(account.admName, param.keyword)}">-->
+<!--                                        <strong th:text="${@viewCommonUtils.getMaskName(account.admName)}">홍*동</strong>-->
+<!--                                    </a>-->
+<!--                                    <a cu:href="@{/settings/account/detail/{id}(id=${account.admNo})}" class="em normal-01" th:unless="${not #strings.isEmpty(param.keyword) and #strings.contains(account.admName, param.keyword)}"-->
+<!--                                       th:text="${@viewCommonUtils.getMaskName(account.admName)}">-->
+<!--                                        홍*동-->
+<!--                                    </a>-->
+                                </td>
+                                <td th:text="${account.dept}">유컴패니온</td>
+                                <th:block th:if="${account.groupNo != null}">
+                                    <td th:text="${#strings.defaultString(account.groupNo.groupName, '-')}">슈퍼관리자</td>
+                                </th:block>
+                                <th:block th:if="${account.groupNo == null}">
+                                    <td th:text="${'-'}">슈퍼관리자</td>
+                                </th:block>
+                                <td th:text="${account.admHphone}">010-****-1234</td>
+                                <td th:text="${#strings.defaultString(#dates.format(account.regDate, 'yyyy-MM-dd HH:mm:ss'), '-')}">2021-08-23 10:17:07</td>
+                                <td th:text="${#strings.defaultString(#dates.format(account.upDate, 'yyyy-MM-dd HH:mm:ss'), '-')}">-</td>
+                                <td>
+                                    <span class="mark module-a style-b type-line small-1x"
+                                            th:classappend="${
+                                                !#strings.equals(account.loginFailCnt, '5') && #strings.equals(account.admFlag, '0')? 'accent-02' :
+                                                (!#strings.equals(account.loginFailCnt, '5') && #strings.equals(account.admFlag, '1')? 'accent-05' :
+                                                    ( !#strings.equals(account.loginFailCnt, '5') &&#strings.equals(account.admFlag, '2')? 'normal-03' :
+                                                        ( !#strings.equals(account.loginFailCnt, '5') && #strings.equals(account.admFlag, '3')? 'accent-04' :
+                                                            (#strings.equals(account.loginFailCnt, '5')? 'accent-04' : '')
+                                                        )
+                                                    )
+                                                )
+                                            }">
+                                        <span class="mark-text" th:if="${!#strings.equals(account.loginFailCnt, '5') && #strings.equals(account.admFlag, '0')}">승인대기</span>
+                                        <span class="mark-text" th:if="${!#strings.equals(account.loginFailCnt, '5') && #strings.equals(account.admFlag, '1')}">승인완료</span>
+                                        <span class="mark-text" th:if="${!#strings.equals(account.loginFailCnt, '5') && #strings.equals(account.admFlag, '2')}">중지</span>
+                                        <span class="mark-text" th:if="${!#strings.equals(account.loginFailCnt, '5') && #strings.equals(account.admFlag, '3')}">승인거절</span>
+                                        <span class="mark-text" th:if="${#strings.equals(account.loginFailCnt, '5')}">5회 잠김</span>
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- //data-table -->
+
+                    <th:block th:unless="${accounts.content.size() == 0}">
+                        <!-- pagination -->
+                        <nav th:replace="~{fragments/pagination :: pagination(${accounts})}"></nav>
+                        <!-- //pagination -->
+                    </th:block>
+                </div>
+                <!-- //posts-display -->
+            </div>
+            <!-- //content-body -->
+        </div>
+        <!-- //content -->
+    </div>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/settings/account.list.js}"></script>
+    </th:block>
+</body>
+</html>
+

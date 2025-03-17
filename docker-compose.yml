@@ -1,0 +1,13 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "7080:80"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+
+
+

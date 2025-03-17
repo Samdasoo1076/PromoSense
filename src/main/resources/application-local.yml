@@ -1,0 +1,113 @@
+server:
+  error:
+    include-exception: false
+    include-stacktrace: never
+    whitelabel:
+      enabled: false
+    path: /error
+  etc-info:
+    address: http://doms.ucom.kr
+    bd-pc-address: https://doms.ucom.kr/home/index
+    bd-mo-address: https://doms.ucom.kr/home/index
+    tb-pc-address: https://doms.ucom.kr/home/index
+    tb-mo-address: https://doms.ucom.kr/home/index
+    bw-pc-address: https://doms.ucom.kr/home/index
+    bw-mo-address: https://doms.ucom.kr/home/index
+    rending-url: "#rendingUrl"
+    direct-url: "#directUrl"
+    leave-url: "#leaveUrl"
+    calling-num: "#callingNum"
+  port: 80
+  servlet:
+    session:
+      timeout: 30m
+
+application:
+  crypto:
+    password: da989ac0-32d1-4723-b55e-0fcba57879e9
+  jwt:
+    app-name: doms
+    token-name: __ACT
+    expires-in: 30
+    secret-key: 4K3ms526N5GZjXSPE3pbmDZua4vhT8DGv9SK6EBq4EjM8fB6
+  upload:
+    path:
+      menu-icon: c:/upload/menu_icon
+      campaign: c:/upload/campaign
+      capture: c:/upload/capture
+    image-type: png,jpg,jpeg,gif
+  api:
+    cors-allowed-origins:
+      - http://m.bdirectshop.com
+      - http://www.bdirectshop.com
+      - http://bdirectshop.com
+      - http://btvcable.shop
+      - http://m.btvcable.shop
+      - https://m.bdirectshop.com
+      - https://www.bdirectshop.com
+      - https://bdirectshop.com
+      - https://btvcable.shop
+      - https://m.btvcable.shop
+      - https://wwwstg.bworld.co.kr
+    access-key:
+      bdirectshop: P3QerWZfzEZoK66PesI072xbuQGYoKWi
+      btvcable: V898EYrDhuDti8yfGUCiKkZPREXy1mR1
+      bworld: BoXYeCb4EueDKLTZYy6pzr1yK5GsifS9
+
+spring:
+  # sql:
+  #   init:
+  #     mode: always # SQL 초기화 모드 설정
+  #     encoding: UTF-8 # 인코딩 설정
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+  thymeleaf:
+    cache: false
+  jpa:
+    hibernate:
+      ddl-auto: none
+    # defer-datasource-initialization: true # Hibernate 초기화 후 data.sql 실행
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    open-in-view: false
+    properties:
+      hibernate:
+        default_batch_fetch_size: 500
+        show_sql: true
+        format_sql: true
+
+datasource:
+  web:
+    url: jdbc:mariadb://52.79.74.190:57083/domsdb
+    username: root
+    password: dwUJBhz2KdB#8L
+    driver-class-name: org.mariadb.jdbc.Driver
+    maximum-pool-size: 10
+    minimum-idle: 10
+    max-lifetime: 1800000
+    idle-timeout: 600000
+  api:
+    url: jdbc:mariadb://52.79.74.190:57083/domsdb
+    username: root
+    password: dwUJBhz2KdB#8L
+    driver-class-name: org.mariadb.jdbc.Driver
+    maximum-pool-size: 10
+    minimum-idle: 10
+    max-lifetime: 1800000
+    idle-timeout: 600000
+
+logging:
+  config:
+    path: c:/logs
+    filename: app-doms
+    maxHistory: 7 # 7일
+    totalSizeCap: 10MB # 로그 파일 사이즈
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true

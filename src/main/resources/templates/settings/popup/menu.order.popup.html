@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8" />
+    <title>SKB DOMS</title>
+</head>
+<body>
+<!-- content-popup -->
+<div class="content-popup module-a style-a type-a large" data-bui-toggle="contentPopup" id="contentPopupMenuOrder">
+    <div class="popup-page-body">
+        <!-- popup-local -->
+        <div class="popup-local">
+            <!-- popup-local-head -->
+            <div class="popup-local-head">
+                <h2 class="popup-local-subject">
+                    <span class="popup-local-name">
+                        <th:block th:if="${#strings.equals(param.type, 'major')}">메뉴 순서 관리 (1Depth)</th:block>
+                        <th:block th:if="${#strings.equals(param.type, 'middle')}">메뉴 순서 관리 (2Depth)</th:block>
+                    </span>
+                </h2>
+            </div>
+            <!-- //popup-local-head -->
+            <!-- popup-local-body -->
+            <div class="popup-local-body">
+                <form id="popup_frm" name="frm" method="post" th:action="@{/settings/menu/order/update.do}">
+                    <input type="hidden" id="acl" name="acl" th:value="${param.acl}" />
+                <div class="popup-content">
+                    <!-- popup-content-body -->
+                    <div class="popup-content-body">
+                        <!-- data-display -->
+                        <div class="data-display module-e style-b type-a attr-draggable">
+                            <!-- data-list -->
+                            <ul class="data-list">
+                                <li class="data-item" th:each="menu, info: ${menus}">
+                                    <input type="hidden" name="menuId" th:value="${menu.id}"/>
+                                    <div class="data-wrap">
+                                        <div class="data-head">
+                                            <p class="data-subject"><span class="data-name"><span class="data-counter" th:text="${info.count}">1</span> <th:block th:text="${menu.menuName}"></th:block></span></p>
+                                        </div>
+                                        <div class="data-body">
+                                            <p class="para">&#91;<th:block th:text="${menu.menuUrl}"></th:block>&#93;</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- //data-list -->
+                        </div>
+                        <!--// data-display -->
+                    </div>
+                    <!-- //popup-content-body -->
+                </div>
+                </form>
+            </div>
+            <!-- //popup-local-body -->
+            <div class="popup-local-util">
+                <!-- button-display -->
+                <div class="button-display">
+					<span class="button-area">
+						<button id="btnClose" class="btn module-c style-b type-fill normal-01 large-4x" type="button"><span class="btn-text">닫기</span></button>
+						<button id="btnSave" class="btn module-b style-b type-fill accent-01 large-4x" type="button" sec:authorize="hasPermission('', 'write,update')"><span class="btn-text">등록</span></button>
+					</span>
+                </div>
+                <!-- //button-display -->
+            </div>
+            <!-- popup-local-func -->
+            <div class="popup-local-func">
+				<span class="button-area">
+					<button type="button" id="btnX" class="btn popup-close">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" width="28px" height="28px">
+							<title>닫기</title>
+							<path d="M20.7339 8.91573C21.1895 8.46012 21.1895 7.72142 20.7339 7.26581C20.2782 6.8102 19.5396 6.8102 19.0839 7.26581L13.9991 12.3506L8.91643 7.26796C8.46082 6.81234 7.72212 6.81234 7.26651 7.26796C6.8109 7.72357 6.8109 8.46226 7.26651 8.91787L12.3492 14.0006L7.26762 19.0821C6.81201 19.5377 6.81201 20.2764 7.26762 20.732C7.72323 21.1877 8.46192 21.1877 8.91753 20.732L13.9991 15.6505L19.0828 20.7342C19.5384 21.1898 20.2771 21.1898 20.7327 20.7342C21.1884 20.2786 21.1884 19.5399 20.7327 19.0843L15.649 14.0006L20.7339 8.91573Z"></path>
+						</svg>
+					</button>
+				</span>
+            </div>
+            <!-- //popup-local-func -->
+        </div>
+        <!-- //popup-local -->
+    </div>
+</div>
+<script th:src="@{/js/settings/popup/menu.order.popup.js}"></script>
+<!-- //content-popup -->
+</body>
+</html>

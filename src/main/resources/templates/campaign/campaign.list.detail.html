@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{fragments/campaign_layout.html}" xmlns:cu="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>SKB DOMS</title>
+</head>
+<body>
+    <!-- local-body -->
+    <div class="local-body" layout:fragment="content">
+        <!-- content -->
+        <div id="content">
+            <!-- content-body -->
+            <div class="content-head">
+                <h3 class="content-subject" id="contentSubject"><span class="content-name">캠페인 상세 정보</span></h3>
+            </div>
+            <!-- //content-body -->
+
+            <!-- content-path -->
+            <div class="content-path">
+                <!-- section-->
+                <div class="section breadcrumb">
+                    <div class="section-wrap">
+                        <div class="section-head">
+                            <p class="section-subject"><strong class="section-name">위치정보</strong></p>
+                        </div>
+                        <div class="section-body">
+                            <!-- data-display -->
+                            <div class="data-display">
+                                <div class="data-list">
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">홈</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">캠페인 관리</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" th:href="@{/campaign/list/list.do?acl=C0001}">캠페인 목록</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="">캠페인 상세</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //data-display -->
+                        </div>
+                    </div>
+                </div>
+                <!-- section-->
+            </div>
+            <!-- //content-path -->
+
+            <!-- content-body -->
+            <div class="content-body">
+                <form id="frm" name="frm" method="get" th:action="@{/campaign/list/detail.do}">
+                    <input type="hidden" id="acl" name="acl" th:value="${param.acl}" />
+                    <input type="hidden" id="caNo" name="caNo" th:value="${param.caNo}" />
+                    <input type="hidden" id="id" name="id" th:value="${param.caNo}" />
+                    <input type="hidden" id="size" name="size" th:value="${param.size}" />
+                    <input type="hidden" id="caGubun" name="caGubun" th:value="${param.caGubun}" />
+                    <input type="hidden" name="msgId" id="msgId" th:value="${campaignInfo.campaignMessageDto.id}" />
+                    <input type="hidden" name="msgImgNm01" id="msgImgNm01" th:value="${campaignInfo.campaignMessageDto.msgImgNm01}" />
+                    <input type="hidden" name="hidMsgImgRnm01" id="hidMsgImgRnm01" th:value="${campaignInfo.campaignMessageDto.msgImgRnm01}" />
+
+                    <input type="hidden" name="taskFlag" id="taskFlag" th:value="${param.taskFlag}" />
+                    <input type="hidden" name="orderFlag" id="orderFlag" th:value="${param.orderFlag}" />
+                    <input type="hidden" name="caFlag" id="caFlag" th:value="${param.caFlag}"/>
+                    <input type="hidden" name="page" id="page" th:value="${param.page}"/>
+                    <input type="hidden" name="startDate" id="startDate" th:value="${param.startDate}"/>
+                    <input type="hidden" name="endDate" id="endDate" th:value="${param.endDate}"/>
+
+
+                <!-- posts-display -->
+                <div class="posts-display module-b style-a type-a">
+                    <div class="posts-wrap">
+                        <div class="posts-inform">
+                            <div class="posts-prop">
+                                <p class="data-list">
+                                    <span class="data-item">
+                                        <span class="head">노출유형</span>
+                                        <span class="body">
+                                            <span class="mark module-a style-b type-line accent-01 small-1x">
+                                                <span class="mark-text" th:text="${@commCodeUtils.getCampaignBaseInfo(campaignInfo.caMsgType).title}">세로팝업</span>
+                                            </span>
+                                            <span class="body" th:switch="${campaignInfo.caStateNm}">
+                                                <span th:case='s0001' class="mark module-a style-b type-line accent-02 small-1x">
+                                                    <span class="mark-text">진행예정</span>
+                                                </span>
+                                                <span th:case='s0002' class="mark module-a style-b type-line accent-05 small-1x">
+                                                    <span class="mark-text">진행중</span>
+                                                </span>
+                                                <span th:case='s0003' class="mark module-a style-b type-line accent-04 small-1x">
+                                                    <span class="mark-text">일시정지</span>
+                                                </span>
+                                                <span th:case='s0004' class="mark module-a style-b type-line accent-03 small-1x">
+                                                    <span class="mark-text">종료</span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="posts-info">
+                                <p class="data-list">
+                                    <span class="data-item period">
+                                        <span class="head">노출기간</span>
+                                        <span class="body">
+                                            <span th:if="${#strings.isEmpty(campaignInfo.caStartHour)}" th:text="${#strings.defaultString(#dates.format(campaignInfo.caStartDate, 'yyyy-MM-dd'), '-')}">2022-11-30</span>
+                                            <span th:unless="${#strings.isEmpty(campaignInfo.caStartHour)}" th:text="|${#dates.format(campaignInfo.caStartDate, 'yyyy-MM-dd')} ${campaignInfo.caStartHour}:${campaignInfo.caStartMin}|">2022-11-21 16:27:00</span>
+                                            ~
+                                            <sapn th:if="${#strings.isEmpty(campaignInfo.caEndHour)}" th:text="${#strings.defaultString(#dates.format(campaignInfo.caEndDate, 'yyyy-MM-dd'), '-')}">2022-12-30</sapn>
+                                            <sapn th:unless="${#strings.isEmpty(campaignInfo.caEndHour)}"  th:text="|${#dates.format(campaignInfo.caEndDate, 'yyyy-MM-dd')} ${campaignInfo.caEndHour}:${campaignInfo.caEndMin}|">2022-11-21 16:27:00</sapn>
+                                        </span>
+                                    </span>
+                                    <span class="data-item id">
+                                        <span class="head">ID</span>
+                                        <span class="body" th:text="${campaignInfo.id}">74</span>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="posts-head">
+                                <p class="posts-subject">
+                                    <span class="posts-name" th:text="${campaignInfo.caName}">요즘가족결합 프로모션 팝업</span>
+                                </p>
+                            </div>
+                            <div class="posts-data">
+                                <p class="data-list">
+                                    <span class="data-item posted">
+                                        <span class="head">등록일</span>
+                                        <span class="body" th:text="${#strings.defaultString(#dates.format(campaignInfo.upDate, 'yyyy-MM-dd hh:mm:ss'), '-')}">2022-11-30 15:30:24 Last Edited</span>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="posts-util">
+                        <span class="button-area">
+                            <a class="btn module-b style-b type-line normal-01 large-4x symbol-ltr-monitor flex"
+                               th:href="@{(${pcPreviewUrl})}" target="_blank" sec:authorize="hasPermission('C0001', 'read')">
+                                        <span class="btn-text">미리보기</span>
+                                    </a>
+                                    <a class="btn module-b style-b type-line normal-01 large-4x symbol-ltr-mobile flex"
+                                       th:value="${moPreviewUrl}" href="#"
+                                       th:onclick="Preview.info(this.getAttribute('value'))" sec:authorize="hasPermission('C0001', 'read')">
+                                        <span class="btn-text">미리보기</span>
+                                    </a>
+                            <button class="btn module-c style-b type-line normal-01 large-4x" id="btnModify"
+                                    sec:authorize="hasPermission('', 'update')">
+                                        <span class="btn-text">편집</span>
+                                    </button>
+                        </span>
+                    </div>
+                </div>
+                </form>
+                <!-- //posts-display -->
+
+                <!-- section -->
+                <div class="section module-a style-c">
+                    <div class="section-wrap">
+                        <div class="section-head">
+                            <h4 class="section-subject"><span class="section-name">캠페인 상세정보 요약</span></h4>
+                        </div>
+                        <div class="section-body">
+                            <!-- subsection -->
+                            <div class="subsection module-c style-a type-a active" data-bui-expand="subsection">
+                                <div class="subsection-wrap">
+                                    <div class="subsection-head">
+                                        <h5 class="subsection-subject"><span class="subsection-counter">1</span> <span class="subsection-name">기본 정보</span></h5>
+                                    </div>
+                                    <form class="subsection-body">
+                                        <!-- data-display -->
+                                        <div class="data-display module-b style-b type-a">
+                                            <!-- data-list -->
+                                            <div class="data-list">
+                                                <div class="data-item">
+                                                    <div class="data-wrap">
+                                                        <div class="data-head">
+                                                            <p class="data-subject">
+                                                                <span class="data-name">캠페인 설명</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="data-body">
+                                                            <p class="para" >
+                                                                <span th:text="${campaignInfo.caMemo}">요즘가족 결합 프로모션 팝업 캠페인에 대한 자세한 설명 내용</span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="data-item">
+                                                    <div class="data-wrap">
+                                                        <div class="data-head">
+                                                            <p class="data-subject">
+                                                                <span class="data-name">캠페인 전환 지점</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="data-body">
+                                                            <th:block th:if="${!#strings.isEmpty(campaignInfo.caPurpose)}" th:each="codeCaPurpose, status : ${@commCodeUtils.getCodeList('CAM_PURPOSE')}">
+                                                                <th:block th:if="${#strings.equals(codeCaPurpose.dcode,campaignInfo.caPurpose)}">
+                                                                    <p class="para" th:text="${codeCaPurpose.dcodeNm}">온라인 상담 가입상담 신청 완료 (PC/Mobile)</p>
+                                                                </th:block>
+                                                            </th:block>
+                                                            <div class="data-display landing-page-url" th:if="${#strings.equals(campaignInfo.caPurpose, 'ETC')}">
+                                                                <div class="data-list">
+                                                                    <div class="data-item laptop">
+                                                                        <div class="data-wrap">
+                                                                            <div class="data-head">
+                                                                                <p class="data-subject"><span class="data-name">PC</span></p>
+                                                                            </div>
+                                                                            <div class="data-body">
+                                                                                <div class="data-list">
+                                                                                    <th:block th:each="targetUrl, status : ${campaignInfo.campaignTargetUrlDtos}"
+                                                                                              th:if="${#strings.equals(targetUrl.gubun, 'P')}">
+                                                                                        <p class="data-item">
+                                                                                            <span class="body">
+                                                                                                <a class="em normal-02" th:href="@{${targetUrl.targetUrl}}" target="_blank"
+                                                                                                   th:text="${targetUrl.targetUrl}">
+                                                                                                    https://www.bdirectshop.com/product/Page.do?menu_id=combiMain&_C_=39771864</a>
+                                                                                            </span>
+                                                                                        </p>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="data-item mobile">
+                                                                        <div class="data-wrap">
+                                                                            <div class="data-head">
+                                                                                <p class="data-subject"><span class="data-name">Mobile</span></p>
+                                                                            </div>
+                                                                            <div class="data-body">
+                                                                                <div class="data-list">
+                                                                                    <th:block th:each="targetUrl, status : ${campaignInfo.campaignTargetUrlDtos}"
+                                                                                              th:if="${#strings.equals(targetUrl.gubun, 'M')}">
+                                                                                        <p class="data-item">
+                                                                                        <span class="body">
+                                                                                            <a class="em normal-02" th:href="@{${targetUrl.targetUrl}}" target="_blank"
+                                                                                               th:text="${targetUrl.targetUrl}">
+                                                                                                https://www.bdirectshop.com/product/Page.do?menu_id=combiMain&_C_=39771864</a>
+                                                                                        </span>
+                                                                                        </p>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- //data-list -->
+                                        </div>
+                                        <!-- //data-display -->
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- //subsection -->
+                            <!-- subsection -->
+                            <div class="subsection module-c style-a type-a active" data-bui-expand="subsection">
+                                <div class="subsection-wrap">
+                                    <div class="subsection-head">
+                                        <h5 class="subsection-subject">
+                                            <span class="subsection-counter">2</span>
+                                            <span class="subsection-name">타겟 정보</span>
+                                        </h5>
+                                    </div>
+                                    <form class="subsection-body">
+                                        <!-- data-display -->
+                                        <div class="data-display module-b style-b type-a">
+                                            <!-- data-list -->
+                                            <div class="data-list">
+                                                <div class="data-item">
+                                                    <div class="data-wrap">
+                                                        <div class="data-head">
+                                                            <p class="data-subject">
+                                                                <span class="data-name">1차 타켓</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="data-body">
+                                                            <p class="para">
+                                                                <th:block th:switch="${campaignInfo.tgType01}">
+                                                                    <strong class="em" th:case="RETURN"
+                                                                            th:text="${@commCodeUtils.getCodeInfo('TAR1_RETURN', campaignInfo.tg1Sub).dcodeNm}">
+                                                                        특정 페이지에 관심이 많은 고객 (최근 7일 동안 특정 페이지를 3번 이상 방문한 고객)</strong>
+                                                                    <strong class="em" th:case="FIXED"
+                                                                            th:text="${@commCodeUtils.getCodeInfo('CAM_TARGET2', campaignInfo.tg1Sub).dcodeNm}">
+                                                                        특정 페이지에 관심이 많은 고객 (최근 7일 동안 특정 페이지를 3번 이상 방문한 고객)</strong>
+                                                                    <strong class="em" th:case="*"
+                                                                            th:text="${@commCodeUtils.getCodeInfo('CAM_TARGET1', campaignInfo.tgType01).dcodeNm}">
+                                                                        특정 페이지에 관심이 많은 고객 (최근 7일 동안 특정 페이지를 3번 이상 방문한 고객)</strong>
+                                                                </th:block>
+                                                            </p>
+                                                            <p class="para" th:if="${#strings.equals(campaignInfo.tg1Sub, 'FIXEDWORD')}" th:text="${campaignInfo.tgFixedWord}">인터넷, 인터넷가입, SK브로드밴드</p>
+                                                            <!-- //data-display -->
+                                                            <div class="data-display landing-page-url" th:if="${#strings.equals(campaignInfo.tg1Sub, 'OUTLINK')}">
+                                                                <div class="data-list">
+                                                                    <div class="data-item laptop">
+                                                                        <div class="data-wrap">
+                                                                            <div class="data-head">
+                                                                                <p class="data-subject"><span class="data-name">PC</span></p>
+                                                                            </div>
+                                                                            <div class="data-body">
+                                                                                <div class="data-list">
+                                                                                    <th:block th:each="spec, status : ${campaignInfo.campaignSpecUrlDtos}"
+                                                                                              th:if="${#strings.equals(spec.gubun, 'P')}">
+                                                                                        <p class="data-item">
+                                                                                            <span class="body">
+                                                                                                <a class="em normal-02" th:href="@{${spec.specUrl}}" target="_blank"
+                                                                                                   th:text="${spec.specUrl}">
+                                                                                                    https://www.bdirectshop.com/product/Page.do?menu_id=combiMain&_C_=39771864</a>
+                                                                                            </span>
+                                                                                        </p>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="data-item mobile">
+                                                                        <div class="data-wrap">
+                                                                            <div class="data-head">
+                                                                                <p class="data-subject"><span class="data-name">Mobile</span></p>
+                                                                            </div>
+                                                                            <div class="data-body">
+                                                                                <div class="data-list">
+                                                                                    <th:block th:each="spec, status : ${campaignInfo.campaignSpecUrlDtos}"
+                                                                                              th:if="${#strings.equals(spec.gubun, 'M')}">
+                                                                                        <p class="data-item">
+                                                                                        <span class="body">
+                                                                                            <a class="em normal-02" th:href="@{${spec.specUrl}}" target="_blank"
+                                                                                               th:text="${spec.specUrl}">
+                                                                                                https://www.bdirectshop.com/product/Page.do?menu_id=combiMain&_C_=39771864</a>
+                                                                                        </span>
+                                                                                        </p>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <th:block th:if="${#strings.equals(campaignInfo.tgType02Yn, 'Y')}">
+                                                    <div class="data-item">
+                                                        <div class="data-wrap">
+                                                            <div class="data-head">
+                                                                <p class="data-subject">
+                                                                    <span class="data-name">2차 타켓</span>
+                                                                </p>
+                                                            </div>
+                                                            <div class="data-body">
+                                                                <p class="para">
+                                                                    <th:block th:if="${#strings.equals(campaignInfo.tgType01, 'FIXED')}">
+                                                                        <th:block th:switch="${campaignInfo.tgType02}">
+                                                                            <strong th:case="RETURN" class="em"
+                                                                                    th:text="${@commCodeUtils.getCodeInfo('TAR1_RETURN', campaignInfo.tg2Sub).dcodeNm}">특정 검색어를 통해 유입한 고객</strong>
+                                                                            <strong th:case="*" class="em"
+                                                                                    th:text="${@commCodeUtils.getCodeInfo('CAM_TARGET1', campaignInfo.tgType02).dcodeNm}">특정 검색어를 통해 유입한 고객</strong>
+                                                                        </th:block>
+                                                                    </th:block>
+                                                                    <th:block th:unless="${#strings.equals(campaignInfo.tgType01, 'FIXED')}">
+                                                                        <strong class="em"
+                                                                                th:text="${@commCodeUtils.getCodeInfo('CAM_TARGET2', campaignInfo.tg2Sub).dcodeNm}">특정 검색어를 통해 유입한 고객</strong>
+                                                                    </th:block>
+                                                                </p>
+                                                                <div class="data-display landing-page-url" th:if="${#strings.equals(campaignInfo.tg2Sub, 'TAR1_FIXED')}">
+                                                                    <div class="data-list">
+                                                                        <div class="data-item laptop">
+                                                                            <div class="data-wrap">
+                                                                                <div class="data-head">
+                                                                                    <p class="data-subject"><span class="data-name">PC</span></p>
+                                                                                </div>
+                                                                                <div class="data-body">
+                                                                                    <div class="data-list">
+                                                                                        <th:block th:each="revisit, status : ${campaignInfo.campaignRevisitUrlDtos}"
+                                                                                                  th:if="${#strings.equals(revisit.gubun, 'P')}">
+                                                                                            <p class="data-item">
+                                                                                    <span class="body">
+                                                                                        <a class="em normal-02" th:href="@{${revisit.revisitUrl}}" target="_blank"
+                                                                                           th:text="${revisit.revisitUrl}">
+                                                                                            https://www.bdirectshop.com/product/Page.do?menu_id=combiMain&_C_=39771864</a>
+                                                                                    </span>
+                                                                                            </p>
+                                                                                        </th:block>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="data-item mobile">
+                                                                            <div class="data-wrap">
+                                                                                <div class="data-head">
+                                                                                    <p class="data-subject"><span class="data-name">Mobile</span></p>
+                                                                                </div>
+                                                                                <div class="data-body">
+                                                                                    <div class="data-list">
+                                                                                        <th:block th:each="revisit, status : ${campaignInfo.campaignRevisitUrlDtos}"
+                                                                                                  th:if="${#strings.equals(revisit.gubun, 'M')}">
+                                                                                            <p class="data-item">
+                                                                                    <span class="body">
+                                                                                        <a class="em normal-02" th:href="@{${revisit.revisitUrl}}" target="_blank"
+                                                                                           th:text="${revisit.revisitUrl}">
+                                                                                            https://www.bdirectshop.com/product/Page.do?menu_id=combiMain&_C_=39771864</a>
+                                                                                    </span>
+                                                                                            </p>
+                                                                                        </th:block>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="data-display landing-page-url" th:if="${#strings.equals(campaignInfo.tg2Sub, 'OUTLINK')}">
+                                                                    <div class="data-list">
+                                                                        <div class="data-item laptop">
+                                                                            <div class="data-wrap">
+                                                                                <div class="data-head">
+                                                                                    <p class="data-subject"><span class="data-name">PC</span></p>
+                                                                                </div>
+                                                                                <div class="data-body">
+                                                                                    <div class="data-list">
+                                                                                        <th:block th:each="spec, status : ${campaignInfo.campaignSpecUrlDtos}"
+                                                                                                  th:if="${#strings.equals(spec.gubun, 'P')}">
+                                                                                            <p class="data-item">
+                                                                                        <span class="body">
+                                                                                            <a class="em normal-02" th:href="@{${spec.specUrl}}" target="_blank"
+                                                                                               th:text="${spec.specUrl}">
+                                                                                                https://www.bdirectshop.com/product/Page.do?menu_id=combiMain&_C_=39771864</a>
+                                                                                        </span>
+                                                                                            </p>
+                                                                                        </th:block>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="data-item mobile">
+                                                                            <div class="data-wrap">
+                                                                                <div class="data-head">
+                                                                                    <p class="data-subject"><span class="data-name">Mobile</span></p>
+                                                                                </div>
+                                                                                <div class="data-body">
+                                                                                    <div class="data-list">
+                                                                                        <th:block th:each="spec, status : ${campaignInfo.campaignSpecUrlDtos}"
+                                                                                                  th:if="${#strings.equals(spec.gubun, 'M')}">
+                                                                                            <p class="data-item">
+                                                                                    <span class="body">
+                                                                                        <a class="em normal-02" th:href="@{${spec.specUrl}}" target="_blank"
+                                                                                           th:text="${spec.specUrl}">
+                                                                                            https://www.bdirectshop.com/product/Page.do?menu_id=combiMain&_C_=39771864</a>
+                                                                                    </span>
+                                                                                            </p>
+                                                                                        </th:block>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <p class="para" th:if="${#strings.equals(campaignInfo.tg2Sub, 'FIXEDWORD')}"
+                                                                   th:text="${campaignInfo.tgFixedWord}">인터넷, 인터넷가입, SK브로드밴드</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </th:block>
+                                            </div>
+                                            <!-- //data-list -->
+                                        </div>
+                                        <!-- //data-display -->
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- //subsection -->
+                            <!-- subsection -->
+                            <div class="subsection module-c style-a type-a active" data-bui-expand="subsection">
+                                <div class="subsection-wrap">
+                                    <div class="subsection-head">
+                                        <h5 class="subsection-subject"><span class="subsection-counter">3</span> <span class="subsection-name">옵션 정보</span></h5>
+                                    </div>
+                                    <form class="subsection-body">
+                                        <!-- data-display -->
+                                        <div class="data-display module-b style-b type-a">
+                                            <!-- data-list -->
+                                            <div class="data-list">
+                                                <div class="data-item">
+                                                    <div class="data-wrap">
+                                                        <div class="data-head">
+                                                            <p class="data-subject"><span class="data-name">노출 요일</span></p>
+                                                        </div>
+                                                        <div class="data-body">
+                                                            <p class="para">
+<!--                                                                <th:block th:each="data, index : ${#strings.arraySplit(campaignInfo.caWeek, ',')}" th:if="${#strings.arraySplit(campaignInfo.caWeek, ',') != null} or ${#strings.setSplit(campaignInfo.caWeek, ',').size() != 0}">-->
+<!--                                                                    <th:block th:each="codeCamWeek, status : ${@commCodeUtils.getCodeList('CAM_WEEK')}">-->
+<!--                                                                        <block th:if="${#strings.equals(codeCamWeek.dcode,data)}">-->
+<!--                                                                            <span th:text="|${codeCamWeek.dcodeNm+(index.last?'':', ')}|"></span>-->
+<!--                                                                        </block>-->
+<!--                                                                    </th:block>-->
+<!--                                                                </th:block>-->
+<!--                                                                <th:block th:unless="${#strings.length(campaignInfo.caWeek).equals(1)}">-->
+<!--                                                                    <th:block th:each="codeCamWeek, status : ${@commCodeUtils.getCodeList('CAM_WEEK')}">-->
+<!--                                                                        <th:block th:if="${#strings.equals(codeCamWeek.dcode,data)}">-->
+<!--                                                                            <span th:text="${codeCamWeek.dcodeNm}"></span>-->
+<!--                                                                        </th:block>-->
+<!--                                                                    </th:block>-->
+<!--                                                                </th:block>-->
+                                                                <th:block th:each="weeks, status : ${#strings.arraySplit(campaignInfo.caWeek, ',')}">
+                                                                    <th:block th:each="baseWeeks, index : ${@commCodeUtils.getCodeList('CAM_WEEK')}">
+                                                                        <th:block th:if="${#strings.equals(baseWeeks.dcode, weeks)}">
+                                                                            <span th:text="|${baseWeeks.dcodeNm + (status.last? '' : ', ')}|"></span>
+                                                                        </th:block>
+                                                                    </th:block>
+                                                                </th:block>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="data-item">
+                                                    <div class="data-wrap">
+                                                        <div class="data-head">
+                                                            <p class="data-subject">
+                                                                <span class="data-name">노출 시간</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="data-body">
+                                                            <p class="para"><!--#strings.arraySplit(baseTimes.dcodeNm, '-')[0].trim()-->
+                                                                <strong class="em" th:text="${@commCodeUtils.getCodeInfo('CAM_EXPO_TIME', campaignInfo.caTime).dcodeNm}">상세 설정</strong>
+                                                            </p>
+                                                            <p class="para" th:if="${#strings.equals(campaignInfo.caTime, 'DETAIL_TIME')}">
+                                                                <th:block th:each="times, status : ${campaignInfo.caTimes}">
+                                                                    <span th:text="|${times + (status.last? '' : ', ')}|"></span>
+                                                                </th:block>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="data-item">
+                                                    <div class="data-wrap">
+                                                        <div class="data-head">
+                                                            <p class="data-subject">
+                                                                <span class="data-name">노출 위치</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="data-body">
+                                                            <p class="para">
+                                                                <strong class="em"
+                                                                        th:text="${@commCodeUtils.getCodeInfo('CAM_PLACE', campaignInfo.caPlace).dcodeNm}">특정 페이지 지정</strong>
+                                                            </p>
+
+                                                            <!-- data-display -->
+                                                            <div class="data-display landing-page-url type-a" th:if="${!#strings.equals(campaignInfo.caPlaceYn, 'N')}">
+                                                                <div class="data-list">
+                                                                    <div class="data-item laptop">
+                                                                        <div class="data-wrap">
+                                                                            <div class="data-head">
+                                                                                <p class="data-subject"><span class="data-name">PC</span></p>
+                                                                            </div>
+                                                                            <div class="data-body">
+                                                                                <div class="data-list">
+                                                                                    <th:block th:each="exposure, status : ${campaignInfo.campaignExposureUrlDtos}"
+                                                                                              th:if="${#strings.equals(exposure.gubun, 'P')}">
+                                                                                    <p class="data-item">
+                                                                                        <span class="head" th:text="${#strings.equals(exposure.includeYn,'Y')?'포함':'제외'}">포함</span>
+                                                                                        <span class="body">
+                                                                                            <a class="em normal-02"
+                                                                                               th:href="@{${exposure.exposureUrl}}" target="_blank" th:text="${exposure.exposureUrl}">
+                                                                                                https://www.bdirectshop.com/product/Page.do?menu_id=combiMain&_C_=39771864
+                                                                                            </a>
+                                                                                        </span>
+                                                                                    </p>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="data-item mobile">
+                                                                        <div class="data-wrap">
+                                                                            <div class="data-head">
+                                                                                <p class="data-subject"><span class="data-name">mobile</span></p>
+                                                                            </div>
+                                                                            <div class="data-body">
+                                                                                <div class="data-list">
+                                                                                    <th:block th:each="exposure, status : ${campaignInfo.campaignExposureUrlDtos}" th:if="${#strings.equals(exposure.gubun, 'M')}">
+                                                                                        <p class="data-item">
+                                                                                        <span class="head" th:text="${#strings.equals(exposure.includeYn, 'Y')? '포함' : '제외'}">포함</span>
+                                                                                        <span class="body">
+                                                                                            <a class="em normal-02"
+                                                                                               th:href="@{${exposure.exposureUrl}}" target="_blank" th:text="${exposure.exposureUrl}">
+                                                                                                https://www.bdirectshop.com/product/Page.do?menu_id=combiMain&_C_=39771864</a>
+                                                                                        </span>
+                                                                                        </p>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="data-item">
+                                                    <div class="data-wrap">
+                                                        <div class="data-head">
+                                                            <p class="data-subject"><span class="data-name">노출 시점</span></p>
+                                                        </div>
+                                                        <div class="data-body">
+                                                            <p class="para">
+                                                            <p class="para">
+                                                                <strong class="em"
+                                                                        th:text="${@commCodeUtils.getCodeInfo('CAM_VIEW_POINT', campaignInfo.caViewPoint).dcodeNm}">
+                                                                    노출 페이지에서 이탈 직전에</strong>
+                                                            </p>
+                                                            <th:block th:if="${!#strings.equals(campaignInfo.caViewPoint, 'AT_ONCE')}">
+                                                                <th:block th:switch="${campaignInfo.caViewPoint}">
+                                                                    <p class="para" th:case="PERCENT"
+                                                                       th:text="${@commCodeUtils.getCodeInfo('VIEW_PERCENT', campaignInfo.viewPointSub).dcodeNm}">
+                                                                        뒤로 가기 버튼 클릭 시</p>
+                                                                    <p class="para" th:case="BEFORE_OUT"
+                                                                       th:text="${@commCodeUtils.getCodeInfo('VIEW_OUT', campaignInfo.viewPointSub).dcodeNm}">
+                                                                        뒤로 가기 버튼 클릭 시</p>
+                                                                    <p class="para" th:case="*"
+                                                                       th:text="${@commCodeUtils.getCodeInfo('VIEW_SECOND', campaignInfo.viewPointSub).dcodeNm}">
+                                                                        뒤로 가기 버튼 클릭 시</p>
+                                                                </th:block>
+                                                            </th:block>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="data-item">
+                                                    <div class="data-wrap">
+                                                        <div class="data-head">
+                                                            <p class="data-subject">
+                                                                <span class="data-name">노출 빈도</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="data-body">
+                                                            <p class="para">
+                                                                <th:block th:each="codeCamUsing, status : ${@commCodeUtils.getCodeList('CAM_USING')}">
+                                                                    <span th:if="${#strings.equals(codeCamUsing.dcode,campaignInfo.exposureLimitCnt)}" th:text="${codeCamUsing.dcodeNm}">1회</span>
+                                                                </th:block>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- //data-list -->
+                                        </div>
+                                        <!-- //data-display -->
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- //subsection -->
+                            <!-- subsection -->
+                            <div class="subsection module-c style-a type-a active" data-bui-expand="subsection">
+                                <div class="subsection-wrap">
+                                    <div class="subsection-head">
+                                        <h5 class="subsection-subject"><span class="subsection-counter">4</span> <span class="subsection-name">메시지 정보</span></h5>
+                                    </div>
+                                    <div class="subsection-body">
+                                        <!-- data-display -->
+                                        <div class="data-display message-preview">
+                                            <div class="slides-navigation" th:if="${campaignInfo.campaignMessageDto.msgType == '8'}">
+                                                <div class="swiper-button-prev"></div>
+                                                <div class="swiper-button-next"></div>
+                                            </div>
+                                            <div class="data-list">
+                                                <div class="data-item">
+                                                    <div class="data-wrap">
+                                                        <div class="data-head">
+                                                            <p class="data-subject"><span class="data-name">PC</span></p>
+                                                        </div>
+<!--                                                        <div class="data-body" th:utext="${campaignInfo.campaignMessageDto.msgPcHtml}">-->
+<!--                                                            &lt;!&ndash; campaign-popup &ndash;&gt;-->
+<!--                                                            <div class="campaign-popup module-b style-a type-a small" data-campaign-device="laptop">-->
+<!--                                                                <div class="popup-page-body">-->
+<!--                                                                    <div class="subsubsection-body" th:if="${!#strings.isEmpty(campaignInfo.campaignMessageDto.msgPcHtml)}">-->
+<!--                                                                        <th:block th:utext="${campaignInfo.campaignMessageDto.msgPcHtml}"></th:block>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                            &lt;!&ndash; //campaign-popup &ndash;&gt;-->
+<!--                                                        </div>-->
+                                                        <div class="data-body" th:utext="${campaignInfo.campaignMessageDto.msgPcHtml}">
+                                                            <!-- campaign-popup -->
+                                                            <div class="campaign-popup module-b style-a type-a small" data-campaign-device="laptop">
+                                                                <div class="popup-page-body">
+                                                                    <!-- popup-local -->
+                                                                    <div class="popup-local">
+                                                                        <!-- popup-local-head -->
+                                                                        <div class="popup-local-head">
+                                                                            <h2 class="popup-local-subject"><span class="popup-local-name">캠페인</span></h2>
+                                                                        </div>
+                                                                        <!-- //popup-local-head -->
+                                                                        <!-- popup-local-body -->
+                                                                        <div class="popup-local-body">
+                                                                            <div class="popup-content">
+                                                                                <!-- popup-content-body -->
+                                                                                <div class="popup-content-body">
+                                                                                    <!-- info-board -->
+                                                                                    <div class="info-board">
+                                                                                        <div class="board-wrap">
+                                                                                            <div class="board-figure">
+                                                                                                <span class="board-cover"><img src="/assets/images/campaign/noimage_campaign_popup_b_a_01.png" alt="이미지 대체 텍스트" /></span>
+                                                                                            </div>
+                                                                                            <div class="board-inform">
+                                                                                                <div class="board-head">
+                                                                                                    <p class="board-subject"><span class="board-name">켐페인 주제 문구</span></p>
+                                                                                                    <p class="board-summary">켐페인 요약 문구</p>
+                                                                                                </div>
+                                                                                                <div class="board-util">
+                                                                                                                        <span class="button-area">
+                                                                                                                            <a class="btn type-cta attr-move" href="#"><span class="btn-text">랜딩 페이지로 이동</span></a>
+                                                                                                                            <a class="btn type-cta attr-send" href="#"><span class="btn-text">가입상담 신청</span></a>
+                                                                                                                            <a class="btn type-cta attr-join" href="#"><span class="btn-text">바로가입</span></a>
+                                                                                                                        </span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- //info-board -->
+                                                                                </div>
+                                                                                <!-- //popup-content-body -->
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- //popup-local-body -->
+                                                                        <!-- popup-local-util -->
+                                                                        <div class="popup-local-util">
+                                                                            <fieldset class="submit-form">
+                                                                                <legend>팝업 노출 설정 서식</legend>
+                                                                                <div class="form-list">
+                                                                                    <div class="form-item">
+                                                                                        <div class="form-wrap">
+                                                                                            <div class="form-head"><p class="form-subject"><span class="form-name">팝업 설정 선택</span></p></div>
+                                                                                            <div class="form-body">
+                                                                                                <div class="option-list">
+                                                                                                                        <span class="option-item">
+                                                                                                                            <label class="form checkbox">
+                                                                                                                                <input class="form-elem" type="checkbox" />
+                                                                                                                                <span class="form-text">7일 동안 보지 않기</span>
+                                                                                                                            </label>
+                                                                                                                        </span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </fieldset>
+                                                                            <div class="button-display">
+                                                                                                    <span class="button-area">
+                                                                                                        <button class="btn popup-close" type="button">
+                                                                                                            <span class="btn-text">닫기</span>
+                                                                                                        </button>
+                                                                                                    </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- //popup-local-util -->
+                                                                    </div>
+                                                                    <!-- //popup-local -->
+                                                                </div>
+                                                            </div>
+                                                            <!-- //campaign-popup -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="data-item">
+                                                    <div class="data-wrap">
+                                                        <div class="data-head">
+                                                            <p class="data-subject"><span class="data-name">Mobile</span></p>
+                                                        </div>
+<!--                                                        <div class="data-body">-->
+<!--                                                            &lt;!&ndash; campaign-popup &ndash;&gt;-->
+<!--                                                            <div class="campaign-popup module-b style-a type-a small" data-campaign-device="mobile">-->
+<!--                                                                <div class="popup-page-body">-->
+<!--                                                                    <div class="subsubsection-body" th:if="${!#strings.isEmpty(campaignInfo.campaignMessageDto.msgMoHtml)}">-->
+<!--                                                                        <th:block th:utext="${campaignInfo.campaignMessageDto.msgMoHtml}"></th:block>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                            &lt;!&ndash; //campaign-popup &ndash;&gt;-->
+<!--                                                        </div>-->
+                                                        <div class="data-body" th:utext="${campaignInfo.campaignMessageDto.msgMoHtml}">
+                                                            <!-- campaign-popup -->
+                                                            <div class="campaign-popup module-b style-a type-a small" data-campaign-device="mobile">
+                                                                <div class="popup-page-body">
+                                                                    <!-- popup-local -->
+                                                                    <div class="popup-local">
+                                                                        <!-- popup-local-head -->
+                                                                        <div class="popup-local-head">
+                                                                            <h2 class="popup-local-subject"><span class="popup-local-name">캠페인</span></h2>
+                                                                        </div>
+                                                                        <!-- //popup-local-head -->
+                                                                        <!-- popup-local-body -->
+                                                                        <div class="popup-local-body">
+                                                                            <div class="popup-content">
+                                                                                <!-- popup-content-body -->
+                                                                                <div class="popup-content-body">
+                                                                                    <!-- info-board -->
+                                                                                    <div class="info-board">
+                                                                                        <div class="board-wrap">
+                                                                                            <div class="board-figure">
+                                                                                                <span class="board-cover"><img src="/assets/images/campaign/noimage_campaign_popup_b_a_01.png" alt="이미지 대체 텍스트" /></span>
+                                                                                            </div>
+                                                                                            <div class="board-inform">
+                                                                                                <div class="board-head">
+                                                                                                    <p class="board-subject"><span class="board-name">켐페인 주제 문구</span></p>
+                                                                                                    <p class="board-summary">켐페인 요약 문구</p>
+                                                                                                </div>
+                                                                                                <div class="board-util">
+                                                                                                                        <span class="button-area">
+                                                                                                                            <a class="btn type-cta attr-move" href="#"><span class="btn-text">랜딩 페이지로 이동</span></a>
+                                                                                                                            <a class="btn type-cta attr-send" href="#"><span class="btn-text">가입상담 신청</span></a>
+                                                                                                                            <a class="btn type-cta attr-join" href="#"><span class="btn-text">바로가입</span></a>
+                                                                                                                            <a class="btn type-cta attr-call" href="#"><span class="btn-text">가입상담 전화</span></a>
+                                                                                                                        </span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- //info-board -->
+                                                                                </div>
+                                                                                <!-- //popup-content-body -->
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- //popup-local-body -->
+                                                                        <!-- popup-local-util -->
+                                                                        <div class="popup-local-util">
+                                                                            <fieldset class="submit-form">
+                                                                                <legend>팝업 노출 설정 서식</legend>
+                                                                                <div class="form-list">
+                                                                                    <div class="form-item">
+                                                                                        <div class="form-wrap">
+                                                                                            <div class="form-head"><p class="form-subject"><span class="form-name">팝업 설정 선택</span></p></div>
+                                                                                            <div class="form-body">
+                                                                                                <div class="option-list">
+                                                                                                                        <span class="option-item">
+                                                                                                                            <label class="form checkbox">
+                                                                                                                                <input class="form-elem" type="checkbox" />
+                                                                                                                                <span class="form-text">7일 동안 보지 않기</span>
+                                                                                                                            </label>
+                                                                                                                        </span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </fieldset>
+                                                                            <div class="button-display">
+                                                                                                    <span class="button-area">
+                                                                                                        <button class="btn popup-close" type="button">
+                                                                                                            <span class="btn-text">닫기</span>
+                                                                                                        </button>
+                                                                                                    </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- //popup-local-util -->
+                                                                    </div>
+                                                                    <!-- //popup-local -->
+                                                                </div>
+                                                            </div>
+                                                            <!-- //campaign-popup -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--// data-display -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //subsection -->
+                        </div>
+                    </div>
+                </div>
+                <!-- //section -->
+
+                <!-- button-display -->
+                <div class="button-display module-a style-a type-c">
+                    <span class="button-area">
+                        <a cu:href="@{/campaign/list/list.do(caNo=,caGubun=${param.caGubun})}" type="button" class="btn module-b style-b type-line accent-01 large-6x flex"><span class="btn-text">목록으로 돌아가기</span></a>
+<!--                        <button id="btnCamcampaignInfo" type="button" class="btn module-b style-b type-fill accent-01 large-6x flex"><span class="btn-text">캠페인 분석 바로가기</span></button>-->
+                    </span>
+                </div>
+                <!-- //button-display -->
+
+
+            </div>
+            <!-- //content-body -->
+        </div>
+        <!-- //content -->
+    </div>
+    <!-- //local-body -->
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/campaign/campaign.list.detail.js}"></script>
+    </th:block>
+</body>
+</html>

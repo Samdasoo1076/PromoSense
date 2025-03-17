@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8" />
+    <title>SKB DOMS</title>
+</head>
+<body>
+<!-- content-popup -->
+<div class="content-popup module-a style-a type-a large-1x" data-bui-toggle="contentPopup" id="contentPopupMessageVertical">
+    <div class="popup-page-body">
+        <!-- popup-local -->
+        <div class="popup-local">
+            <!-- popup-local-head -->
+            <div class="popup-local-head">
+                <h2 class="popup-local-subject"><span class="popup-local-name">세로 팝업 메시지 불러오기</span></h2>
+            </div>
+            <!-- //popup-local-head -->
+            <div class="popup-local-body" th:if="${historys.size == 0}">
+                <div class="popup-content">
+                    <!-- popup-content-body -->
+                    <div class="popup-content-body">
+                        <!-- info-board -->
+                        <div class="info-board module-a style-c type-c attr-nodata">
+                            <div class="board-wrap">
+                                <div class="board-head">
+                                    <p class="board-summary">저장된 메시지가 없습니다.<br />새로운 메시지를 저장해 보세요.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //info-board -->
+                    </div>
+                    <!-- //popup-content-body -->
+                </div>
+            </div>
+            <!-- popup-local-body -->
+            <div class="popup-local-body" th:unless="${historys.size == 0}">
+                <div class="popup-content">
+                    <!-- popup-content-body -->
+                    <div class="popup-content-body">
+                        <!-- goods-display -->
+                        <div class="goods-display module-b style-b">
+                            <div class="goods-list">
+                                <th:block th:each="history, status : ${historys}">
+                                <div class="goods-item">
+                                    <div class="goods-wrap">
+                                        <!-- goods-select -->
+                                        <label class="goods-select">
+                                            <span class="form checkbox module-a style-a small-2x accent-01">
+                                                <input type="checkbox" class="form-elem" id="chkHistory" name="chkHistory"
+                                                       th:value="${history.id}" onchange="checkedWithin(this, '.goods-item');" />
+                                                <span class="form-text">항목선택</span>
+                                            </span>
+                                        </label>
+                                        <!-- //goods-select -->
+                                        <!--goods-inform-->
+                                        <div class="goods-inform">
+                                            <!-- goods-head -->
+                                            <div class="goods-head">
+                                                <p class="goods-subject">
+                                                    <span class="goods-name" th:text="${history.msgName}">요즘가족결합<br>런칭 이벤트</span>
+                                                </p>
+                                            </div>
+                                            <!-- //goods-head -->
+                                            <!-- goods-body -->
+                                            <div class="goods-body">
+                                                <img th:src="@{/images/capture/__${history.msgCaptureName}__}" />
+                                            </div>
+                                            <!-- //goods-body -->
+                                        </div>
+                                        <!--//goods-inform-->
+                                    </div>
+                                </div>
+                                </th:block>
+                            </div>
+                            <div class="goods-util">
+                                <div class="button-display type-b">
+									<span class="button-area">
+										<button id="btnViewDel" name="btnViewDel" class="btn delete disabled" type="button" >
+                                            <span class="btn-text">삭제</span>
+                                        </button>
+										<!--<button class="btn delete" type="button"  ><span class="btn-text">삭제</span></button>-->
+									</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //goods-display -->
+
+                    </div>
+                    <!-- //popup-content-body -->
+                </div>
+            </div>
+            <!-- //popup-local-body -->
+            <div class="popup-local-util">
+                <!-- button-display -->
+                <div class="button-display">
+					<span class="button-area">
+						<button class="btn module-c style-b type-fill normal-01 large-4x"
+                                id="btnCancel" name="btnCancel" type="button"
+                                th:style="${(historys.size > 0)? '' : 'display: none'}">
+                            <span class="btn-text">취소</span>
+                        </button>
+						<button class="btn module-b style-b type-fill accent-01 large-4x"
+                                id="btnApply" name="btnApply" type="submit"
+                                th:style="${(historys.size > 0)? '' : 'display: none'}">
+                            <span class="btn-text">적용</span>
+                        </button>
+						<button class="btn module-b style-b type-fill accent-01 large-4x"
+                                id="btnDelete" name="btnDelete" type="button"
+                                th:style="${(historys.size > 0)? '' : 'display: none'}">
+                            <span class="btn-text">삭제</span>
+                        </button>
+					</span>
+                </div>
+                <!-- //button-display -->
+            </div>
+            <!-- popup-local-func -->
+            <div class="popup-local-func">
+				<span class="button-area">
+					<button type="button" id="btnX" class="btn popup-close">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" width="28px" height="28px">
+							<title>닫기</title>
+							<path d="M20.7339 8.91573C21.1895 8.46012 21.1895 7.72142 20.7339 7.26581C20.2782 6.8102 19.5396 6.8102 19.0839 7.26581L13.9991 12.3506L8.91643 7.26796C8.46082 6.81234 7.72212 6.81234 7.26651 7.26796C6.8109 7.72357 6.8109 8.46226 7.26651 8.91787L12.3492 14.0006L7.26762 19.0821C6.81201 19.5377 6.81201 20.2764 7.26762 20.732C7.72323 21.1877 8.46192 21.1877 8.91753 20.732L13.9991 15.6505L19.0828 20.7342C19.5384 21.1898 20.2771 21.1898 20.7327 20.7342C21.1884 20.2786 21.1884 19.5399 20.7327 19.0843L15.649 14.0006L20.7339 8.91573Z"></path>
+						</svg>
+					</button>
+				</span>
+            </div>
+            <!-- //popup-local-func -->
+        </div>
+        <!-- //popup-local -->
+    </div>
+</div>
+<script th:src="@{/js/campaign/popup/campaign.message.vertical.popup.js}"></script>
+<!-- //content-popup -->
+</body>
+</html>

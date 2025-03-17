@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8" />
+    <title>SKB DOMS</title>
+</head>
+<body>
+<!-- content-popup -->
+<div class="content-popup module-a style-a type-a large-1x" data-bui-toggle="contentPopup" id="contentPopupExposureRank">
+    <div class="popup-page-body">
+        <!-- popup-local -->
+        <div class="popup-local">
+            <!-- popup-local-head -->
+            <div class="popup-local-head">
+                <h2 class="popup-local-subject"><span class="popup-local-name">노출 순위 설정</span></h2>
+            </div>
+            <!-- //popup-local-head -->
+            <!-- popup-local-body -->
+            <div class="popup-local-body">
+                <form id="popup_frm" name="popup_frm" method="post" th:action="@{/campaign/popup/view/order/update.do}">
+                    <input type="hidden" id="acl" name="acl" th:value="${param.acl}" />
+                    <input type="hidden" id="count" name="count" th:value="${param.count}"/>
+                    <input type="hidden" name="size" id="size" th:value="${param.size}" />
+                    <input type="hidden" id="keyword" name="keyword" th:value="${param.keyword}"/>
+                    <input type="hidden" name="startDate" id="startDate" th:value="${param.startDate}" />
+                    <input type="hidden" name="endDate" id="endDate" th:value="${param.endDate}" />
+                    <input type="hidden" name="page" id="page" th:value="0" />
+                    <input type="hidden" name="taskFlag" id="taskFlag" th:value="viewOrder" />
+                    <input type="hidden" name="orderFlag" id="orderFlag" th:value="ASC" />
+                    <input type="hidden" name="caFlag" id="caFlag" th:value="2"/>
+                    <input type="hidden" name="caGubun" id="caGubun" th:value="${param.caGubun}"/>
+                <div class="popup-content">
+                    <!-- popup-content-body -->
+                    <div class="popup-content-body">
+                        <!-- info-board -->
+                        <div class="info-board module-a style-b type-a">
+                            <div class="board-wrap">
+                                <div class="board-head">
+                                    <p class="board-summary">
+                                        <span class="wbr">활성화 중인 캠페인의 노출 우선순위를 drag &amp; drop을 통해 수동으로 설정할 수 있습니다.</span>
+                                        <span class="wbr">팝업 목록 내 순위 넘버는 이전 설정한 순위 그대로 노출되며, 적용 완료 시 변경됩니다.</span>
+<!--                                        <span class="wbr">자동 정렬 버튼 선택 시 타겟과 노출 옵션의 상세한 정도를 기준으로 노출 순위가 자동 정렬 됩니다.</span>-->
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //info-board -->
+                        <!-- data-display -->
+                        <div  id= "drgDiv" class="data-display module-e style-b type-c attr-draggable">
+                            <!-- data-list -->
+                            <ul class="data-list" >
+                                <li class="data-item" th:each="campaign, statat : ${campaigns}">
+                                    <input type="hidden" id="caNo" name="caNo" th:value="${campaign.id}"/>
+                                    <input type="hidden" name="viewOrder" th:value="${campaign.viewOrder}"/>
+
+                                    <div class="data-wrap">
+                                        <div class="data-head">
+                                            <p class="data-subject">
+                                                <span class="data-name" >
+                                                    <span class="data-counter" th:text="${(#strings.isEmpty(campaign.viewOrder)||campaign.viewOrder>=1000)?'-':campaign.viewOrder}">1</span>
+                                                    <span th:text="${campaign.caName}">캠페인 관리</span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="data-body">
+                                            <ul class="data-list">
+                                                <li class="data-item direct-column">
+                                                    <span class="head">타겟</span>
+                                                    <span class="body">
+                                                        <th:block th:switch="${campaign.tgType01}">
+                                                            <span th:case="RETURN" th:text="${@commCodeUtils.getCodeInfo('TAR1_RETURN', campaign.tg1Sub).dcodeNm}"></span>
+                                                            <span th:case="FIXED" th:text="${@commCodeUtils.getCodeInfo('CAM_TARGET2', campaign.tg1Sub).dcodeNm}"></span>
+                                                            <span th:case="*" th:text="${@commCodeUtils.getCodeInfo('CAM_TARGET1', campaign.tgType01).dcodeNm}"></span>
+                                                        </th:block>
+                                                        <th:block th:if="${#strings.equals(campaign.tgType02Yn, 'Y')}">
+                                                            <span>,&nbsp;</span>
+                                                            <th:block th:if="${#strings.equals(campaign.tgType01, 'FIXED')}">
+                                                                <th:block th:switch="${campaign.tgType02}">
+                                                                    <span th:case="RETURN" th:text="${@commCodeUtils.getCodeInfo('TAR1_RETURN', campaign.tg2Sub).dcodeNm}">특정 검색어를 통해 유입한 고객</span>
+                                                                    <span th:case="*" th:text="${@commCodeUtils.getCodeInfo('CAM_TARGET1', campaign.tgType02).dcodeNm}">특정 검색어를 통해 유입한 고객</span>
+                                                                </th:block>
+                                                            </th:block>
+                                                            <th:block th:unless="${#strings.equals(campaign.tgType01, 'FIXED')}">
+                                                                <span th:text="${@commCodeUtils.getCodeInfo('CAM_TARGET2', campaign.tg2Sub).dcodeNm}">특정 검색어를 통해 유입한 고객</span>
+                                                            </th:block>
+                                                        </th:block>
+                                                    </span>
+                                                </li>
+                                                <li class="data-item">
+                                                    <span class="head">노출 시간</span>
+                                                    <span class="body" th:text="${#strings.equals(campaign.caTime,'ALL_TIME')?'전체':'특정'}">특정</span>
+                                                </li>
+                                                <li class="data-item">
+                                                    <span class="head">노출 위치</span>
+                                                    <span class="body" th:text="${#strings.equals(campaign.caPlace,'FIXED_PAGE')?'특정':'전체'}">특정(일치)</span>
+                                                </li>
+                                                <li class="data-item">
+                                                    <span class="head">노출 요일</span>
+                                                    <span class="body" th:text="${#strings.equals(campaign.caWeek,'1,2,3,4,5,6,0')?'전체':'특정'}">전체</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="data-side">
+                                            <ul class="data-list">
+                                                <li class="data-item">
+                                                    <span class="head">등록일</span>
+                                                    <span class="body" th:text="${#strings.defaultString(#dates.format(campaign.upDate, 'yyyy-MM-dd'), '-') + ' ' +
+                                                    ((#dates.hour(campaign.upDate) > 12) ?
+                                                        (#dates.hour(campaign.upDate) - 12 < 10 ? '0' + (#dates.hour(campaign.upDate) - 12) : #dates.hour(campaign.upDate) - 12) + ':' + (#dates.minute(campaign.upDate) < 10 ?'0' + #dates.minute(campaign.upDate):#dates.minute(campaign.upDate))  + 'PM' :
+                                                        #dates.hour(campaign.upDate) + ':' + (#dates.minute(campaign.upDate) < 10 ?'0' + #dates.minute(campaign.upDate):#dates.minute(campaign.upDate)) + 'AM')}">2022-12-31</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- //data-list -->
+                            <!-- data-util -->
+<!--                            <div class="data-util">-->
+<!--                                <div class="button-display module-a style-a type-b">-->
+<!--                                    <span class="button-area">-->
+<!--                                        <button class="btn module-b style-b type-line normal-01 medium symbol-ltr-arrow-up-down" type="button">-->
+<!--                                            <span class="btn-text">자동정렬</span>-->
+<!--                                        </button>-->
+<!--                                    </span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <!-- //data-util -->
+                        </div>
+                        <!--// data-display -->
+                    </div>
+                    <!-- //popup-content-body -->
+                </div>
+                </form>
+            </div>
+            <!-- //popup-local-body -->
+            <!-- popup-local-util -->
+            <div class="popup-local-util">
+                <!-- button-display -->
+                <div class="button-display">
+					<span class="button-area">
+						<button id="btnReset" class="btn module-c style-b type-fill normal-01 large-4x" type="button"><span class="btn-text">초기화</span></button>
+						<button id="btnSave" class="btn module-b style-b type-fill accent-01 large-4x" type="button" sec:authorize="hasPermission('', 'update')"><span class="btn-text">적용</span></button>
+					</span>
+                </div>
+                <!-- //button-display -->
+            </div>
+            <!-- //popup-local-util -->
+            <!-- popup-local-func -->
+            <div class="popup-local-func">
+				<span class="button-area">
+					<button type="button" class="btn popup-close" id="btnX">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" width="28px" height="28px">
+							<title>닫기</title>
+							<path d="M20.7339 8.91573C21.1895 8.46012 21.1895 7.72142 20.7339 7.26581C20.2782 6.8102 19.5396 6.8102 19.0839 7.26581L13.9991 12.3506L8.91643 7.26796C8.46082 6.81234 7.72212 6.81234 7.26651 7.26796C6.8109 7.72357 6.8109 8.46226 7.26651 8.91787L12.3492 14.0006L7.26762 19.0821C6.81201 19.5377 6.81201 20.2764 7.26762 20.732C7.72323 21.1877 8.46192 21.1877 8.91753 20.732L13.9991 15.6505L19.0828 20.7342C19.5384 21.1898 20.2771 21.1898 20.7327 20.7342C21.1884 20.2786 21.1884 19.5399 20.7327 19.0843L15.649 14.0006L20.7339 8.91573Z"></path>
+						</svg>
+					</button>
+				</span>
+            </div>
+            <!-- //popup-local-func -->
+        </div>
+        <!-- //popup-local -->
+
+    </div>
+
+</div>
+
+<!-- //content-popup -->
+<script th:src="@{/js/campaign/popup/campaign.view.order.popup.js}"></script>
+<!-- //content-popup -->
+</body>
+</html>

@@ -1,0 +1,59 @@
+server:
+  error:
+    include-exception: true
+    include-stacktrace: always
+    whitelabel:
+      enabled: true
+    path: /error
+  etc-info:
+    address: http://localhost:8080
+
+application:
+  crypto:
+    password: e94a67d8-6a9c-450c-8149-1145fc9ecace
+  jwt:
+    app-name: doms
+    header: Authorization
+    expires-in: 1800
+    secret-key: iy3dN$!8$gUZ*3b4d^8S^Ux%6z9&u&R7V6XvP#ZY^oUIf8@1fyuAzR3&3wQ3*54t
+
+spring:
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+  thymeleaf:
+    cache: false
+
+  datasource:
+    url: jdbc:mariadb://183.111.199.212:3306/bizwithme
+    username: bizwithme
+    password: croi@dmin2023
+    driver-class-name: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 5
+      max-lifetime: 300000
+      idle-timeout: 10000
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    open-in-view: false
+    properties:
+      hibernate:
+        default_batch_fetch_size: 500
+        hibernate.format_sql: false
+    defer-datasource-initialization: true
+
+logging:
+  level:
+    #    org.springframework: info
+    org.springframework.web.filter.CommonsRequestLoggingFilter: debug
+    #    org.springframework.web.reactive.function.client.DefaultExchangeFunction: info
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace

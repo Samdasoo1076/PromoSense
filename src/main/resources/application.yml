@@ -1,0 +1,42 @@
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force-response: true
+
+spring:
+  application:
+    title: 다이렉트샵 온라인 마케팅 시스템
+  mail:
+    host: 114.204.245.94
+    port: 25
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+    sender: admop@skbroadband.com
+
+    multipart:
+      enabled: true
+      file-size-threshold: 1MB
+      max-file-size: 10MB
+      max-request-size: 15MB
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+
+  data:
+    web:
+      pageable:
+        default-page-size: 20
+        max-page-size: 2000
+
+  sql:
+    init:
+      mode: never

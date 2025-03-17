@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/login_off_layout.html}">
+
+<head>
+    <meta charset="utf-8" />
+    <title>CROI</title>
+</head>
+
+<body>
+    <!-- page-body -->
+    <div class="page-body page-login page-find-id" layout:fragment="content">
+        <!-- local -->
+        <div id="local">
+            <!-- local-head -->
+            <div class="local-head">
+                <h2 class="local-subject" id="localSubject"><span class="local-name">로그인</span></h2>
+            </div>
+            <!-- //local-head -->
+            <!-- local-body -->
+            <div class="local-body">
+                <!-- content -->
+                <div id="content">
+                    <!-- content-head -->
+                    <div class="content-head">
+                        <h3 class="content-subject" id="contentSubject"><span class="content-name">아이디 찾기</span></h3>
+                        <p class="content-summary">등록된 이름, 이메일 주소를 입력해 주세요.</p>
+                    </div>
+                    <!-- //content-head -->
+                    <!-- content-body -->
+                    <form class="content-body" id="frm" name="frm" th:object="${user}" method="post" th:action="@{/search/id/find}" onsubmit="return false">
+                        <!-- submit-form -->
+                        <fieldset class="submit-form module-b style-a type-c large-6x">
+                            <legend>로그인정보 입력 서식</legend>
+                            <div class="form-list">
+                                <div class="form-item">
+                                    <div class="form-wrap">
+                                        <div class="form-head">
+                                            <p class="form-subject"><label for="admName" class="form-name">이름</label></p>
+                                        </div>
+                                        <div class="form-body">
+                                            <div class="form-area">
+                                                <span class="form textfield module-b style-b type-fill normal-01 large-6x flex">
+                                                    <input type="text" class="form-elem" id="admName" placeholder="이름 입력"
+                                                           name="admName" data-bui-form-cancel="" th:value="${user.admName}" />
+                                                </span>
+                                            </div>
+                                            <p id="msgAdmName" class="form-noti invalid">
+                                                <th:block th:errors="${user.admName}"></th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="form-wrap">
+                                        <div class="form-head">
+                                            <p class="form-subject"><label for="admEmail" class="form-name">이메일 주소</label></p>
+                                        </div>
+                                        <div class="form-body">
+                                            <div class="form-area">
+                                                <span class="form textfield module-b style-b type-fill normal-01 large-6x flex">
+                                                    <input type="email" class="form-elem" id="admEmail" placeholder="이메일 입력"
+                                                           name="admEmail" data-bui-form-cancel="" th:value="${user.admEmail}" />
+                                                </span>
+                                            </div>
+                                            <p id="msgAdmEmail" class="form-noti invalid">
+                                                <th:block th:errors="${user.admEmail}"></th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- button-display -->
+                            <div class="button-display module-a style-b type-a">
+                                <span class="button-area">
+                                    <button type="button" id="btnSearch" class="btn module-b style-b type-fill accent-01 large-6x flex disabled">확인</button>
+                                </span>
+                            </div>
+                            <script th:inline="javascript">
+                                const isError = [[${#fields.hasGlobalErrors()}]];
+                                const errorMsgs = [[${#fields.globalErrors()}]];
+                                if(isError) {
+                                    window.onload = function () {
+                                        Modal.alert(errorMsgs);
+                                    }
+                                }
+                            </script>
+                            <!-- //button-display -->
+                        </fieldset>
+                        <!-- //submit-form -->
+                    </form>
+                    <!-- //content-body -->
+                </div>
+                <!-- //content -->
+            </div>
+            <!-- //local-body -->
+        </div>
+        <!-- //local -->
+    </div>
+    <!-- //page-body -->
+</body>
+</html>
+<script type="text/javascript" th:src="@{/js/login/search.id.js}"></script>
+
+

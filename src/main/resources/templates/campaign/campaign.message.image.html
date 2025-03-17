@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/campaign_layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>SKB DOMS</title>
+</head>
+<body>
+    <!-- local-body -->
+    <div class="local-body" layout:fragment="content">
+        <!-- content -->
+        <div id="content">
+            <!-- content-body -->
+            <div class="content-head">
+                <h3 class="content-subject" id="contentSubject"><span class="content-name">캠페인 만들기</span></h3>
+            </div>
+            <!-- //content-body -->
+
+            <!-- content-path -->
+            <div class="content-path">
+                <!-- section-->
+                <div class="section breadcrumb">
+                    <div class="section-wrap">
+                        <div class="section-head">
+                            <p class="section-subject"><strong class="section-name">위치정보</strong></p>
+                        </div>
+                        <div class="section-body">
+                            <!-- data-display -->
+                            <div class="data-display">
+                                <div class="data-list">
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">홈</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" th:href="@{/campaign/list/list.do?acl=C0001}">캠페인 목록</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">캠페인 만들기</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //data-display -->
+                        </div>
+                    </div>
+                </div>
+                <!-- section-->
+            </div>
+            <!-- //content-path -->
+
+            <!-- content-body -->
+            <div class="content-body">
+
+                <!-- data-display -->
+                <div class="data-display process-step">
+                    <!-- order-list -->
+                    <!-- current 클래스 활성화 -->
+                    <ol class="order-list">
+                        <li class="order-item">
+                            <div class="order-wrap">
+                                <div class="order-head">
+                                    <p class="order-subject"><span class="order-name">Setup Campaign</span></p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="order-item current">
+                            <div class="order-wrap">
+                                <div class="order-head">
+                                    <p class="order-subject"><span class="order-name">Create Message</span></p>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+                    <!-- //order-list -->
+                </div>
+                <!--// data-display -->
+
+                <!-- section -->
+                <div class="section module-a style-c">
+                    <div class="section-wrap">
+                        <div class="section-head">
+                            <h4 class="section-subject"><span class="section-name">캠페인 생성</span></h4>
+                        </div>
+                        <div class="section-body">
+                            <!-- subsection -->
+                            <div class="subsection module-c style-a type-a active" data-bui-expand="subsection">
+                                <div class="subsection-wrap">
+                                    <div class="subsection-head">
+                                        <h5 class="subsection-subject"><span class="subsection-counter">5</span> <span class="subsection-name">메시지 편집</span></h5>
+                                        <span class="button-area">
+                                            <a class="btn module-c style-b type-line normal-01 medium symbol-ltr-test"
+                                               href="javascript:campaignMessageImage.showHisMessage();">
+                                                <span class="btn-text">이전 메시지 불러오기</span>
+                                            </a>
+                                        </span>
+                                    </div>
+                                    <div class="subsection-body">
+                                        <!-- info-board -->
+                                        <div class="info-board module-a style-b type-a">
+                                            <div class="board-wrap">
+                                                <div class="board-head">
+                                                    <p class="board-summary">
+                                                        이미지 플로팅 메시지 유형을 선택하셨습니다.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- //info-board -->
+
+                                        <!-- submit-form -->
+                                        <input type="hidden" name="caNo" id="caNo" th:value="${caNo}" />
+                                        <input type="hidden" name="acl" id="acl" th:value="${param.acl}" />
+                                        <input type="hidden" name="msgType" id="msgType" th:value="${msgType}" />
+                                        <input type="hidden" name="msgId" id="msgId" th:value="${msgInfo.id}" />
+                                        <input type="hidden" name="msgImgNm01" id="msgImgNm01" th:value="${msgInfo.msgImgNm01}" />
+                                        <input type="hidden" name="hidMsgImgRnm01" id="hidMsgImgRnm01" th:value="${msgInfo.msgImgRnm01}" />
+                                        <input type="file" name="hidFile" id="hidFile" style="display: none;" />
+                                        <fieldset class="submit-form module-c style-b type-c large-4x">
+                                            <legend>메시지 편집 서식</legend>
+                                            <div class="form-list">
+                                                <div class="form-item checked-within">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">이미지</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="submit-form module-b style-a type-c large-4x">
+                                                                <div class="form-list">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><label class="form-name">이미지 파일 등록</label></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="file-upload module-a style-a type-a">
+                                                                                    <div class="upload-wrap">
+                                                                                        <div class="upload-head">
+                                                                                            <div class="file-to-upload">
+                                                                                                <span class="form textfield module-b style-b type-line normal-01 large-4x flex">
+                                                                                                    <input  id="msgImgRnm01" name="msgImgRnm01"
+                                                                                                            class="form-elem" type="file" accept="image/*" />
+                                                                                                </span>
+                                                                                                <button class="btn module-c style-b type-fill normal-01 large-4x" type="button" onclick="this.parentElement.querySelector('input[type=file]').click();"><span class="btn-text">파일 등록</span></button>
+                                                                                            </div>
+                                                                                            <p class="file-noti">권장 사이즈 : 460x270</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><label class="form-name">이미지 대체 텍스트</label></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form textfield module-b style-b type-line normal-01 large-4x flex">
+                                                                                        <input type="text" class="form-elem" id="msgImgAlter01" name="msgImgAlter01"
+                                                                                               placeholder="웹접근성 준수를 위해 이미지에 맞는 대체 텍스트를 입력하세요."
+                                                                                               data-bui-form-cancel="true" th:value="${msgInfo.msgImgAlter01}" />
+                                                                                        <span class="form-func"></span>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item" th:classappend="${#strings.equals(msgInfo.msgButtonTf, 'N')? '' : 'checked-within'}">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject">
+                                                                <span class="form-name">CTA 버튼</span>
+                                                                <label class="form module-a style-a switch">
+                                                                    <input class="form-elem" type="checkbox" id="msgButtonTf" name="msgButtonTf"
+                                                                           th:checked="${!#strings.equals(msgInfo.msgButtonTf, 'N')}" onchange="checkedWithin(this, '.form-item');" />
+                                                                </label>
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="submit-form module-b style-a type-c large-4x">
+                                                                <div class="form-list">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><label class="form-name">버튼명</label></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form textfield module-b style-b type-line normal-01 large-4x flex">
+                                                                                        <input type="text" class="form-elem" placeholder="버튼명" id="msgButton" name="msgButton"
+                                                                                               data-bui-form-cancel="true" th:value="${msgInfo.msgButton}" maxlength="20" />
+                                                                                        <span class="form-func"></span>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <p class="form-noti">띄어쓰기 포함 최대 20자까지 입력 가능합니다.</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><label class="form-name">버튼 배경 컬러</label></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form colorpicker module-b style-b type-line normal-01 large-4x flex"
+                                                                                          th:data-bui-form-value="${#strings.isEmpty(msgInfo.msgButtonBgColor)? '#4130DF' : msgInfo.msgButtonBgColor}"
+                                                                                          th:style="${#strings.isEmpty(msgInfo.msgButtonBgColor)? '--bui-form-value: #4130DF' :
+                                                                                                    '--bui-form-value: ' + msgInfo.msgButtonBgColor}">
+                                                                                        <input class="form-elem" type="color" id="msgButtonBgColor" name="msgButtonBgColor"
+                                                                                               th:value="${#strings.isEmpty(msgInfo.msgButtonBgColor)? '#4130DF' : msgInfo.msgButtonBgColor}"
+                                                                                               onchange="buiFormColorpicker(this);" />
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><label class="form-name">버튼 텍스트 컬러</label></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form colorpicker module-b style-b type-line normal-01 large-4x flex"
+                                                                                          th:data-bui-form-value="${#strings.isEmpty(msgInfo.msgButtonColor)? '#FFFFFF' : msgInfo.msgButtonColor}"
+                                                                                          th:style="${#strings.isEmpty(msgInfo.msgButtonColor)? '--bui-form-value: #FFFFFF' :
+                                                                                                    '--bui-form-value: ' + msgInfo.msgButtonColor}">
+                                                                                        <input class="form-elem" type="color" id="msgButtonColor" name="msgButtonColor"
+                                                                                               th:value="${#strings.isEmpty(msgInfo.msgButtonColor)? '#FFFFFF' : msgInfo.msgButtonColor}"
+                                                                                               onchange="buiFormColorpicker(this);" />
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><label class="form-name">랜딩 페이지 URL</label></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form url-pc module-b style-b type-line normal-01 large-4x flex">
+                                                                                        <input class="form-elem" type="url" placeholder="https://www."
+                                                                                               id="msgButtonPcUrl" name="msgButtonPcUrl" data-bui-form-cancel="true" style="padding-right: 41rem;"
+                                                                                               th:value="${msgInfo.msgButtonPcUrl}">
+                                                                                        <span class="form-func"></span>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div class="option-list module-a style-a type-a">
+                                                                                    <span class="option-item">
+                                                                                        <label class="form radio module-a style-c accent-01 small-2x">
+                                                                                            <input type="radio" class="form-elem" value="S"
+                                                                                                   th:id="${'msgButtonUrlTargetP'}" th:name="${'msgButtonUrlTargetP'}"
+                                                                                                   th:checked="${(#strings.equals(msgInfo.msgButtonUrlTargetP, 'S') || #strings.isEmpty(msgInfo.msgButtonUrlTargetP))}">
+                                                                                            <span class="form-text">현재 창</span>
+                                                                                        </label>
+                                                                                    </span>
+                                                                                    <span class="option-item">
+                                                                                        <label class="form radio module-a style-c accent-01 small-2x">
+                                                                                            <input type="radio" class="form-elem" value="N"
+                                                                                                   th:id="${'msgButtonUrlTargetP'}" th:name="${'msgButtonUrlTargetP'}"
+                                                                                                   th:checked="${#strings.equals(msgInfo.msgButtonUrlTargetP, 'N')}">
+                                                                                            <span class="form-text">새 창</span>
+                                                                                        </label>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div class="form-area">
+                                                                                    <span class="form url-mo module-b style-b type-line normal-01 large-4x flex">
+                                                                                        <input class="form-elem" type="url" placeholder="https://m." id="msgButtonMoUrl" name="msgButtonMoUrl"
+                                                                                               data-bui-form-cancel="true" style="padding-right: 41rem;"
+                                                                                               th:value="${msgInfo.msgButtonMoUrl}">
+                                                                                        <span class="form-func"></span>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div class="option-list module-a style-a type-a">
+                                                                                    <span class="option-item">
+                                                                                        <label class="form radio module-a style-c accent-01 small-2x">
+                                                                                            <input type="radio" class="form-elem" value="S"
+                                                                                                   th:id="${'msgButtonUrlTargetM'}" th:name="${'msgButtonUrlTargetM'}"
+                                                                                                   th:checked="${(#strings.equals(msgInfo.msgButtonUrlTargetM, 'S') || #strings.isEmpty(msgInfo.msgButtonUrlTargetM))}">
+                                                                                            <span class="form-text">현재 창</span>
+                                                                                        </label>
+                                                                                    </span>
+                                                                                    <span class="option-item">
+                                                                                        <label class="form radio module-a style-c accent-01 small-2x">
+                                                                                            <input type="radio" class="form-elem" value="N"
+                                                                                                   th:id="${'msgButtonUrlTargetM'}" th:name="${'msgButtonUrlTargetM'}"
+                                                                                                   th:checked="${#strings.equals(msgInfo.msgButtonUrlTargetM, 'N')}">
+                                                                                            <span class="form-text">새 창</span>
+                                                                                        </label>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item" th:classappend="${#strings.equals(msgInfo.msgLeaveTf, 'N')? '' : 'checked-within'}">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject">
+                                                                <span class="form-name">가입상담 신청 버튼</span>
+                                                                <label class="form module-a style-a switch">
+                                                                    <input class="form-elem" type="checkbox" id="msgLeaveTf" name="msgLeaveTf"
+                                                                           th:checked="${!#strings.equals(msgInfo.msgLeaveTf, 'N')}" onchange="checkedWithin(this, '.form-item');" />
+                                                                </label>
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="submit-form module-b style-a type-c large-4x">
+                                                                <div class="form-list">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><label class="form-name">버튼 라인 컬러</label></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form colorpicker module-b style-b type-line normal-01 large-4x flex"
+                                                                                          th:data-bui-form-value="${#strings.isEmpty(msgInfo.msgLeaveLineColor)? '#AEA6FF' : msgInfo.msgLeaveLineColor}"
+                                                                                          th:style="${#strings.isEmpty(msgInfo.msgLeaveLineColor)? '--bui-form-value: #AEA6FF' :
+                                                                                                    '--bui-form-value: ' + msgInfo.msgLeaveLineColor}">
+                                                                                        <input class="form-elem" type="color" id="msgLeaveLineColor" name="msgLeaveLineColor"
+                                                                                               th:value="${#strings.isEmpty(msgInfo.msgLeaveLineColor)? '#AEA6FF' : msgInfo.msgLeaveLineColor}" onchange="buiFormColorpicker(this);" />
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><label class="form-name">버튼 텍스트 컬러</label></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form colorpicker module-b style-b type-line normal-01 large-4x flex"
+                                                                                          th:data-bui-form-value="${#strings.isEmpty(msgInfo.msgLeaveColor)? '#4130DF' : msgInfo.msgLeaveColor}"
+                                                                                          th:style="${#strings.isEmpty(msgInfo.msgLeaveColor)? '--bui-form-value: #4130DF' :
+                                                                                                    '--bui-form-value: ' + msgInfo.msgLeaveColor}">
+                                                                                        <input class="form-elem" type="color" id="msgLeaveColor" name="msgLeaveColor"
+                                                                                               th:value="${#strings.isEmpty(msgInfo.msgLeaveColor)? '#4130DF' : msgInfo.msgLeaveColor}" onchange="buiFormColorpicker(this);" />
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item" th:classappend="${#strings.equals(msgInfo.msgRegistTf, 'N')? '' : 'checked-within'}">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject">
+                                                                <span class="form-name">바로가입 버튼</span>
+                                                                <label class="form module-a style-a switch">
+                                                                    <input class="form-elem" type="checkbox" id="msgRegistTf" name="msgRegistTf"
+                                                                           th:checked="${!#strings.equals(msgInfo.msgRegistTf, 'N')}" onchange="checkedWithin(this, '.form-item');" />
+                                                                </label>
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="submit-form module-b style-a type-c large-4x">
+                                                                <div class="form-list">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><label class="form-name">버튼 라인 컬러</label></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form colorpicker module-b style-b type-line normal-01 large-4x flex"
+                                                                                          th:data-bui-form-value="${#strings.isEmpty(msgInfo.msgRegistLineColor)? '#AEA6FF' : msgInfo.msgRegistLineColor}"
+                                                                                          th:style="${#strings.isEmpty(msgInfo.msgRegistLineColor)? '--bui-form-value: #AEA6FF' :
+                                                                                                    '--bui-form-value: ' + msgInfo.msgRegistLineColor}">
+                                                                                        <input class="form-elem" type="color" id="msgRegistLineColor" name="msgRegistLineColor"
+                                                                                               th:value="${#strings.isEmpty(msgInfo.msgRegistLineColor)? '#AEA6FF' : msgInfo.msgRegistLineColor}" onchange="buiFormColorpicker(this);" />
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><label class="form-name">버튼 텍스트 컬러</label></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form colorpicker module-b style-b type-line normal-01 large-4x flex"
+                                                                                          th:data-bui-form-value="${#strings.isEmpty(msgInfo.msgRegistColor)? '#4130DF' : msgInfo.msgRegistColor}"
+                                                                                          th:style="${#strings.isEmpty(msgInfo.msgRegistColor)? '--bui-form-value: #4130DF' :
+                                                                                                    '--bui-form-value: ' + msgInfo.msgRegistColor}">
+                                                                                        <input class="form-elem" type="color" id="msgRegistColor" name="msgRegistColor"
+                                                                                               th:value="${#strings.isEmpty(msgInfo.msgRegistColor)? '#4130DF' : msgInfo.msgRegistColor}" onchange="buiFormColorpicker(this);" />
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item" th:classappend="${#strings.equals(msgInfo.msgMobileCallingTf, 'N')? '' : 'checked-within'}">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject">
+                                                                <span class="form-name">모바일 전용 전화 연결 버튼</span>
+                                                                <label class="form module-a style-a switch">
+                                                                    <input class="form-elem" type="checkbox" id="msgMobileCallingTf" name="msgMobileCallingTf"
+                                                                           th:checked="${!#strings.equals(msgInfo.msgMobileCallingTf, 'N')}" onchange="checkedWithin(this, '.form-item');" />
+                                                                </label>
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="submit-form module-b style-a type-c large-4x">
+                                                                <div class="form-list">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><label class="form-name">버튼 라인 컬러</label></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form colorpicker module-b style-b type-line normal-01 large-4x flex"
+                                                                                          th:data-bui-form-value="${#strings.isEmpty(msgInfo.msgMobileCallingLineColor)? '#AEA6FF' : msgInfo.msgMobileCallingLineColor}"
+                                                                                          th:style="${#strings.isEmpty(msgInfo.msgMobileCallingLineColor)? '--bui-form-value: #AEA6FF' :
+                                                                                                    '--bui-form-value: ' + msgInfo.msgMobileCallingLineColor}">
+                                                                                        <input class="form-elem" type="color" id="msgMobileCallingLineColor" name="msgMobileCallingLineColor"
+                                                                                               th:value="${#strings.isEmpty(msgInfo.msgMobileCallingLineColor)? '#AEA6FF' : msgInfo.msgMobileCallingLineColor}" onchange="buiFormColorpicker(this);" />
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><label class="form-name">버튼 텍스트 컬러</label></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form colorpicker module-b style-b type-line normal-01 large-4x flex"
+                                                                                          th:data-bui-form-value="${#strings.isEmpty(msgInfo.msgMobileCallingColor)? '#4130DF' : msgInfo.msgMobileCallingColor}"
+                                                                                          th:style="${#strings.isEmpty(msgInfo.msgMobileCallingColor)? '--bui-form-value: #4130DF' :
+                                                                                                    '--bui-form-value: ' + msgInfo.msgMobileCallingColor}">
+                                                                                        <input class="form-elem" type="color" id="msgMobileCallingColor" name="msgMobileCallingColor"
+                                                                                               th:value="${#strings.isEmpty(msgInfo.msgMobileCallingColor)? '#4130DF' : msgInfo.msgMobileCallingColor}" onchange="buiFormColorpicker(this);" />
+                                                                                    </span>
+                                                                                </div>
+                                                                                <p class="form-para">* 상담 시간(9AM - 6PM)에만 노출됩니다.</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject">
+                                                                <span class="form-name">메시지 백그라운드 dim 처리 설정</span>
+                                                                <label class="form module-a style-a switch">
+                                                                    <input class="form-elem" type="checkbox" id="msgBackDimTf" nam="msgBackDimTf"
+                                                                           th:checked="${#strings.equals(msgInfo.msgBackDimTf, 'Y')}" onchange="checkedWithin(this, '.form-item');" />
+                                                                </label>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item" th:classappend="${#strings.equals(msgInfo.msgReviewTf, 'Y')? 'checked-within' : ''}">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject">
+                                                                <span class="form-name">메시지 다시 보지 않기 설정</span>
+                                                                <label class="form module-a style-a switch">
+                                                                    <input class="form-elem" type="checkbox" id="msgReviewTf" name="msgReviewTf"
+                                                                           th:checked="${#strings.equals(msgInfo.msgReviewTf, 'Y')}" onchange="checkedWithin(this, '.form-item');" />
+                                                                </label>
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="option-list module-a style-a type-a">
+                                                                <span class="option-item">
+                                                                    <label class="form radio module-a style-c accent-01 small-2x">
+                                                                        <input type="radio" class="form-elem" th:id="${'radMsgReview'}" th:name="${'radMsgReview'}" value="T"
+                                                                               th:checked="${(#strings.equals(msgInfo.msgReviewType, 'T') || #strings.isEmpty(msgInfo.msgReviewType))}">
+                                                                        <span class="form-text">오늘 하루 보지 않기</span>
+                                                                    </label>
+                                                                </span>
+                                                                <span class="option-item">
+                                                                    <label class="form radio module-a style-c accent-01 small-2x">
+                                                                        <input type="radio" class="form-elem" th:id="${'radMsgReview'}" th:name="${'radMsgReview'}" value="D"
+                                                                               th:checked="${#strings.equals(msgInfo.msgReviewType, 'D')}">
+                                                                        <span class="form-text">N일 동안 보지 않기</span>
+                                                                    </label>
+                                                                    <span class="form textfield module-b style-b type-line normal-01 large-4x flex" style="max-width:96rem">
+                                                                        <input type="text" class="form-elem" onkeyup="this.value=this.value.replace(/[^0-9]/g, '');"
+                                                                               id="msgReviewDays" name="msgReviewDays" maxlength="3" th:value="${msgInfo.msgReviewDays}"
+                                                                               th:disabled="${(#strings.equals(msgInfo.msgReviewType, 'T') || #strings.isEmpty(msgInfo.msgReviewType))}" />
+                                                                        <span class="form-func"><span class="form-unit">일</span></span>
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <!-- //submit-form -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //subsection -->
+                            <!-- subsection -->
+                            <div class="subsection module-c style-a type-a" data-bui-expand="subsection">
+                                <div class="subsection-wrap">
+                                    <div class="subsection-head">
+                                        <h5 class="subsection-subject"><span class="subsection-counter">6</span> <span class="subsection-name">메시지 저장 설정</span></h5>
+                                    </div>
+                                    <div class="subsection-body">
+                                        <!-- submit-form -->
+                                        <fieldset class="submit-form module-c style-b type-c large-4x">
+                                            <legend>메시지 편집 서식</legend>
+                                            <div class="form-list">
+                                                <div class="form-item" th:classappend="${#strings.equals(msgInfo.msgSaveTf, 'Y')? 'checked-within' : ''}">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject">
+                                                                <span class="form-name">메시지 보관함에 저장</span>
+                                                                <label class="form module-a style-a switch">
+                                                                    <input class="form-elem" type="checkbox" id="msgSaveTf" name="msgSaveTf"
+                                                                           th:checked="${#strings.equals(msgInfo.msgSaveTf, 'Y')}" onchange="checkedWithin(this, '.form-item');" />
+                                                                </label>
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="submit-form module-b style-a type-c large-4x">
+                                                                <div class="form-list">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><label class="form-name">메시지 콘텐츠명</label></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form textfield module-b style-b type-line normal-01 large-4x flex">
+                                                                                        <input type="text" class="form-elem" placeholder="메시지 보관함에 설정한 이름으로 저장됩니다."
+                                                                                               th:value="${msgInfo.msgName}" id="msgSaveTitle" name="msgSaveTitle"
+                                                                                               data-bui-form-cancel="true" />
+                                                                                        <span class="form-func"></span>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <!-- //submit-form -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //subsection -->
+                        </div>
+                        <!-- //subsection -->
+
+                        <!-- section-side -->
+                        <div class="section-side">
+                            <div class="subsection campaign-preview">
+                                <div class="subsection-wrap">
+                                    <div class="subsection-head">
+                                        <h5 class="subsection-subject"><span class="subsection-name">메시지 미리보기</span></h5>
+                                        <div class="subsection-control">
+                                            <div class="tab-display module-e style-b type-a medium" data-bui-tab="defaultTab">
+                                                <ul class="tab-list">
+                                                    <li class="tab-item current"><a class="tab-text" href="#campaignMessagePreviewLaptop">PC</a></li>
+                                                    <li class="tab-item"><a class="tab-text" href="#campaignMessagePreviewMobile">Mobile</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="subsection-body">
+                                        <div class="subsubsection" id="campaignMessagePreviewLaptop">
+                                            <div class="subsubsection-wrap">
+                                                <div class="subsubsection-head">
+                                                    <h6 class="subsubsection-subject"><span class="subsubsection-name">PC</span></h6>
+                                                </div>
+                                                <div class="subsubsection-body" th:if="${!#strings.isEmpty(msgInfo.msgPcHtml)}">
+                                                    <th:block th:utext="${msgInfo.msgPcHtml}"></th:block>
+                                                </div>
+                                                <div class="subsubsection-body" th:unless="${!#strings.isEmpty(msgInfo.msgPcHtml)}">
+                                                    <!-- campaign-popup -->
+                                                    <div class="campaign-popup module-b style-b type-a medium" data-campaign-device="laptop">
+                                                        <div class="popup-page-body">
+                                                            <!-- popup-local -->
+                                                            <div class="popup-local">
+                                                                <!-- popup-local-head -->
+                                                                <div class="popup-local-head">
+                                                                    <h2 class="popup-local-subject"><span class="popup-local-name">캠페인</span></h2>
+                                                                </div>
+                                                                <!-- //popup-local-head -->
+                                                                <!-- popup-local-body -->
+                                                                <div class="popup-local-body">
+                                                                    <div class="popup-content">
+                                                                        <!-- popup-content-body -->
+                                                                        <div class="popup-content-body">
+                                                                            <!-- info-board -->
+                                                                            <div class="info-board">
+                                                                                <div class="board-wrap">
+                                                                                    <div class="board-figure">
+                                                                                        <span class="board-cover"><img th:src="@{/assets/images/campaign/noimage_campaign_popup_b_a_03.png}" alt="이미지 대체 텍스트" /></span>
+                                                                                    </div>
+                                                                                    <div class="board-inform">
+                                                                                        <div class="board-util">
+                                                                                            <span class="button-area">
+                                                                                                <a class="btn type-cta attr-move" href="#"><span class="btn-text">랜딩 페이지로 이동</span></a>
+                                                                                                <a class="btn type-cta attr-send" href="#"><span class="btn-text">가입상담 신청</span></a>
+                                                                                                <a class="btn type-cta attr-join" href="#"><span class="btn-text">바로가입</span></a>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- //info-board -->
+                                                                        </div>
+                                                                        <!-- //popup-content-body -->
+                                                                    </div>
+                                                                </div>
+                                                                <!-- //popup-local-body -->
+                                                                <!-- popup-local-util -->
+                                                                <div class="popup-local-util">
+                                                                    <fieldset class="submit-form">
+                                                                        <legend>팝업 노출 설정 서식</legend>
+                                                                        <div class="form-list">
+                                                                            <div class="form-item">
+                                                                                <div class="form-wrap">
+                                                                                    <div class="form-head"><p class="form-subject"><span class="form-name">팝업 설정 선택</span></p></div>
+                                                                                    <div class="form-body">
+                                                                                        <div class="option-list">
+                                                                                            <span class="option-item">
+                                                                                                <label class="form checkbox">
+                                                                                                    <input class="form-elem" type="checkbox" />
+                                                                                                    <span class="form-text">오늘 하루 보지 않기</span>
+                                                                                                </label>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                    <div class="button-display">
+                                                                        <span class="button-area">
+                                                                            <button class="btn popup-close" type="button">
+                                                                                <span class="btn-text">닫기</span>
+                                                                            </button>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- //popup-local-util -->
+                                                            </div>
+                                                            <!-- //popup-local -->
+                                                        </div>
+                                                    </div>
+                                                    <!-- //campaign-popup -->
+
+                                                </div>
+                                                <div class="subsubsection-util">
+                                                    <!-- button-display -->
+                                                    <div class="button-display module-a style-a type-c" th:if="${!#strings.isEmpty(msgInfo.id)}">
+                                                        <span class="button-area">
+                                                            <a class="btn module-c style-b type-line normal-01 large-4x flex" target="_blank"
+                                                               th:href="@{(${pcPreviewUrl})}">
+                                                                <span class="btn-text">미리보기</span>
+                                                            </a>
+                                                        </span>
+                                                    </div>
+                                                    <!-- //button-display -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="subsubsection" id="campaignMessagePreviewMobile">
+                                            <div class="subsubsection-wrap">
+                                                <div class="subsubsection-head">
+                                                    <h6 class="subsubsection-subject"><span class="subsubsection-name">Mobile</span></h6>
+                                                </div>
+                                                <div class="subsubsection-body" th:if="${!#strings.isEmpty(msgInfo.msgMoHtml)}">
+                                                    <th:block th:utext="${msgInfo.msgMoHtml}"></th:block>
+                                                </div>
+                                                <div class="subsubsection-body" th:unless="${!#strings.isEmpty(msgInfo.msgMoHtml)}">
+                                                    <!-- campaign-popup -->
+                                                    <div class="campaign-popup module-b style-b type-a medium" data-campaign-device="mobile">
+                                                        <div class="popup-page-body">
+                                                            <!-- popup-local -->
+                                                            <div class="popup-local">
+                                                                <!-- popup-local-head -->
+                                                                <div class="popup-local-head">
+                                                                    <h2 class="popup-local-subject"><span class="popup-local-name">캠페인</span></h2>
+                                                                </div>
+                                                                <!-- //popup-local-head -->
+                                                                <!-- popup-local-body -->
+                                                                <div class="popup-local-body">
+                                                                    <div class="popup-content">
+                                                                        <!-- popup-content-body -->
+                                                                        <div class="popup-content-body">
+                                                                            <!-- info-board -->
+                                                                            <div class="info-board">
+                                                                                <div class="board-wrap">
+                                                                                    <div class="board-figure">
+                                                                                        <span class="board-cover"><img th:src="@{/assets/images/campaign/noimage_campaign_popup_b_a_03.png}" alt="이미지 대체 텍스트" /></span>
+                                                                                    </div>
+                                                                                    <div class="board-inform">
+                                                                                        <div class="board-util">
+                                                                                            <span class="button-area">
+                                                                                                <a class="btn type-cta attr-move" href="#"><span class="btn-text">랜딩 페이지로 이동</span></a>
+                                                                                                <a class="btn type-cta attr-send" href="#"><span class="btn-text">가입상담 신청</span></a>
+                                                                                                <a class="btn type-cta attr-join" href="#"><span class="btn-text">바로가입</span></a>
+                                                                                                <a class="btn type-cta attr-call" href="#"><span class="btn-text">가입상담 전화</span></a>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- //info-board -->
+                                                                        </div>
+                                                                        <!-- //popup-content-body -->
+                                                                    </div>
+                                                                </div>
+                                                                <!-- //popup-local-body -->
+                                                                <!-- popup-local-util -->
+                                                                <div class="popup-local-util">
+                                                                    <fieldset class="submit-form">
+                                                                        <legend>팝업 노출 설정 서식</legend>
+                                                                        <div class="form-list">
+                                                                            <div class="form-item">
+                                                                                <div class="form-wrap">
+                                                                                    <div class="form-head"><p class="form-subject"><span class="form-name">팝업 설정 선택</span></p></div>
+                                                                                    <div class="form-body">
+                                                                                        <div class="option-list">
+                                                                                            <span class="option-item">
+                                                                                                <label class="form checkbox">
+                                                                                                    <input class="form-elem" type="checkbox" />
+                                                                                                    <span class="form-text">오늘 하루 보지 않기</span>
+                                                                                                </label>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                    <div class="button-display">
+                                                                        <span class="button-area">
+                                                                            <button class="btn popup-close" type="button">
+                                                                                <span class="btn-text">닫기</span>
+                                                                            </button>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- //popup-local-util -->
+                                                            </div>
+                                                            <!-- //popup-local -->
+                                                        </div>
+                                                    </div>
+                                                    <!-- //campaign-popup -->
+
+                                                </div>
+                                                <div class="subsubsection-util">
+                                                    <!-- button-display -->
+                                                    <div class="button-display module-a style-a type-c" th:if="${!#strings.isEmpty(msgInfo.id)}">
+                                                        <span class="button-area">
+                                                            <a class="btn module-c style-b type-line normal-01 large-4x flex"
+                                                               th:value="${moPreviewUrl}" href="#"
+                                                               th:onclick="Preview.info(this.getAttribute('value'))">
+                                                                <span class="btn-text">미리보기</span>
+                                                            </a>
+                                                        </span>
+                                                    </div>
+                                                    <!-- //button-display -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //section-side -->
+                    </div>
+                </div>
+                <!-- //section -->
+
+                <!-- button-display -->
+                <div class="button-display module-a style-a type-c">
+                    <span class="button-area">
+                        <a class="btn module-b style-b type-line accent-01 large-6x flex"
+                           href="javascript:campaignMessageImage.saveTemp();">
+                            <span class="btn-text">이전단계로 돌아가기</span>
+                        </a>
+                        <button type="submit" id="btnSave" name="btnSave"
+                                class="btn module-b style-b type-fill accent-01 large-6x flex">
+                            <span class="btn-text" th:text="${#strings.isEmpty(msgInfo.id)? '캠페인 등록하기' : '캠페인 수정하기'}">캠페인 등록하기</span>
+                        </button>
+                    </span>
+                </div>
+                <!-- //button-display -->
+
+            </div>
+            <!-- //content-body -->
+        </div>
+        <!-- //content -->
+    </div>
+    <!-- //local-body -->
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/campaign/campaign.message.image.js}"></script>
+    </th:block>
+</body>
+</html>

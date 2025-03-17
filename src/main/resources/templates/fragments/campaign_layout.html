@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>SKB DOMS</title>
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="keywords" content="SK브로드밴드 B다이렉트샵, DOMS" />
+<!--    <link rel="shortcut icon" href="./../../assets/images/app/favicon.ico" />-->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/module.global.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/module.campaign.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/layout.front.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/page.campaign.css}" />
+    <script th:src="@{/js/common/common.js}"></script>
+    <script th:src="@{/js/common/html2canvas.min.js}"></script>
+    <script th:src="@{/assets/js/swiper-bundle.min.js}"></script>
+    <script th:src="@{/assets/js/air-datepicker.js}"></script>
+    <script th:src="@{/assets/js/Sortable.min.js}"></script>
+    <script th:src="@{/assets/js/bui.js}"></script>
+    <script th:src="@{/assets/js/bui.template.js}" defer></script>
+</head>
+<body>
+<div id="wrap">
+    <!-- page -->
+    <div id="page">
+        <th:block th:replace="~{fragments/header :: header}" />
+        <!-- //page-head -->
+        <hr />
+        <!-- page-body -->
+        <div class="page-body page-campaign">
+            <!-- local -->
+            <div id="local">
+                <!-- local-side -->
+                <th:block th:replace="~{fragments/side :: side}" />
+                <!-- //local-side -->
+
+                <!-- local-body -->
+                <th:block layout:fragment="content" />
+                <!-- //local-body -->
+            </div>
+            <!-- //local -->
+        </div>
+        <!-- //page-body -->
+        <hr />
+        <!-- page-foot -->
+        <th:block th:replace="~{fragments/footer :: footer}" />
+        <!-- //page-foot -->
+    </div>
+    <!-- //page -->
+</div>
+<th:block th:replace="~{fragments/info.popup :: info_popup}" />
+<th:block layout:fragment="script" />
+</body>
+</html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{fragments/campaign_layout.html}" xmlns:cu="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>SKB DOMS</title>
+</head>
+<body>
+    <div class="local-body" layout:fragment="content">
+        <!-- content -->
+        <div id="content">
+            <!-- content-body -->
+            <div class="content-head">
+                <h3 class="content-subject" id="contentSubject"><span class="content-name">캠페인 목록</span></h3>
+            </div>
+            <!-- //content-body -->
+
+            <!-- content-path -->
+            <div class="content-path">
+                <!-- section-->
+                <div class="section breadcrumb">
+                    <div class="section-wrap">
+                        <div class="section-head">
+                            <p class="section-subject"><strong class="section-name">위치정보</strong></p>
+                        </div>
+                        <div class="section-body">
+                            <!-- data-display -->
+                            <div class="data-display">
+                                <div class="data-list">
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">홈</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">캠페인 관리</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="">캠페인 목록</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //data-display -->
+                        </div>
+                    </div>
+                </div>
+                <!-- section-->
+            </div>
+            <!-- //content-path -->
+            <form id="frm" name="frm" method="get" >
+                <input type="hidden" name="size" id="size" th:value="${campaigns.pageable.pageSize}" />
+                <input type="hidden" name="page" id="page" th:value="${campaigns.pageable.pageNumber}" />
+                <input type="hidden" name="taskFlag" id="taskFlag" th:value="${param.taskFlag}" />
+                <input type="hidden" name="orderFlag" id="orderFlag" th:value="${param.orderFlag}" />
+                <input type="hidden" name="caFlag" id="caFlag" th:value="${param.caFlag}"/>
+                <input type="hidden" id="acl" name="acl" th:value="${param.acl}" />
+                <input type="hidden" id="caNo" name="caNo" />
+                <input type="hidden" id="id" name="id" />
+                <input type="hidden" id="activeCnt" name="activeCnt" th:value="${tabCount.caActiveCnt}" />
+
+                <input type="hidden" id="caGubun" name="caGubun" th:value="${param.caGubun}" />
+            <!-- content-body -->
+            <div class="content-body">
+
+                <!--tab-display-->
+                <div class="tab-display module-c style-b type-a medium">
+                    <ul class="tab-list" th:switch="${userAdmInfo}">
+                        <th:block th:case='A'>
+                            <th:block th:each="codeCaGubun, status : ${@commCodeUtils.getCodeList('CAM_GUBUN')}">
+                                <li th:if="${#strings.isEmpty(param.caGubun)}"
+                                    class="tab-item" 
+                                    th:classappend="${#strings.equals(codeCaGubun.dcode, 'BW') ? 'current' : ''}" 
+                                    th:title="${#strings.equals(codeCaGubun.dcode, 'BW') ? '현재 선택된 항목' : ''}">
+                                    <a class="tab-text" cu:href="@{__${#httpServletRequest.requestURI}__(caGubun=${codeCaGubun.dcode})}" th:text="${codeCaGubun.dcodeNm}"></a>
+                                </li>
+                                <li th:unless="${#strings.isEmpty(param.caGubun)}"
+                                    class="tab-item" 
+                                    th:classappend="${#strings.equals(param.caGubun, codeCaGubun.dcode) ? 'current' : ''}" 
+                                    th:title="${#strings.equals(param.caGubun, codeCaGubun.dcode) ? '현재 선택된 항목' : ''}">
+                                    <a class="tab-text" cu:href="@{__${#httpServletRequest.requestURI}__(caGubun=${codeCaGubun.dcode})}" th:text="${codeCaGubun.dcodeNm}"></a>
+                                </li>
+                            </th:block>
+                        </th:block>
+                        <th:block th:case='*'>
+                            <th:block th:each="codeCaGubun, status : ${@commCodeUtils.getCodeList('CAM_GUBUN')}">
+                                <li th:if="${#strings.isEmpty(param.caGubun)}" 
+                                    class="tab-item" 
+                                    th:classappend="${#strings.equals(userAdmInfo, codeCaGubun.dcodeExtValue1) ? 'current' : ''}" 
+                                    th:title="${#strings.equals(userAdmInfo, codeCaGubun.dcodeExtValue1) ? '현재 선택된 항목' : ''}">
+                                    <a class="tab-text" cu:href="@{__${#httpServletRequest.requestURI}__(caGubun=${codeCaGubun.dcode})}" th:text="${codeCaGubun.dcodeNm}"></a>
+                                </li>
+                                <li th:unless="${#strings.isEmpty(param.caGubun)}" 
+                                    class="tab-item" 
+                                    th:classappend="${#strings.equals(param.caGubun, codeCaGubun.dcode) ? 'current' : ''}" 
+                                    th:title="${#strings.equals(param.caGubun, codeCaGubun.dcode) ? '현재 선택된 항목' : ''}">
+                                    <a class="tab-text" cu:href="@{__${#httpServletRequest.requestURI}__(caGubun=${codeCaGubun.dcode})}" th:text="${codeCaGubun.dcodeNm}"></a>
+                                </li>
+                            </th:block>
+                        </th:block>
+                    </ul>
+                </div>
+                <!--//tab-display-->
+                <!-- posts-display -->
+                <div class="posts-display module-a style-a type-a">
+
+                    <!-- data-finder -->
+                        <div class="data-finder module-a style-b type-d">
+                        <!-- data-form -->
+                        <div class="data-form">
+                            <!-- submit-form -->
+                            <fieldset class="submit-form module-b style-c large-4x direct-column">
+                                <legend>게시물 검색 서식</legend>
+                                <div class="form-list">
+                                    <div class="form-item flex">
+                                        <div class="form-wrap">
+                                            <div class="form-head">
+                                                <p class="form-subject">
+                                                    <span class="form-name">캠페인명 또는 캠페인 ID를 입력하세요.</span>
+                                                </p>
+                                            </div>
+                                            <div class="form-body">
+                                                <div class="form-area">
+                                                    <span class="form textfield module-b style-b type-line normal-03 large-4x flex">
+                                                        <input class="form-elem" type="text" name="keyword" id="keyword" data-bui-form-cancel="true" placeholder="캠페인명 또는 캠페인 ID를 입력하세요." th:value="${param.keyword}"/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-item">
+                                        <div class="form-wrap">
+                                            <div class="form-head"><p class="form-subject"><span class="form-name">날짜</span></p></div>
+                                            <div class="form-body">
+                                                <div class="form-area">
+                                                    <span class="form datepicker module-b style-b type-line normal-01 large-4x flex">
+                                                        <input type="text" class="form-elem" name="startDate" id="startDate"
+                                                               data-bui-form-date-start="campaignPostedRange" autocomplete="off"
+                                                               th:value="${param.startDate}"/>
+                                                    </span>
+                                                    <span class="sign">~</span>
+                                                    <span class="form datepicker module-b style-b type-line normal-01 large-4x flex">
+                                                        <input type="text" class="form-elem" name="endDate" id="endDate"
+                                                               data-bui-form-date-end="campaignPostedRange" autocomplete="off"
+                                                               th:value="${param.endDate}"/>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-util">
+                                    <div class="button-display">
+                                        <span class="button-area">
+                                            <button id="btnSearch" class="btn module-b style-b type-fill accent-01 large-4x flex" type="button"><span class="btn-text">검색</span></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <!-- //submit-form -->
+                        </div>
+                        <!-- data-filter -->
+
+                        <!-- data-type -->
+                        <div class="data-type">
+                            <!--tab-display-->
+                            <div class="tab-display module-d style-b type-a medium">
+                                <ul class="tab-list">
+                                    <li class="tab-item attr-completion " th:classappend="${#strings.equals(param.caFlag,'3')||#strings.isEmpty(param.caFlag) ? 'current' : ''}" title="현재 선택된 항목">
+                                        <a class="tab-text" cu:href="@{__${#httpServletRequest.requestURI}__(caFlag=3,page=0,taskFlag=upDate,orderFlag=DESC,size=30)}">등록 완료
+                                            <span class="number" th:text="${tabCount.regFinishCnt}">00</span>
+                                        </a>
+                                    </li>
+                                    <li class="tab-item attr-activation" th:classappend="${#strings.equals(param.caFlag,'2')} ? 'current' : ''">
+                                        <a class="tab-text" cu:href="@{__${#httpServletRequest.requestURI}__(caFlag=2,page=0,taskFlag=viewOrder,orderFlag=ASC,size=30)}">활성화
+                                            <span class="number" th:text="${tabCount.caActiveCnt}">00</span>
+                                        </a>
+                                    </li>
+                                    <li class="tab-item attr-registration" th:classappend="${#strings.equals(param.caFlag,'1')} ? 'current' : ''">
+                                        <a class="tab-text" cu:href="@{__${#httpServletRequest.requestURI}__(caFlag=1,page=0,taskFlag=upDate,orderFlag=DESC,size=30)}">등록 중
+                                            <span class="number" th:text="${tabCount.regIngCnt}">00</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--//tab-display-->
+                        </div>
+                        <!-- //data-type -->
+
+                        <!-- data-func -->
+                        <div class="data-func">
+                            <div class="data-sort">
+                                <div class="dropdown module-c style-b type-line normal-01 medium" style="width: 120rem">
+                                    <div class="dropdown-wrap">
+                                        <div class="dropdown-head">
+                                            <p class="dropdown-subject" data-bui-dropdown-selected="정렬기준명"><span class="dropdown-name">정렬기준명</span></p>
+                                        </div>
+                                        <div class="dropdown-body">
+                                            <ul class="navi-list">
+                                                <li th:if="${#strings.equals(param.taskFlag, 'id')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=id)}">ID</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.taskFlag, 'id')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=id)}">ID</a>
+                                                </li>
+
+                                                <th:block th:if="${#strings.equals(param.caFlag,'2')}">
+                                                    <li th:if="${#strings.equals(param.taskFlag, 'viewOrder')}" class="navi-item" title="선택됨">
+                                                        <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=viewOrder)}">노출 순위</a>
+                                                    </li>
+                                                    <li th:unless="${#strings.equals(param.taskFlag, 'viewOrder')}" class="navi-item">
+                                                        <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=viewOrder)}">노출 순위</a>
+                                                    </li>
+                                                </th:block>
+                                                <th:block th:if="${!#strings.equals(param.caFlag,'1')}">
+                                                    <li th:if="${#strings.equals(param.taskFlag, 'views')}" class="navi-item" title="선택됨">
+                                                        <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=views)}">Views</a>
+                                                    </li>
+                                                    <li th:unless="${#strings.equals(param.taskFlag, 'views')}" class="navi-item">
+                                                        <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=views)}">Views</a>
+                                                    </li>
+                                                </th:block>
+                                                <li th:if="${#strings.equals(param.taskFlag, 'caStartDate')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=caStartDate)}">시작일</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.taskFlag, 'caStartDate')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=caStartDate)}">시작일</a>
+                                                </li>
+
+                                                <li th:if="${#strings.equals(param.taskFlag, 'caEndDate')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=caEndDate)}">종료일</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.taskFlag, 'caEndDate')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=caEndDate)}">종료일</a>
+                                                </li>
+
+                                                <li th:if="${#strings.equals(param.taskFlag, 'upDate') || #strings.equals(#strings.defaultString(param.taskFlag, ''), '')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=upDate)}">최근 편집일</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.taskFlag, 'upDate') || #strings.equals(#strings.defaultString(param.taskFlag, ''), '')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=upDate)}">최근 편집일</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown module-c style-b type-line normal-01 medium" style="width: 108rem">
+                                    <div class="dropdown-wrap">
+                                        <div class="dropdown-head">
+                                            <p class="dropdown-subject" data-bui-dropdown-selected="정렬기준"><span class="dropdown-name">정렬기준</span></p>
+                                        </div>
+                                        <div class="dropdown-body">
+                                            <ul class="navi-list">
+                                                <li th:if="${#strings.equals(param.orderFlag, 'ASC')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(orderFlag=ASC)}">오름차순</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.orderFlag, 'ASC')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(orderFlag=ASC)}">오름차순</a>
+                                                </li>
+                                                <li th:if="${#strings.equals(param.orderFlag, 'DESC') || #strings.equals(#strings.defaultString(param.orderFlag, ''), '')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(orderFlag=DESC)}">내림차순</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.orderFlag, 'DESC') || #strings.equals(#strings.defaultString(param.orderFlag, ''), '')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(orderFlag=DESC)}">내림차순</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown module-c style-b type-line normal-01 medium" style="width: 128rem">
+                                    <div class="dropdown-wrap">
+                                        <div class="dropdown-head">
+                                            <p class="dropdown-subject" data-bui-dropdown-selected="노출개수"><span class="dropdown-name">노출개수</span></p>
+                                        </div>
+                                        <div class="dropdown-body">
+                                            <ul class="navi-list">
+                                                <th:block th:each="codeSize, status : ${@commCodeUtils.getCodeList('PAGE_SIZE')}">
+                                                    <li th:if="${#strings.equals(campaigns.pageable.pageSize, codeSize.dcode)}" class="navi-item" title="선택됨">
+                                                        <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(size=${codeSize.dcode})}"
+                                                           th:text="${codeSize.dcodeNm}">10개씩 보기</a>
+                                                    </li>
+                                                    <li th:unless="${#strings.equals(campaigns.pageable.pageSize, codeSize.dcode)}" class="navi-item">
+                                                        <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(size=${codeSize.dcode})}"
+                                                           th:text="${codeSize.dcodeNm}">10개씩 보기</a>
+                                                    </li>
+                                                </th:block>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="button-area">
+							    <a class="btn module-b style-b type-fill accent-01 medium symbol-ltr-plus flex" sec:authorize="hasPermission('C0002', 'write')" cu:href="@{/campaign/base/regist.view(acl=C0002)}">
+                                    <span class="btn-text">캠페인 만들기</span>
+                                </a>
+							</span>
+                        </div>
+                        <!-- //data-func -->
+                    </div>
+
+                    <!-- //data-finder -->
+                    <!-- data-table -->
+                    <div th:if="${campaigns.content.size() == 0}" class="info-board module-a type-c attr-nodata">
+                        <div class="board-wrap">
+                            <div class="board-head">
+                                <p class="board-summary">검색결과가 없습니다.<br> 다른 캠페인명 혹은 캠페인 ID로 다시 검색해보세요.</p>
+                            </div>
+                            <div class="board-util">
+                                <div class="button-display">
+                                    <span class="button-area"><button type="button" id="btnReset" class="btn module-c style-b type-line normal-01 medium symbol-ltr-reset flex"><span class="btn-text">검색 초기화</span></button></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- data-table -->
+                    <div th:unless="${campaigns.content.size() == 0}" class="data-table module-c style-b type-c">
+                        <table>
+                            <caption th:text="${#strings.equals(param.caFlag,'2') ? '활성화' : (#strings.equals(param.caFlag,'1') ? '등록중' : '등록완료') }">등록완료 캠페인 목록 화면</caption>
+
+                            <colgroup th:if="${#strings.equals(param.caFlag,'1')}">
+                                <col style="width: 64rem">
+                                <col>
+                                <col style="width: 120rem">
+                                <col style="width: 12%">
+                                <col style="width: 12%">
+                                <col style="width: 12%">
+                                <col style="width: 12%">
+                                <col style="width: 50rem">
+                            </colgroup>
+                            <colgroup th:if="${#strings.equals(param.caFlag,'2')}">
+                                <col style="width: 64rem">
+                                <col style="width: 64rem">
+                                <col style="width: 100rem">
+                                <col>
+                                <col style="width: 7.5%">
+                                <col style="width: 100rem">
+                                <col style="width: 9%">
+                                <col style="width: 8.5%">
+                                <col style="width: 8.5%">
+                                <col style="width: 8.5%">
+                                <col style="width: 50rem">
+                            </colgroup>
+                            <colgroup th:if="${#strings.equals(param.caFlag,'3')||#strings.isEmpty(param.caFlag)}">
+                                <col style="width: 64rem">
+                                <col style="width: 64rem">
+                                <col>
+                                <col style="width: 7.5%">
+                                <col style="width: 100rem">
+                                <col style="width: 9%">
+                                <col style="width: 9%">
+                                <col style="width: 9%">
+                                <col style="width: 9%">
+                                <col style="width: 50rem">
+                            </colgroup>
+
+                            <thead>
+
+
+                                <tr th:if="${#strings.equals(param.caFlag,'1')}">
+                                    <th>ID</th>
+                                    <th>캠페인명</th>
+                                    <th>상태</th>
+                                    <th>메시지 유형</th>
+                                    <th>시작일</th>
+                                    <th>종료일</th>
+                                    <th>최근 편집일</th>
+                                    <th class="hidden">더보기</th>
+                                </tr>
+                                <tr th:if="${#strings.equals(param.caFlag,'2')}">
+                                    <th>ID</th>
+                                    <th>On/Off</th>
+                                    <th>
+                                        <div class="data-wrap">
+                                            <a href="javascript:campaignList.viewOrderPopup();"  class="em attr-setting">노출 순위</a>
+                                            <div class="tooltip module-b style-a type-c">
+                                                <div class="tooltip-wrap">
+                                                    <div class="tooltip-head">
+                                                        <p class="tooltip-summary">버튼을 누르면 노출 순위 설정 팝업을 호출합니다.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>캠페인명</th>
+                                    <th>Views</th>
+                                    <th>상태</th>
+                                    <th>메시지 유형</th>
+                                    <th>시작일</th>
+                                    <th>종료일</th>
+                                    <th>최근 편집일</th>
+                                    <th class="hidden">더보기</th>
+                                </tr>
+                                <tr th:if="${#strings.equals(param.caFlag,'3')||#strings.isEmpty(param.caFlag)}">
+                                    <th>ID</th>
+                                    <th>On/Off</th>
+                                    <th>캠페인명</th>
+                                    <th>Views</th>
+                                    <th>상태</th>
+                                    <th>메시지 유형</th>
+                                    <th>시작일</th>
+                                    <th>종료일</th>
+                                    <th>최근 편집일</th>
+                                    <th class="hidden">더보기</th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                            <tr th:each="campaign, statat : ${campaigns.content}"  >
+                                <td th:text="${campaign.id}" >74</td>
+                                <th:block th:if="${!#strings.equals(param.caFlag,'1')}">
+                                <td>
+                                    <div class="form-area">
+                                        <div class="option-list">
+                                            <span class="option-item">
+                                                <label class="form module-a style-a switch">
+                                                    <th:block th:if="${#strings.equals(campaign.caStateNm, 's0004')||#strings.equals(campaign.caState,'1')}">
+                                                        <input type="checkbox"  name="useTf" th:disabled="${true}" sec:authorize="hasPermission('', 'update')" th:data-id="${campaign.id}" class="form-elem">
+                                                    </th:block>
+                                                    <th:block th:unless="${#strings.equals(campaign.caStateNm, 's0004')||#strings.equals(campaign.caState,'1')}">
+                                                        <input type="checkbox" th:checked="${#strings.equals(campaign.useTf,'Y')}" name="useTf" sec:authorize="hasPermission('', 'update')" th:data-id="${campaign.id}" class="form-elem">
+                                                    </th:block>
+                                                </label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                                </th:block>
+                                <td th:if="${#strings.equals(param.caFlag,'2')}" th:text="${(#strings.isEmpty(campaign.viewOrder)||campaign.viewOrder>=1000)?'-':campaign.viewOrder}">
+                                <td class="campaign-name">
+                                    <th:block th:if="${#strings.equals(param.caFlag,'1')}">
+                                        <a cu:href="@{/campaign/base/modify.view(acl=${param.acl},id=${campaign.id})}">
+<!--                                            <span th:utext="${campaign.caName}">요즘가족결합 프로모션 팝업 요즘가족결합 프로모션 팝업 요즘가족결합 프로모션 팝업</span>-->
+                                            <span th:text="${campaign.caName}">요즘가족결합 프로모션 팝업 요즘가족결합 프로모션 팝업 요즘가족결합 프로모션 팝업</span>
+                                        </a>
+                                    </th:block>
+                                    <th:block th:unless="${#strings.equals(param.caFlag,'1')}">
+                                        <a th:href="|javascript:campaignList.basePopup('${campaign.id}')|" >
+<!--                                            <span th:utext="${campaign.caName}" >요즘가족결합 프로모션 팝업 요즘가족결합 프로모션 팝업 요즘가족결합 프로모션 팝업</span>-->
+                                            <span th:text="${campaign.caName}" >요즘가족결합 프로모션 팝업 요즘가족결합 프로모션 팝업 요즘가족결합 프로모션 팝업</span>
+                                        </a>
+                                    </th:block>
+                                </td>
+
+                                <th:block th:if="${#strings.equals(param.caFlag,'1')}">
+                                    <td>
+                                    <span class="mark module-a style-b type-line normal-01 small-1x">
+                                        <span class="mark-text">작성중</span>
+                                    </span>
+                                    </td>
+                                </th:block>
+
+                                <th:block th:unless="${#strings.equals(param.caFlag,'1')}">
+                                    <td th:text="${#numbers.formatInteger(campaign.visibleCnt + campaign.visibleMoCnt, 1, 'COMMA')}">6,297</td>
+                                    <td th:switch="${campaign.caStateNm}">
+                                        <span th:case='s0001' class="mark module-a style-b type-line accent-02 small-1x">
+                                            <span class="mark-text">진행예정</span>
+                                        </span>
+                                        <span th:case='s0002' class="mark module-a style-b type-line accent-05 small-1x">
+                                            <span class="mark-text">진행중</span>
+                                        </span>
+                                        <span th:case='s0003' class="mark module-a style-b type-line accent-04 small-1x">
+                                            <span class="mark-text">일시정지</span>
+                                        </span>
+                                        <span th:case='s0004' class="mark module-a style-b type-line accent-03 small-1x">
+                                            <span class="mark-text">종료</span>
+                                        </span>
+                                    </td>
+                                </th:block>
+
+                                <td th:text="${campaign.caMsgTypeNm}">세로 팝업</td>
+
+                                <td th:text="${#strings.defaultString(#dates.format(campaign.caStartDate, 'yyyy-MM-dd'), '-')} + ' ' +
+                                                ${#strings.equals(campaign.caAlldayYn, 'N')?
+                                                    ((campaign.caStartHourInt > 12)? campaign.caStartHourInt - 12 + ':' + campaign.caStartMin + 'PM' :
+                                                        campaign.caStartHourInt + ':' + campaign.caStartMin + 'AM') : ''}">2022-11-21 16:27:00</td>
+                                <td th:text="${#strings.defaultString(#dates.format(campaign.caEndDate, 'yyyy-MM-dd'), '-')} + ' ' +
+                                                ${#strings.equals(campaign.caAlldayYn, 'N')?
+                                                    ((campaign.caEndHourInt > 12)? campaign.caEndHourInt - 12 + ':' + campaign.caEndMin + 'PM' :
+                                                        campaign.caEndHourInt + ':' + campaign.caEndMin + 'AM') : ''}">2022-11-21 16:27:00</td>
+
+                                <td th:text="${#strings.defaultString(#dates.format(campaign.upDate, 'yyyy-MM-dd'), '-') + ' ' +
+                                ((#dates.hour(campaign.upDate) > 12) ?
+                                (#dates.hour(campaign.upDate) - 12 < 10 ? '0' + (#dates.hour(campaign.upDate) - 12) : #dates.hour(campaign.upDate) - 12) + ':' + (#dates.minute(campaign.upDate) < 10 ?'0' + #dates.minute(campaign.upDate):#dates.minute(campaign.upDate))  + 'PM' :
+                                #dates.hour(campaign.upDate) + ':' + (#dates.minute(campaign.upDate) < 10 ?'0' + #dates.minute(campaign.upDate):#dates.minute(campaign.upDate)) + 'AM')}"></td>
+
+                                <td>
+                                    <div class="data-more" data-bui-expand="moreDataTooltip">
+                                        <div class="tooltip module-c style-b type-a">
+                                            <div class="tooltip-wrap">
+                                                <div class="tooltip-head">
+                                                    <p class="tooltip-subject"><span class="tooltip-name">캠페인 옵션 메뉴</span></p>
+                                                </div>
+                                                <div class="tooltip-body">
+                                                    <ul class="navi-list">
+                                                        <th:block th:if="${!#strings.equals(param.caFlag,'1')}">
+                                                        <li class="navi-item">
+                                                            <span class="navi-name" name="spanView" th:data-id="${campaign.id}">상세 정보</span>
+                                                        </li>
+
+                                                        <li class="navi-item">
+                                                            <a class="navi-name" cu:href="@{/campaign/base/modify.view(id=${campaign.id})}">편집</a>
+                                                        </li>
+                                                        </th:block>
+                                                        <li class="navi-item">
+                                                            <span class="navi-name" name="spanDel" sec:authorize="hasPermission('', 'delete')" th:data-id="${campaign.id}">삭제</span>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <th:block th:unless="${campaigns.content.size() == 0}">
+                        <!-- pagination -->
+                        <nav th:replace="~{fragments/pagination :: pagination(${campaigns})}"></nav>
+                        <!-- //pagination -->
+                    </th:block>
+                    <!-- //pagination -->
+
+                </div>
+
+            </div>
+            </form>
+            <!-- //content-body -->
+        </div>
+        <!-- //content -->
+
+    </div>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/campaign/campaign.list.js}"></script>
+    </th:block>
+</body>
+</html>
+

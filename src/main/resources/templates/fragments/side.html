@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>SKB DOMS</title>
+</head>
+<body>
+    <th:block th:fragment="side">
+        <!-- local-head -->
+        <div class="local-head">
+            <h2 class="local-subject" id="localSubject"><span class="local-name">설정</span></h2>
+        </div>
+        <!-- //local-head -->
+        <!-- local-side -->
+        <!-- local-side -->
+        <div class="local-side" th:classappend='${#request.getAttribute("menuExpand")}' id="localSide" data-bui-expand="localSide">
+            <div class="section local-navi">
+                <div class="section-wrap">
+                    <div class="section-head">
+                        <h2 class="section-subject"><span class="section-name">목차</span></h2>
+                    </div>
+                    <div class="section-body">
+                        <ul class="lnb-list">
+                            <th:block th:each="menu: ${@authService.findMenusByGroupNo()}">
+                            <li class="lnb-item" th:classappend="${menu.isSelected()? ' current active':''}"
+                                th:attrappend="style='--icon-image: url(/images/menu_icon/__${menu.menuImg}__)'">
+<!--                                <span class="lnb-name">-->
+                                    <a class="lnb-name" th:attrappend="href=${#strings.isEmpty(menu.menuUrl)?'':menu.menuUrl}" th:text="${menu.menuName}">타겟 Menu</a>
+<!--                                </span>-->
+                                <ul class="snb-list">
+                                    <th:block th:each="submenu: ${menu.subMenu}">
+                                    <li class="snb-item" th:attrappend="class=${submenu.isSelected()? ' current':''}">
+                                        <a class="snb-name" th:href="${submenu.menuUrl}" th:text="${submenu.menuName}">타겟 Menu</a>
+<!--                                        <ul class="sub-list">-->
+<!--                                            <li class="sub-item current">-->
+<!--                                                <a class="sub-name" href="#">3 Depth Menu</a>-->
+<!--                                            </li>-->
+<!--                                            <li class="sub-item">-->
+<!--                                                <a class="sub-name" href="#">3 Depth Menu</a>-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+                                    </li>
+                                    </th:block>
+                                </ul>
+                            </li>
+                            </th:block>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //local-side -->
+        <!-- //local-side -->
+    </th:block>
+</body>
+</html>

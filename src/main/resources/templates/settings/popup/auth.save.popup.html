@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8" />
+    <title>SKB DOMS</title>
+</head>
+<body>
+<!-- content-popup -->
+<div class="content-popup module-a style-a type-a large-1x" data-bui-toggle="contentPopup" id="contentPopupMenuPermission">
+    <div class="popup-page-body">
+        <!-- popup-local -->
+        <div class="popup-local">
+            <!-- popup-local-head -->
+            <div class="popup-local-head">
+                <h2 class="popup-local-subject"><span class="popup-local-name">메뉴 권한 설정</span></h2>
+            </div>
+            <!-- //popup-local-head -->
+            <!-- popup-local-body -->
+            <div class="popup-local-body">
+                <form name="pop_frm" id="pop_frm" method="post">
+                    <input type="hidden" name="groupNo" id="groupNo" th:value="${groupNo}" />
+                    <input type="hidden" id="acl" name="acl" th:value="${param.acl}" />
+                <div class="popup-content">
+                    <!-- popup-content-body -->
+                    <div class="popup-content-body">
+                        <!-- data-table -->
+                        <div class="data-table module-c style-a type-c attr-menu-list">
+                            <table>
+                                <caption>메뉴 권한 설정 목록</caption>
+                                <colgroup>
+                                    <col style="width: 37.5%" />
+                                    <col />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>메뉴</th>
+                                    <th>조회</th>
+                                    <th>등록</th>
+                                    <th>수정</th>
+                                    <th>삭제</th>
+                                    <th>파일</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <th:block th:each="menu, status : ${menus}">
+                                <tr class="depth-01" th:if="${menu.menuNo.menuDepth eq 1}">
+                                <input type="hidden" th:name="${'menuNo'}" th:id="${'menuNo'}" th:value="${menu.menuNo.id}" />
+                                <input type="hidden" th:name="${'menuCode'}" th:id="${'menuCode'}" th:value="${menu.menuNo.menuCode}" />
+                                    <td><div class="data-name" th:text="${menu.menuNo.menuName}">캠페인 관리</div></td>
+                                    <td><label class="form checkbox module-a style-a small-2x accent-01">
+                                        <input type="checkbox" class="form-elem" th:id="${'chkRead'}"
+                                               th:name="${'chkRead'}" th:value="${menu.menuNo.menuDepth + '.' + #strings.substring(menu.menuNo.menuCode, 0, 1)}"
+                                               th:checked="${#strings.equals(menu.readFlag, 'Y')}">
+                                    </label></td>
+                                    <td><label class="form checkbox module-a style-a small-2x accent-01">
+                                        <input type="checkbox" class="form-elem" th:id="${'chkReg'}"
+                                               th:name="${'chkReg'}" th:value="${menu.menuNo.menuDepth + '.' + #strings.substring(menu.menuNo.menuCode, 0, 1)}"
+                                               th:checked="${#strings.equals(menu.regFlag, 'Y')}">
+                                    </label></td>
+                                    <td><label class="form checkbox module-a style-a small-2x accent-01">
+                                        <input type="checkbox" class="form-elem" th:id="${'chkUpd'}"
+                                               th:name="${'chkUpd'}" th:value="${menu.menuNo.menuDepth + '.' + #strings.substring(menu.menuNo.menuCode, 0, 1)}"
+                                               th:checked="${#strings.equals(menu.updFlag, 'Y')}">
+                                    </label></td>
+                                    <td><label class="form checkbox module-a style-a small-2x accent-01">
+                                        <input type="checkbox" class="form-elem" th:id="${'chkDel'}"
+                                               th:name="${'chkDel'}" th:value="${menu.menuNo.menuDepth + '.' + #strings.substring(menu.menuNo.menuCode, 0, 1)}"
+                                               th:checked="${#strings.equals(menu.delFlag, 'Y')}">
+                                    </label></td>
+                                    <td><label class="form checkbox module-a style-a small-2x accent-01">
+                                        <input type="checkbox" class="form-elem" th:id="${'chkFile'}"
+                                               th:name="${'chkFile'}" th:value="${menu.menuNo.menuDepth + '.' + #strings.substring(menu.menuNo.menuCode, 0, 1)}"
+                                               th:checked="${#strings.equals(menu.fileFlag, 'Y')}">
+                                    </label></td>
+                                </tr>
+                                <tr class="depth-02" th:unless="${menu.menuNo.menuDepth eq 1}">
+                                <input type="hidden" th:name="${'menuNo'}" th:id="${'menuNo'}" th:value="${menu.menuNo.id}" />
+                                <input type="hidden" th:name="${'menuCode'}" th:id="${'menuCode'}" th:value="${menu.menuNo.menuCode}" />
+                                    <td><div class="data-name" th:text="${menu.menuNo.menuName}">캠페인 관리</div></td>
+                                    <td><label class="form checkbox module-a style-a small-2x accent-01">
+                                        <input type="checkbox" class="form-elem" th:id="${'chkRead'}"
+                                               th:name="${'chkRead'}" th:value="${menu.menuNo.menuDepth + '.' + #strings.substring(menu.menuNo.menuCode, 0, 1)}"
+                                               th:checked="${#strings.equals(menu.readFlag, 'Y')}">
+                                    </label></td>
+                                    <td><label class="form checkbox module-a style-a small-2x accent-01">
+                                        <input type="checkbox" class="form-elem" th:id="${'chkReg'}"
+                                               th:name="${'chkReg'}" th:value="${menu.menuNo.menuDepth + '.' + #strings.substring(menu.menuNo.menuCode, 0, 1)}"
+                                               th:checked="${#strings.equals(menu.regFlag, 'Y')}">
+                                    </label></td>
+                                    <td><label class="form checkbox module-a style-a small-2x accent-01">
+                                        <input type="checkbox" class="form-elem" th:id="${'chkUpd'}"
+                                               th:name="${'chkUpd'}" th:value="${menu.menuNo.menuDepth + '.' + #strings.substring(menu.menuNo.menuCode, 0, 1)}"
+                                               th:checked="${#strings.equals(menu.updFlag, 'Y')}">
+                                    </label></td>
+                                    <td><label class="form checkbox module-a style-a small-2x accent-01">
+                                        <input type="checkbox" class="form-elem" th:id="${'chkDel'}"
+                                               th:name="${'chkDel'}" th:value="${menu.menuNo.menuDepth + '.' + #strings.substring(menu.menuNo.menuCode, 0, 1)}"
+                                               th:checked="${#strings.equals(menu.delFlag, 'Y')}">
+                                    </label></td>
+                                    <td><label class="form checkbox module-a style-a small-2x accent-01">
+                                        <input type="checkbox" class="form-elem" th:id="${'chkFile'}"
+                                               th:name="${'chkFile'}" th:value="${menu.menuNo.menuDepth + '.' + #strings.substring(menu.menuNo.menuCode, 0, 1)}"
+                                               th:checked="${#strings.equals(menu.fileFlag, 'Y')}">
+                                    </label></td>
+                                </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- //data-table -->
+                    </div>
+                    <!-- //popup-content-body -->
+                </div>
+                </form>
+            </div>
+            <!-- //popup-local-body -->
+
+            <div class="popup-local-util">
+                <!-- button-display -->
+                <div class="button-display">
+					<span class="button-area">
+						<button id="btnPopClose" class="btn module-c style-b type-fill normal-01 large-4x" type="button">
+                            <span class="btn-text">취소</span>
+                        </button>
+						<button id="btnPopSave" class="btn module-b style-b type-fill accent-01 large-4x" type="button" sec:authorize="hasPermission('', 'write,update')">
+                            <span class="btn-text">저장</span>
+                        </button>
+					</span>
+                </div>
+                <!-- //button-display -->
+            </div>
+            <!-- popup-local-func -->
+            <div class="popup-local-func">
+				<span class="button-area">
+					<button type="button" id="btnX" class="btn popup-close">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" width="28px" height="28px">
+							<title>닫기</title>
+							<path d="M20.7339 8.91573C21.1895 8.46012 21.1895 7.72142 20.7339 7.26581C20.2782 6.8102 19.5396 6.8102 19.0839 7.26581L13.9991 12.3506L8.91643 7.26796C8.46082 6.81234 7.72212 6.81234 7.26651 7.26796C6.8109 7.72357 6.8109 8.46226 7.26651 8.91787L12.3492 14.0006L7.26762 19.0821C6.81201 19.5377 6.81201 20.2764 7.26762 20.732C7.72323 21.1877 8.46192 21.1877 8.91753 20.732L13.9991 15.6505L19.0828 20.7342C19.5384 21.1898 20.2771 21.1898 20.7327 20.7342C21.1884 20.2786 21.1884 19.5399 20.7327 19.0843L15.649 14.0006L20.7339 8.91573Z"></path>
+						</svg>
+					</button>
+				</span>
+            </div>
+            <!-- //popup-local-func -->
+        </div>
+        <!-- //popup-local -->
+    </div>
+</div>
+<script th:src="@{/js/settings/popup/auth.save.popup.js}"></script>
+<!-- //content-popup -->
+</body>
+</html>

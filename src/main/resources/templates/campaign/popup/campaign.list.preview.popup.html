@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8" />
+    <title>SKB DOMS</title>
+</head>
+<body>
+<!--<form id="frm" name="frm" method="get" th:action="@{/campaign/list/preview/popup.do}">-->
+<!--    <input type="hidden" id="acl" name="acl" th:value="${param.acl}" />-->
+<!--    <input type="hidden" id="id" name="id" th:value="${param.caNo}" />-->
+<!--    <input type="hidden" id="caNo" name="caNo" th:value="${param.caNo}" />-->
+<!--    <input type="hidden" name="msgType" id="msgType" th:value="${param.msgType}" />-->
+<!--    <input type="hidden" name="popupId" id="popupId" th:value="${param.popupId}" />-->
+<!--    <input type="hidden" name="msgId" id="msgId" th:value="${msgInfo.id}" />-->
+<!--    <input type="hidden" name="msgImgNm01" id="msgImgNm01" th:value="${msgInfo.msgImgNm01}" />-->
+<!--    <input type="hidden" name="hidMsgImgRnm01" id="hidMsgImgRnm01" th:value="${msgInfo.msgImgRnm01}" />-->
+
+<!-- content-popup -->
+<div class="content-popup module-a style-a medium" data-bui-toggle="contentPopup" th:id="${param.popupId}">
+    <div class="popup-page-body">
+        <!-- popup-local -->
+        <div th:if="${!#strings.isEmpty(msgInfo.msgPcHtml)}">
+            <th:block th:utext="${msgInfo.msgPcHtml}"></th:block>
+        </div>
+        <!-- //popup-local -->
+
+    </div>
+</div>
+<!--</form>-->
+<!-- //content-popup -->
+<script th:src="@{/js/campaign/popup/campaign.list.preview.popup.js}"></script>
+<!-- //content-popup -->
+</body>
+</html>

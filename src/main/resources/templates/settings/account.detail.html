@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{fragments/settings_layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>SKB DOMS</title>
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- local-body -->
+    <div class="local-body" layout:fragment="content">
+        <!-- content -->
+        <div id="content">
+            <!-- content-body -->
+            <div class="content-head">
+                <h3 class="content-subject" id="contentSubject"><span class="content-name">계정관리</span></h3>
+            </div>
+            <!-- //content-body -->
+
+            <!-- content-path -->
+            <div class="content-path">
+                <!-- section-->
+                <div class="section breadcrumb">
+                    <div class="section-wrap">
+                        <div class="section-head">
+                            <p class="section-subject"><strong class="section-name">위치정보</strong></p>
+                        </div>
+                        <div class="section-body">
+                            <!-- data-display -->
+                            <div class="data-display">
+                                <div class="data-list">
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">홈</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">설정</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" th:href="@{/settings/account/list.do?acl=S0001}">계정관리</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="">계정관리 상세</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //data-display -->
+                        </div>
+                    </div>
+                </div>
+                <!-- section-->
+            </div>
+            <!-- //content-path -->
+
+            <!-- content-body -->
+            <div class="content-body">
+
+                <!-- data-display -->
+                <div class="data-display account-management style-a">
+                    <!-- data-list -->
+                    <div class="data-list">
+                        <div class="data-item">
+                            <div class="data-wrap">
+                                <div class="data-head">
+                                    <p class="data-subject"><span class="data-name">아이디</span></p>
+                                </div>
+                                <div class="data-body" th:text="${admInfo.admId}">hon****</div>
+<!--                                <div class="data-body" th:text="${@viewCommonUtils.getMaskAdmId(admInfo.admId)}">hon****</div>-->
+                            </div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-wrap">
+                                <div class="data-head">
+                                    <p class="data-subject"><span class="data-name">이름</span></p>
+                                </div>
+                                <div class="data-body" th:text="${admInfo.admName}">홍*동</div>
+<!--                                <div class="data-body" th:text="${@viewCommonUtils.getMaskName(admInfo.admName)}">홍*동</div>-->
+                            </div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-wrap">
+                                <div class="data-head">
+                                    <p class="data-subject"><span class="data-name">등록일</span></p>
+                                </div>
+                                <div class="data-body" th:text="${#strings.defaultString(#dates.format(admInfo.regDate, 'yyyy-MM-dd HH:mm:ss'), '-')}">2021-08-23 10:17:07</div>
+                            </div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-wrap">
+                                <div class="data-head">
+                                    <p class="data-subject"><span class="data-name">최근 편집일</span></p>
+                                </div>
+                                <div class="data-body"
+                                     th:text="${#strings.concat(#strings.defaultString(#dates.format(admInfo.upDate
+                                     , 'yyyy-MM-dd HH:mm:ss'), '-'), (not #strings.isEmpty(upAdmName))? '(' + upAdmName + ')' : '')}">
+                                    2021-08-23 10:17:07 (관리자)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //data-list -->
+                </div>
+                <!--// data-display -->
+
+                <!-- section -->
+                <form method="post" id="frm" name="frm" th:object="${user}" th:action="@{/settings/account/regist}" onsubmit="return false">
+                <input type="hidden" id="admNo" name="admNo" th:value="${admInfo.admNo}" />
+                <input type="hidden" id="tmpPassword" name="tmpPassword" value="**********" />
+                <input type="hidden" id="tmpEmail" name="tmpEmail" th:value="${@viewCommonUtils.getDescrypt(admInfo.admEmail)}" />
+                <input type="hidden" id="admFlag" name="admFlag" th:value="${admInfo.admFlag}" />
+                <input type="hidden" id="acl" name="acl" th:value="${param.acl}" />
+                <input type="hidden" id="admName" name="admName" th:value="${admInfo.admName}" />
+                <div class="section module-a style-b">
+                    <div class="section-wrap">
+                        <div class="section-head">
+                            <h4 class="section-subject"><span class="section-name">기본정보 관리</span></h4>
+                        </div>
+                        <div class="section-body">
+                            <div class="subsection module-b style-a type-a">
+                                <div class="subsection-wrap">
+                                    <div class="subsection-head">
+                                        <h5 class="subsection-subject"><span class="section-name">기본정보</span></h5>
+                                    </div>
+                                    <div class="subsection-body">
+                                        <!-- submit-form -->
+                                        <fieldset class="submit-form module-b style-a type-a large-4x">
+                                            <legend>계정 신청 입력</legend>
+                                            <div class="form-list">
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject">
+                                                                <span class="form-name">비밀번호</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="form-area">
+                                                                <span class="form textfield module-b style-b type-line normal-01 large-4x flex">
+                                                                    <input type="password" id="password" name="password" class="form-elem" placeholder=""
+                                                                           value="********" readonly="true" data-bui-form-cancel="true" />
+                                                                </span>
+                                                                <label class="form checkbox module-a style-a small-2x accent-01">
+                                                                    <input id="chkPassword" name="chkPassword" type="checkbox" class="form-elem" />
+                                                                    <span class="form-text">수정</span>
+                                                                </label>
+                                                            </div>
+                                                            <p id="msgPassword" class="form-noti"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">이메일</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="form-area">
+                                                                <span class="form textfield module-b style-b type-line normal-01 large-4x flex">
+                                                                    <input type="text" class="form-elem" placeholder="이메일 주소 입력" maxlength="50" data-bui-form-cancel="true"
+                                                                           readonly="true" id="admEmail" name="admEmail" th:value="${@viewCommonUtils.getDescrypt(admInfo.admEmail)}" />
+                                                                </span>
+                                                                <label class="form checkbox module-a style-a small-2x accent-01">
+                                                                    <input id="chkEmail" name="chkEmail" type="checkbox" class="form-elem" />
+                                                                    <span class="form-text">수정</span>
+                                                                </label>
+                                                            </div>
+                                                            <p id="msgEmail" class="form-noti"><!--이메일 주소를 입력해주세요.--></p>
+                                                            <!--<p class="form-noti valid">사용 가능한 이메일 입니다.</p>
+                                                            <p class="form-noti invalid">잘못된 이메일 주소입니다. 이메일 주소를 정확하게 입력해주세요.</p>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">휴대폰</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="form-area">
+                                                                <span class="form textfield module-b style-b type-line normal-01 large-4x flex">
+                                                                    <input type="number" class="form-elem" placeholder="‘-’ 빼고 입력" data-bui-form-cancel="true"
+                                                                            id="admHphone" name="admHphone" th:value="${@viewCommonUtils.getDescrypt(admInfo.admHphone)}"/>
+                                                                </span>
+                                                            </div>
+                                                            <p id="msgHphone" class="form-noti"><!--이메일 주소를 입력해주세요.--></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">사용자그룹</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="form-area">
+                                                                <span class="form select module-b style-b type-line normal-01 large-4x flex">
+                                                                    <select name="groupNo" id="groupNo" class="form-elem" >
+                                                                        <option value="">선택</option>
+                                                                        <option th:each="auth, statat : ${authList}"
+                                                                                th:value="${auth.groupNo}"
+                                                                                th:utext="${auth.groupName}"
+                                                                                th:selected="${#strings.equals(auth.groupNo, (#strings.isEmpty(admInfo.groupNo))? '' : admInfo.groupNo.groupNo)}">option1</option>
+                                                                    </select>
+                                                                </span>
+                                                            </div>
+                                                            <p id="msgGroupNo" class="form-noti"><!--이메일 주소를 입력해주세요.--></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">부서</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="form-area"><span class="form textfield module-b style-b type-line normal-01 large-4x flex">
+                                                                <input type="text" class="form-elem" placeholder="소속/부서 입력" data-bui-form-cancel="true"
+                                                                        id="dept" name="dept" th:value="${admInfo.dept}"/>
+                                                            </span></div>
+                                                            <p id="msgDept" class="form-noti"><!--이메일 주소를 입력해주세요.--></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">메모</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="form-area"><span class="form textarea module-b style-b type-line normal-01 large-4x flex">
+                                                                <textarea class="form-elem" cols="30" rows="3"
+                                                                          id="memo" name="memo" th:utext="${admInfo.memo}"
+                                                                          placeholder="별도 요청사항 입력" value="유컴패니온 관리자 승인 부탁합니다."></textarea>
+                                                            </span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <!-- //submit-form -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="subsection module-b style-a type-a">
+                                <div class="subsection-wrap">
+                                    <div class="subsection-head">
+                                        <h5 class="subsection-subject"><span class="section-name">관리</span></h5>
+                                    </div>
+                                    <div class="subsection-body">
+                                        <!-- submit-form -->
+                                        <fieldset class="submit-form module-b style-a type-a large-4x">
+                                            <legend>계정 신청 입력</legend>
+                                            <div class="form-list">
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">구분</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="option-list module-a style-b type-a">
+                                                                <span class="option-item">
+                                                                    <label class="form radio module-a style-c accent-01 small-2x">
+                                                                        <input type="radio" class="form-elem"
+                                                                               th:checked="${#strings.equals(#strings.defaultString(admInfo.admInfo, 'A'), 'A')}"
+                                                                               th:name="${'admInfo'}" th:id="${'admInfo'}" value="A" />
+                                                                        <span class="form-text">전체</span>
+                                                                    </label>
+                                                                </span>
+                                                                <th:block th:each="codeCaGubun, status : ${@commCodeUtils.getCodeList('CAM_GUBUN')}">
+                                                                <span class="option-item">
+                                                                    <label class="form radio module-a style-c accent-01 small-2x">
+                                                                        <input type="radio" class="form-elem"
+                                                                               th:checked="${#strings.equals(#strings.defaultString(admInfo.admInfo, 'A'), codeCaGubun.dcodeExtValue1)}"
+                                                                               th:name="${'admInfo'}" th:id="${'admInfo'}" th:value="${codeCaGubun.dcodeExtValue1}" />
+                                                                        <span class="form-text" th:text="${codeCaGubun.dcodeNm}"></span>
+                                                                    </label>
+                                                                </span>
+                                                                </th:block>
+                                                                <!-- <span class="option-item">
+                                                                    <label class="form radio module-a style-c accent-01 small-2x">
+                                                                        <input type="radio" class="form-elem"
+                                                                               th:checked="${#strings.equals(#strings.defaultString(admInfo.admInfo, 'A'), 'B')}"
+                                                                               th:name="${'admInfo'}" th:id="${'admInfo'}" value="B" />
+                                                                        <span class="form-text">B 다이렉트샵</span>
+                                                                    </label>
+                                                                </span>
+                                                                <span class="option-item">
+                                                                    <label class="form radio module-a style-c accent-01 small-2x">
+                                                                        <input type="radio" class="form-elem"
+                                                                               th:checked="${#strings.equals(#strings.defaultString(admInfo.admInfo, 'A'), 'C')}"
+                                                                               th:name="${'admInfo'}" th:id="${'admInfo'}" value="C" />
+                                                                        <span class="form-text">B tv 케이블샵</span>
+                                                                    </label>
+                                                                </span> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">상태</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="option-list module-a style-b type-a">
+                                                                <span class="option-item">
+                                                                    <label class="form radio module-a style-c accent-01 small-2x">
+                                                                        <input type="radio" class="form-elem" id="radAdmFlag0" name="radAdmFlag"
+                                                                               value="0" th:checked="${#strings.equals(admInfo.admFlag, '0') or #strings.isEmpty(admInfo.admFlag)}" />
+                                                                        <span class="form-text">승인대기</span>
+                                                                    </label>
+                                                                </span>
+                                                                <span class="option-item">
+                                                                    <label class="form radio module-a style-c accent-01 small-2x">
+                                                                        <input type="radio" class="form-elem" id="radAdmFlag1" name="radAdmFlag"
+                                                                               value="1" th:checked="${#strings.equals(admInfo.admFlag, '1')}" />
+                                                                        <span class="form-text">승인완료</span>
+                                                                    </label>
+                                                                </span>
+                                                                <span class="option-item">
+                                                                    <label class="form radio module-a style-c accent-01 small-2x">
+                                                                        <input type="radio" class="form-elem" id="radAdmFlag2" name="radAdmFlag"
+                                                                               value="2" th:checked="${#strings.equals(admInfo.admFlag, '2')}" />
+                                                                        <span class="form-text">중지</span>
+                                                                    </label>
+                                                                </span>
+                                                                <span class="option-item">
+                                                                    <label class="form radio module-a style-c accent-01 small-2x">
+                                                                        <input type="radio" class="form-elem" id="radAdmFlag3" name="radAdmFlag"
+                                                                               value="3" th:checked="${#strings.equals(admInfo.admFlag, '3')}" />
+                                                                        <span class="form-text">승인거절</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name"> </span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="option-list module-a style-b type-a">
+                                                                <span class="option-item">
+                                                                    <label class="form radio module-a style-c accent-01 small-2x">
+                                                                        <input type="checkbox" class="form-elem" id="radLoginFailCnt" name="radLoginFailCnt"/>
+                                                                        <span class="form-text">5회 잠김 해제</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <!-- //submit-form -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+                <!-- //section -->
+
+                <!-- button-display -->
+                <div class="button-display module-a style-a type-c">
+                    <span class="button-area">
+                        <a cu:href="@{/settings/account/list.do(id='')}" class="btn module-b style-b type-line normal-02 large-6x flex" sec:authorize="hasPermission('', 'read')">
+                            <span class="btn-text">리스트</span>
+                        </a>
+                        <button id="btnSave" type="button" class="btn module-b style-b type-fill accent-01 large-6x flex" sec:authorize="hasPermission('', 'update')">
+                            <span class="btn-text">등록</span>
+                        </button>
+                        <button id="btnDelete" type="button" class="btn module-b style-b type-line accent-01 large-6x flex" sec:authorize="hasPermission('', 'delete')">
+                            <span class="btn-text">삭제</span>
+                        </button>
+                    </span>
+                </div>
+                <!-- //button-display -->
+            </div>
+            <!-- //content-body -->
+        </div>
+        <!-- //content -->
+    </div>
+    <!-- //local-body -->
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/settings/account.detail.js}"></script>
+    </th:block>
+</body>
+</html>
+

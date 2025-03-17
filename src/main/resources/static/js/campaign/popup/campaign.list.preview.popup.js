@@ -1,0 +1,9 @@
+(() => {
+
+    return {
+        init: function() {
+
+        },
+
+    }
+})().init();

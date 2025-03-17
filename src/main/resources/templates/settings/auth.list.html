@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{fragments/settings_layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>SKB DOMS</title>
+</head>
+<body>
+    <!-- local-body -->
+    <div class="local-body" layout:fragment="content">
+        <!-- content -->
+        <div id="content">
+            <!-- content-body -->
+            <div class="content-head">
+                <h3 class="content-subject" id="contentSubject"><span class="content-name">권한 관리</span></h3>
+            </div>
+            <!-- //content-body -->
+
+            <!-- content-path -->
+            <div class="content-path">
+                <!-- section-->
+                <div class="section breadcrumb">
+                    <div class="section-wrap">
+                        <div class="section-head">
+                            <p class="section-subject"><strong class="section-name">위치정보</strong></p>
+                        </div>
+                        <div class="section-body">
+                            <!-- data-display -->
+                            <div class="data-display">
+                                <div class="data-list">
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">홈</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">설정</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="">권한관리</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //data-display -->
+                        </div>
+                    </div>
+                </div>
+                <!-- section-->
+            </div>
+            <!-- //content-path -->
+
+            <!-- content-body -->
+            <div class="content-body">
+                <!-- posts-display -->
+                <div class="posts-display module-a style-a type-a">
+                    <form method="get" id="frm" th:action="@{/settings/auth/list}" onsubmit="return false;">
+                    <input type="hidden" id="acl" name="acl" th:value="${param.acl}" />
+                    <!-- data-uploader -->
+                    <div class="data-uploader module-a style-b type-d">
+                        <div class="data-form">
+                            <!-- submit-form -->
+                            <fieldset class="submit-form module-b style-c type-a large-4x direct-column">
+                                <legend>전송 서식</legend>
+                                <div class="form-list">
+                                    <div class="form-item flex">
+                                        <div class="form-wrap">
+                                            <div class="form-head"><p class="form-subject"><span class="form-name">그룹</span></p></div>
+                                            <div class="form-body">
+                                                <div class="form-area">
+                                                    <span class="form textfield module-b style-b type-line normal-01 large-4x flex">
+                                                        <input class="form-elem" type="text"
+                                                               id="groupName" name="groupName" data-bui-form-cancel="true" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-util">
+                                    <div class="button-display">
+                                        <span class="button-area">
+                                            <button id="btnSave" class="btn module-b style-b type-fill accent-01 large-4x flex disabled" type="button" sec:authorize="hasPermission('', 'write')">
+                                                <span class="btn-text">등록</span>
+                                            </button>
+                                            <button id="btnCancel" class="btn module-c style-b type-line normal-01 large-4x flex" type="button">
+                                                <span class="btn-text">취소</span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <!-- //submit-form -->
+                        </div>
+                    </div>
+                    <!-- //data-uploader -->
+                    </form>
+
+                    <!-- data-table -->
+                    <div class="data-table module-c style-a type-c">
+                        <table>
+                            <caption>권한 관리 목록</caption>
+                            <colgroup>
+                                <col style="width: 64rem" />
+                                <col />
+                                <col style="width: 19%" />
+                                <col style="width: 19%" />
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>그룹</th>
+                                <th>권한</th>
+                                <th>관리</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="auth, statat : ${auths.content}">
+                                <td th:text="${auths.totalElements - statat.count + 1 - (auths.pageable.pageSize * auths.pageable.pageNumber)}">74</td>
+                                <td th:text="${auth.groupName}">시스템</td>
+                                <td>
+                                    <span class="button-area">
+                                        <button class="btn module-c style-b type-fill normal-01 medium" type="button"
+                                                th:value="${auth.groupNo}" th:onclick="authList.setting(this.getAttribute('value'))">
+                                            <span class="btn-text">설정</span>
+                                        </button>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="button-area">
+                                        <button class="btn module-b style-b type-fill accent-01 medium" type="button"
+                                                sec:authorize="hasPermission('', 'delete')"
+                                                th:value="${auth.groupNo}" th:onclick="authList.delete(this.getAttribute('value'))">
+                                            <span class="btn-text">삭제</span>
+                                        </button>
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- //data-table -->
+
+                    <th:block th:unless="${auths.content.size() == 0}">
+                        <!-- pagination -->
+                        <nav th:replace="~{fragments/pagination :: pagination(${auths})}"></nav>
+                        <!-- //pagination -->
+                    </th:block>
+                </div>
+                <!-- //posts-display -->
+            </div>
+            <!-- //content-body -->
+        </div>
+        <!-- //content -->
+    </div>
+    <!-- //local-body -->
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/settings/auth.list.js}"></script>
+    </th:block>
+</body>
+</html>
+

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:cu="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/settings_layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>SKB DOMS</title>
+</head>
+<body>
+    <div class="local-body" layout:fragment="content">
+        <!-- content -->
+        <div id="content">
+            <!-- content-body -->
+            <div class="content-head">
+                <h3 class="content-subject" id="contentSubject"><span class="content-name">계정 로그 관리</span></h3>
+            </div>
+            <!-- //content-body -->
+
+            <!-- content-path -->
+            <div class="content-path">
+                <!-- section-->
+                <div class="section breadcrumb">
+                    <div class="section-wrap">
+                        <div class="section-head">
+                            <p class="section-subject"><strong class="section-name">위치정보</strong></p>
+                        </div>
+                        <div class="section-body">
+                            <!-- data-display -->
+                            <div class="data-display">
+                                <div class="data-list">
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">홈</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">설정</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="">계정로그관리</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //data-display -->
+                        </div>
+                    </div>
+                </div>
+                <!-- section-->
+            </div>
+            <!-- //content-path -->
+
+            <!-- content-body -->
+            <div class="content-body">
+                <!-- posts-display -->
+                <div class="posts-display module-a style-a type-a">
+                    <form method="get" id="frm" th:action="@{/settings/account/log/list.do}">
+                        <input type="hidden" name="size" id="size" th:value="${accountLogs.pageable.pageSize}" />
+                        <input type="hidden" name="page" id="page" th:value="${accountLogs.pageable.pageNumber}" />
+
+                        <input type="hidden" name="taskFlag" id="taskFlag" th:value="${param.taskFlag}" />
+                        <input type="hidden" id="acl" name="acl" th:value="${param.acl}" />
+                    <!-- data-finder -->
+                    <div class="data-finder module-a style-b type-d">
+                        <div class="data-form">
+                            <!-- submit-form -->
+                            <fieldset class="submit-form module-b style-c large-4x direct-column">
+                                <legend>게시물 검색 서식</legend>
+                                <div class="form-list">
+                                    <div class="form-item flex">
+                                        <div class="form-wrap">
+                                            <div class="form-head"><p class="form-subject"><span class="form-name">이름 및 아이디</span></p></div>
+                                            <div class="form-body">
+                                                <div class="form-area">
+                                                    <span class="form textfield module-b style-b type-line normal-01 large-4x flex">
+                                                        <input type="text" class="form-elem" placeholder="이름 및 아이디를 입력해주세요"
+                                                               data-bui-form-cancel="" name="keyword" id="keyword" th:value="${param.keyword}"/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-item">
+                                        <div class="form-wrap">
+                                            <div class="form-head"><p class="form-subject"><span class="form-name">날짜</span></p></div>
+                                            <div class="form-body">
+                                                <div class="form-area">
+                                                    <span class="form datepicker module-b style-b type-line normal-01 large-4x flex">
+                                                        <input type="text" class="form-elem" name="startDate" id="startDate"
+                                                               data-bui-form-date-start="campaignPostedRange" autocomplete="off"
+                                                               th:value="${param.startDate}"  />
+                                                    </span>
+                                                    <span class="sign">~</span>
+                                                    <span class="form datepicker module-b style-b type-line normal-01 large-4x flex">
+                                                        <input type="text" class="form-elem" name="endDate" id="endDate"
+                                                               data-bui-form-date-end="campaignPostedRange" autocomplete="off"
+                                                               th:value="${param.endDate}" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-util">
+                                    <div class="button-display">
+                                        <span class="button-area">
+                                            <button id="btnSearch" class="btn module-b style-b type-fill accent-01 large-4x flex" type="button" sec:authorize="hasPermission('', 'read')">
+                                                <span class="btn-text">검색</span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <!-- //submit-form -->
+                        </div>
+                        <!-- data-info -->
+                        <div class="data-info">
+                            <p class="data-list">
+                                <span class="data-item">
+                                    <span class="head">전체 게시물 :</span>
+                                    <span class="body">
+                                        <span th:if="${totalCount == accountLogs.totalElements}" class="em normal-03">All</span>
+                                        <span th:unless="${totalCount == accountLogs.totalElements}"
+                                              th:text="${accountLogs.totalElements}" class="em normal-03">All</span>
+
+                                        of <span th:text="${totalCount}"></span>
+                                    </span>
+                                </span>
+                            </p>
+                        </div>
+                        <!-- //data-info -->
+                        <!-- data-func -->
+                        <div class="data-func">
+                            <span class="button-area">
+                                <a class="btn module-b style-b type-line normal-01 medium symbol-ltr-excel flex" href="javascript:accountLogList.excelDown();" sec:authorize="hasPermission('', 'download')"><span class="btn-text">엑셀다운</span></a>
+                            </span>
+                            <div class="data-sort">
+                                <div class="dropdown module-c style-b type-line normal-01 medium" style="width: 108rem">
+                                    <div class="dropdown-wrap">
+                                        <div class="dropdown-head">
+                                            <p class="dropdown-subject" data-bui-dropdown-selected="상태 기준"><span class="dropdown-name">상태 기준</span></p>
+                                        </div>
+                                        <div class="dropdown-body">
+                                            <ul class="navi-list">
+                                                <li th:if="${#strings.equals(#strings.defaultString(param.taskFlag, ''), '')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=)}">전체</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(#strings.defaultString(param.taskFlag, ''), '')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=)}">전체</a>
+                                                </li>
+                                                <li th:if="${#strings.equals(param.taskFlag, 'login')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=login)}">로그인</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.taskFlag, 'login')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=login)}">로그인</a>
+                                                </li>
+                                                <li th:if="${#strings.equals(param.taskFlag, 'logout')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=logout)}">로그아웃</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.taskFlag, 'logout')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=logout)}">로그아웃</a>
+                                                </li>
+
+                                                <li th:if="${#strings.equals(param.taskFlag, 'list')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=list)}">리스트 조회</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.taskFlag, 'list')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=list)}">리스트 조회</a>
+                                                </li>
+
+                                                <li th:if="${#strings.equals(param.taskFlag, 'excel')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=excel)}">엑셀 조회</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.taskFlag, 'excel')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=excel)}">엑셀 조회</a>
+                                                </li>
+
+                                                <li th:if="${#strings.equals(param.taskFlag, 'detail')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=detail)}">조회</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.taskFlag, 'detail')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=detail)}">조회</a>
+                                                </li>
+
+                                                <li th:if="${#strings.equals(param.taskFlag, 'registration')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=registration)}">등록</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.taskFlag, 'registration')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=registration)}">등록</a>
+                                                </li>
+
+                                                <li th:if="${#strings.equals(param.taskFlag, 'modification')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=modification)}">수정</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.taskFlag, 'modification')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=modification)}">수정</a>
+                                                </li>
+
+                                                <li th:if="${#strings.equals(param.taskFlag, 'delete')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=delete)}">삭제</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(param.taskFlag, 'delete')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(taskFlag=delete)}">삭제</a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown module-c style-b type-line normal-01 medium" style="width: 148rem">
+                                    <div class="dropdown-wrap">
+                                        <div class="dropdown-head">
+                                            <p class="dropdown-subject" data-bui-dropdown-selected="노출개수"><span class="dropdown-name">노출개수</span></p>
+                                        </div>
+                                        <div class="dropdown-body">
+                                            <ul class="navi-list">
+                                                <li th:if="${#strings.equals(accountLogs.pageable.pageSize, '10')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(size=10)}">10개씩 보기</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(accountLogs.pageable.pageSize, '10')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(size=10)}">10개씩 보기</a>
+                                                </li>
+                                                <li th:if="${#strings.equals(accountLogs.pageable.pageSize, '30')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(size=30)}">30개씩 보기</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(accountLogs.pageable.pageSize, '30')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(size=30)}">30개씩 보기</a>
+                                                </li>
+                                                <li th:if="${#strings.equals(accountLogs.pageable.pageSize, '50')}" class="navi-item" title="선택됨">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(size=50)}">50개씩 보기</a>
+                                                </li>
+                                                <li th:unless="${#strings.equals(accountLogs.pageable.pageSize, '50')}" class="navi-item">
+                                                    <a class="navi-name" cu:href="@{__${#httpServletRequest.requestURI}__(size=50)}">50개씩 보기</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //data-func -->
+                    </div>
+                    <!-- //data-finder -->
+                    </form>
+                    <!-- data-table -->
+                    <div th:if="${accountLogs.content.size() == 0}" class="info-board module-a type-c attr-nodata">
+                        <div class="board-wrap">
+                            <div class="board-head">
+                                <p class="board-summary" >검색 결과가 없습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                    
+                    <div th:unless="${accountLogs.content.size() == 0}" class="data-table module-c style-a type-c">
+                        <table>
+                            <caption>계정 로그 관리 목록</caption>
+                            <colgroup>
+                                <col style="width: 64rem" />
+                                <col style="width: 9%" />
+                                <col style="width: 11%" />
+                                <col style="width: 11%" />
+                                <col />
+                                <col style="width: 11.5%" />
+                                <col style="width: 15.5%" />
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>그룹</th>
+                                <th>아이디</th>
+                                <th>업무구분</th>
+                                <th>업무내용 </th>
+                                <th>접속 아이피</th>
+                                <th>처리일시</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="accountLog, statat : ${accountLogs.content}">
+                                <td th:text="${accountLogs.totalElements - statat.count + 1 - (accountLogs.pageable.pageSize * accountLogs.pageable.pageNumber)}">74</td>
+<!--                                <td><strong class="em normal-01" th:text="${@viewCommonUtils.getMaskAdmId(accountLog.admNo)}">abc****</strong></td>-->
+                                <td th:text="${accountLog.groupName}">유컴패니온</td>
+                                <td th:utext="${accountLog.admId}">abc***</td>
+                                <td th:text="${accountLog.taskType}"></td>
+                                <td th:text="|${accountLog.task} (그룹 번호 : ${accountLog.groupNo})|">관리자 권한 조회 (그룹 번호 : 5)</td>
+                                <td th:text="${accountLog.logIp}">1.231.217.207</td>
+                                <td th:text="${#strings.defaultString(#dates.format(accountLog.logDate, 'yyyy-MM-dd HH:mm:ss'), '-')}">2021-08-23 10:17:07</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- //data-table -->
+
+                    <th:block th:unless="${accountLogs.content.size() == 0}">
+                        <!-- pagination -->
+                        <nav th:replace="~{fragments/pagination :: pagination(${accountLogs})}"></nav>
+<!--                        "span:contains('주문취소')").css({color:"red"})-->
+                        <!-- //pagination -->
+                    </th:block>
+                </div>
+                <!-- //posts-display -->
+            </div>
+            <!-- //content-body -->
+        </div>
+        <!-- //content -->
+    </div>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/settings/account.log.list.js}"></script>
+    </th:block>
+</body>
+</html>

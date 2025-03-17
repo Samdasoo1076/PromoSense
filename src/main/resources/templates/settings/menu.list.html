@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{fragments/settings_layout.html}">
+<head>
+    <meta charset="utf-8" />
+    <title>SKB DOMS</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/module.campaign.css}" />
+</head>
+<body>
+    <div layout:fragment="content" th:remove="tag">
+        <div class="local-body">
+            <form id="frmList">
+            <input type="hidden" id="acl" name="acl" th:value="${param.acl}" />
+            <!-- content -->
+            <div id="content">
+                <!-- content-body -->
+                <div class="content-head">
+                    <h3 class="content-subject" id="contentSubject"><span class="content-name">메뉴관리</span></h3>
+                </div>
+                <!-- //content-body -->
+
+                <!-- content-path -->
+                <div class="content-path">
+                    <!-- section-->
+                    <div class="section breadcrumb">
+                        <div class="section-wrap">
+                            <div class="section-head">
+                                <p class="section-subject"><strong class="section-name">위치정보</strong></p>
+                            </div>
+                            <div class="section-body">
+                                <!-- data-display -->
+                                <div class="data-display">
+                                    <div class="data-list">
+                                        <div class="data-item">
+                                            <div class="data-wrap">
+                                                <div class="data-head"><a class="data-name" href="javascript:void(0)">홈</a></div>
+                                            </div>
+                                        </div>
+                                        <div class="data-item">
+                                            <div class="data-wrap">
+                                                <div class="data-head"><a class="data-name" href="javascript:void(0)">설정</a></div>
+                                            </div>
+                                        </div>
+                                        <div class="data-item">
+                                            <div class="data-wrap">
+                                                <div class="data-head"><a class="data-name" href="">메뉴관리</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- //data-display -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- section-->
+                </div>
+                <!-- //content-path -->
+
+                <!-- content-body -->
+                <div class="content-body">
+                    <!-- posts-display -->
+                    <div class="posts-display module-a style-a type-a">
+                        <!-- data-control -->
+                        <div class="data-control module-a style-a type-b">
+                            <div class="data-func">
+                                <button id="btnMainCat" class="btn module-b style-b type-fill accent-01 large-4x" type="button" sec:authorize="hasPermission('', 'write')"><span class="btn-text">대분류 등록</span></button>
+                                <button id="btnMainSort" class="btn module-c style-b type-line normal-01 large-4x" type="button" sec:authorize="hasPermission('', 'update')"><span class="btn-text">메뉴 순서 변경</span></button>
+                            </div>
+                        </div>
+                        <!-- //data-control -->
+
+                        <!-- data-table -->
+                        <div class="data-table module-c style-a type-c attr-menu-list">
+                            <table>
+                                <caption>메뉴관리</caption>
+                                <colgroup>
+                                    <col style="width: 20.5%" />
+                                    <col style="width: auto" />
+                                    <col style="width: 12.7%" />
+                                    <col style="width: 12.7%" />
+                                    <col style="width: 256rem" />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>Menu</th>
+                                    <th>URL</th>
+                                    <th>Code</th>
+                                    <th>Icon</th>
+                                    <th>Management</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <th:block th:each="menu:${menus}">
+                                <tr class="depth-01" th:if="${menu.getMenuDepth()==1}">
+                                    <td><a class="data-name" name="divMainMenuName" th:data-menu_id="${menu.id}" href="javascript:void(0)" th:text="${menu.menuName}">캠페인 관리</a></td>
+                                    <td><div class="data-path" th:text="${menu.menuUrl}"></div></td>
+                                    <td><div class="data-code" th:text="${menu.menuCode}">P0001</div></td>
+                                    <td>
+                                        <img th:src="@{/images/__${divImg}__/__${menu.menuImg}__}" style="width: 24px; height: 24px;"  alt="" th:if="${menu.menuImg != null}"/>
+                                    </td>
+                                    <td>
+                                        <div class="button-display module-a style-a type-c">
+                                            <span class="button-area">
+                                                <button name="btnMidCat" class="btn module-b style-b type-fill accent-01 medium" type="button" th:data-parent_menu_id="${menu.id}" sec:authorize="hasPermission('', 'write')"><span class="btn-text">중분류 등록</span></button>
+                                                <button name="btnMidSort" class="btn module-c style-b type-line normal-01 medium" type="button" th:data-parent_menu_id="${menu.id}" sec:authorize="hasPermission('', 'update')"><span class="btn-text">메뉴 순서 변경</span></button>
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="depth-02" th:if="${menu.subMenu.size()>0}" th:each="subMenu:${menu.subMenu}">
+                                    <td><a class="data-name" name="divMiddleMenuName" th:data-parent_menu_id="${menu.id}" href="javascript:void(0)" th:data-menu_id="${subMenu.id}" th:text="${subMenu.menuName}">캠페인 리스트</a></td>
+                                    <td><div class="data-path" th:text="${subMenu.menuUrl}">/url/menu/campaign_list_do</div></td>
+                                    <td><div class="data-code" th:text="${subMenu.menuCode}">P0002</div></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- //data-table -->
+                    </div>
+                    <!-- //posts-display -->
+                </div>
+                <!-- //content-body -->
+            </div>
+            <!-- //content -->
+            </form>
+        </div>
+    </div>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/settings/menu.list.js}"></script>
+    </th:block>
+</body>
+</html>

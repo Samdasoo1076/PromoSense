@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{fragments/campaign_layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>SKB DOMS</title>
+</head>
+<body>
+    <!-- local-body -->
+    <div class="local-body" layout:fragment="content">
+        <!-- content -->
+        <div id="content">
+            <!-- content-body -->
+            <div class="content-head">
+                <h3 class="content-subject" id="contentSubject"><span class="content-name">캠페인 만들기</span></h3>
+            </div>
+            <!-- //content-body -->
+
+            <!-- content-path -->
+            <div class="content-path">
+                <!-- section-->
+                <div class="section breadcrumb">
+                    <div class="section-wrap">
+                        <div class="section-head">
+                            <p class="section-subject"><strong class="section-name">위치정보</strong></p>
+                        </div>
+                        <div class="section-body">
+                            <!-- data-display -->
+                            <div class="data-display">
+                                <div class="data-list">
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">홈</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">캠페인 관리</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="">캠페인 만들기</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //data-display -->
+                        </div>
+                    </div>
+                </div>
+                <!-- section-->
+            </div>
+            <!-- //content-path -->
+
+            <!-- content-body -->
+            <div class="content-body">
+
+                <!-- data-display -->
+                <div class="data-display process-step">
+                    <!-- order-list -->
+                    <!-- current 클래스 활성화 -->
+                    <ol class="order-list">
+                        <li class="order-item current">
+                            <div class="order-wrap">
+                                <div class="order-head">
+                                    <p class="order-subject"><span class="order-name">Setup Campaign</span></p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="order-item">
+                            <div class="order-wrap">
+                                <div class="order-head">
+                                    <p class="order-subject"><span class="order-name">Create Message</span></p>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+                    <!-- //order-list -->
+                </div>
+                <!--// data-display -->
+
+                <!-- section -->
+                <div class="section module-a style-c">
+                    <div class="section-wrap">
+                        <div class="section-head">
+                            <h4 class="section-subject"><span class="section-name">캠페인 생성</span></h4>
+                        </div>
+                        <div class="section-body">
+                            <!-- subsection -->
+                            <div class="subsection module-c style-a type-a active" data-bui-expand="subsection">
+                                <div class="subsection-wrap">
+                                    <div class="subsection-head">
+                                        <h5 class="subsection-subject"><span class="subsection-counter">1</span> <span class="subsection-name">기본 정보 설정</span></h5>
+                                    </div>
+                                    <form class="subsection-body">
+                                    <input type="hidden" id="acl" name="acl" th:value="${param.acl}" />
+                                        <!-- submit-form -->
+                                        <fieldset class="submit-form module-b style-a type-c large-4x">
+                                            <legend>기본 정보 입력 서식</legend>
+                                            <div class="form-list">
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">구분</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="option-list module-a style-b type-a">
+                                                                <div class="option-item">
+                                                                    <label class="form radio module-a style-c accent-01 small-2x">
+                                                                        <input type="radio" id="caGubun" name="caGubun"
+                                                                               class="form-elem" value="BW"
+                                                                               checked />
+                                                                        <span class="form-text">B다이렉트샵</span>
+                                                                    </label>
+                                                                </div>
+<!--                                                                <th:block th:each="codeCaGubun, status : ${@commCodeUtils.getCodeList('CAM_GUBUN')}">-->
+<!--                                                                    <th:block th:if="${#strings.equals(userAdmInfo, 'A')}">-->
+<!--                                                                    <div class="option-item">-->
+<!--                                                                        <label class="form radio module-a style-c accent-01 small-2x">-->
+<!--                                                                            <input type="radio" th:id="caGubun" th:name="caGubun"-->
+<!--                                                                                   class="form-elem" name="setting-0001" th:value="${codeCaGubun.dcode}"-->
+<!--                                                                                   th:checked="${#strings.equals(codeCaGubun.dcode, 'BD')}" />-->
+<!--                                                                            <span class="form-text" th:text="${codeCaGubun.dcodeNm}">B다이렉트샵</span>-->
+<!--                                                                        </label>-->
+<!--                                                                    </div>-->
+<!--                                                                    </th:block>-->
+<!--                                                                    <th:block th:unless="${#strings.equals(userAdmInfo, 'A')}">-->
+<!--                                                                        <th:block th:if="${#strings.equals(userAdmInfo, 'B')}">-->
+<!--                                                                        <div class="option-item" th:if="${#strings.equals(codeCaGubun.dcode, 'BD')}">-->
+<!--                                                                            <label class="form radio module-a style-c accent-01 small-2x">-->
+<!--                                                                                <input type="radio" th:id="caGubun" th:name="caGubun"-->
+<!--                                                                                       class="form-elem" name="setting-0001" th:value="${codeCaGubun.dcode}"-->
+<!--                                                                                       th:checked="${#strings.equals(codeCaGubun.dcode, 'BD')}" />-->
+<!--                                                                                <span class="form-text" th:text="${codeCaGubun.dcodeNm}">B다이렉트샵</span>-->
+<!--                                                                            </label>-->
+<!--                                                                        </div>-->
+<!--                                                                        </th:block>-->
+<!--                                                                        <th:block th:unless="${#strings.equals(userAdmInfo, 'B')}">-->
+<!--                                                                        <div class="option-item" th:if="${#strings.equals(codeCaGubun.dcode, 'TB')}">-->
+<!--                                                                            <label class="form radio module-a style-c accent-01 small-2x">-->
+<!--                                                                                <input type="radio" th:id="caGubun" th:name="caGubun"-->
+<!--                                                                                       class="form-elem" name="setting-0001" th:value="${codeCaGubun.dcode}"-->
+<!--                                                                                       th:checked="${#strings.equals(codeCaGubun.dcode, 'TB')}" />-->
+<!--                                                                                <span class="form-text" th:text="${codeCaGubun.dcodeNm}">B다이렉트샵</span>-->
+<!--                                                                            </label>-->
+<!--                                                                        </div>-->
+<!--                                                                        </th:block>-->
+<!--                                                                    </th:block>-->
+<!--                                                                </th:block>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">캠페인명</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="form-area">
+                                                                <span class="form textfield module-b style-b type-line normal-01 large-4x flex">
+                                                                    <input type="text" class="form-elem" id="caName" name="caName"
+                                                                           data-bui-form-cancel="true" />
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">설명(선택)</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="form-area">
+                                                                <span class="form textarea module-b style-b type-line normal-01 large-6x flex">
+                                                                    <textarea class="form-elem" id="caMemo" name="caMemo" cols="30" rows="3"></textarea>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">캠페인 노출 기간</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="form-area">
+                                                                <span class="form datepicker module-b style-b type-line normal-01 large-4x" style="width: 160rem;">
+                                                                    <input type="text" id="caStartDateStr" name="caStartDateStr" class="form-elem" autocomplete="off"
+                                                                           data-bui-form-date-start="campaignPostedRange"/>
+                                                                </span>
+                                                                <span class="form timepicker module-b style-b type-line normal-01 large-4x" style="width: 160rem;">
+                                                                    <input class="form-elem" id="caStartTime" name="caStartTime" type="time" value="00:00" disabled />
+
+                                                                    <!-- tooltip -->
+                                                                    <div class="tooltip module-d style-b">
+                                                                        <div class="tooltip-wrap">
+                                                                            <div class="tooltip-head">
+                                                                                <p class="tooltip-subject"><span class="tooltip-name">시간 설정</span></p>
+                                                                            </div>
+                                                                            <div class="tooltip-body">
+                                                                                <div class="submit-form">
+                                                                                    <div class="form-list">
+                                                                                        <div class="form-item">
+                                                                                            <div class="form-wrap">
+                                                                                                <div class="form-body">
+                                                                                                    <div class="form-area">
+                                                                                                        <span class="form">
+                                                                                                            <span class="form-text">Hour</span>
+                                                                                                            <button type="button" class="btn step-up" title="시" onclick="setTimeUp(event.currentTarget, event.currentTarget.parentElement.querySelector('.form-elem'))"><span class="btn-text">Up</span></button>
+                                                                                                            <input id="startTime" class="form-elem" type="number" min="0" max="23" value="1" maxlength="2" onchange="setDecimalNumberTest(this);" />
+                                                                                                            <button type="button" class="btn step-down" onclick="setTimeDown(event.currentTarget, event.currentTarget.parentElement.querySelector('.form-elem'))"><span class="btn-text">Down</span></button>
+                                                                                                        </span>
+                                                                                                        <span class="sign">:</span>
+                                                                                                        <span class="form">
+                                                                                                            <span class="form-text">Minute</span>
+                                                                                                            <button type="button" class="btn step-up" title="분" onclick="setTimeUp(event.currentTarget, event.currentTarget.parentElement.querySelector('.form-elem'))"><span class="btn-text">Up</span></button>
+                                                                                                            <input id="startMinute" class="form-elem" type="number" min="0" max="59" value="1" maxlength="2" onchange="setDecimalNumberTest(this);" />
+                                                                                                            <button type="button" class="btn step-down" onclick="setTimeDown(event.currentTarget, event.currentTarget.parentElement.querySelector('.form-elem'))"><span class="btn-text">Down</span></button>
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="button-display module-a style-b type-a">
+                                                                                        <span class="button-area">
+                                                                                            <button id="btnStartTimePicker" class="btn module-b style-b type-none normal-02 medium" type="button">확인</button>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                    <!-- //tooltip -->
+
+                                                                </span>
+                                                                <span class="sign">~</span>
+                                                                <span class="form datepicker module-b style-b type-line normal-01 large-4x" style="width: 160rem;">
+                                                                    <input type="text" id="caEndDateStr" name="caEndDateStr" class="form-elem" value="2022-01-01" autocomplete="off"
+                                                                           data-bui-form-date-end="campaignPostedRange"/>
+                                                                </span>
+                                                                <span class="form timepicker module-b style-b type-line normal-01 large-4x" style="width: 160rem;">
+                                                                    <input class="form-elem" id="caEndTime" name="caEndTime" type="time" value="00:00" disabled />
+
+                                                    <!-- tooltip -->
+                                                                    <div class="tooltip module-d style-b">
+                                                                        <div class="tooltip-wrap">
+                                                                            <div class="tooltip-head">
+                                                                                <p class="tooltip-subject"><span class="tooltip-name">시간 설정</span></p>
+                                                                            </div>
+                                                                            <div class="tooltip-body">
+                                                                                <div class="submit-form">
+                                                                                    <div class="form-list">
+                                                                                        <div class="form-item">
+                                                                                            <div class="form-wrap">
+                                                                                                <div class="form-body">
+                                                                                                    <div class="form-area">
+                                                                                                        <span class="form">
+                                                                                                            <span class="form-text">Hour</span>
+                                                                                                            <button type="button" class="btn step-up" title="시" onclick="setTimeUp(event.currentTarget, event.currentTarget.parentElement.querySelector('.form-elem'))"><span class="btn-text">Up</span></button>
+                                                                                                            <input id="endTime" class="form-elem" type="number" min="0" max="23" value="1" maxlength="2" onchange="setDecimalNumberTest(this);" />
+                                                                                                            <button type="button" class="btn step-down" onclick="setTimeDown(event.currentTarget, event.currentTarget.parentElement.querySelector('.form-elem'))"><span class="btn-text">Down</span></button>
+                                                                                                        </span>
+                                                                                                        <span class="sign">:</span>
+                                                                                                        <span class="form">
+                                                                                                            <span class="form-text">Minute</span>
+                                                                                                            <button type="button" class="btn step-up" title="분" onclick="setTimeUp(event.currentTarget, event.currentTarget.parentElement.querySelector('.form-elem'))"><span class="btn-text">Up</span></button>
+                                                                                                            <input id="endMinute" class="form-elem" type="number" min="0" max="59" value="1" maxlength="2" onchange="setDecimalNumberTest(this);" />
+                                                                                                            <button type="button" class="btn step-down" onclick="setTimeDown(event.currentTarget, event.currentTarget.parentElement.querySelector('.form-elem'))"><span class="btn-text">Down</span></button>
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="button-display module-a style-b type-a"><span class="button-area">
+                                                                                        <button id="btnEndTimePicker" class="btn module-b style-b type-none normal-02 medium" type="button">확인</button>
+                                                                                    </span></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                    <!-- //tooltip -->
+                                                                </span>
+                                                            </div>
+                                                            <div class="option-list module-a style-a type-a">
+                                                                <span class="option-item">
+                                                                    <label class="form checkbox module-a style-c accent-01 small-2x">
+                                                                        <input type="checkbox" class="form-elem" id="chkCaTermAllDay" name="chkCaTermAllDay" checked />
+                                                                        <span class="form-text">종일</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">캠페인 목표 전환 지점 설정</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="option-list module-a style-b type-a">
+                                                                <th:block th:each="codePurpose, status : ${@commCodeUtils.getCodeList('CAM_PURPOSE')}">
+                                                                <div class="option-item">
+                                                                    <label class="form radio module-a style-c accent-01 small-2x">
+                                                                        <input type="radio" class="form-elem" id="caPurpose" name="caPurpose"
+                                                                               th:checked="${#strings.equals(codePurpose.dcode, 'NONE')}"
+                                                                               th:value="${codePurpose.dcode}" onchange="checkedWithin(this, '.option-item');" />
+                                                                        <span class="form-text" th:text="${codePurpose.dcodeNm}">기타 페이지 도달 완료</span>
+                                                                    </label>
+                                                                    <!-- submit-form -->
+                                                                    <div class="submit-form module-b style-d large-4x" th:if="${#strings.equals(codePurpose.dcode, 'ETC')}">
+                                                                        <div class="form-list">
+                                                                            <div class="form-item">
+                                                                                <div class="form-wrap">
+                                                                                    <div class="form-head">
+                                                                                        <p class="form-subject"><span class="form-name">특정 페이지 URL 입력 서식</span></p>
+                                                                                    </div>
+                                                                                    <div class="form-body">
+                                                                                        <div class="form-area">
+                                                                                            <span class="form url-pc module-b style-b type-line normal-01 large-4x flex">
+                                                                                                <input class="form-elem" type="url" placeholder="https://www."
+                                                                                                       id="targetUrlP" name="targetUrlP" data-bui-form-cancel="true" />
+                                                                                                <span class="form-func"></span>
+                                                                                            </span>
+                                                                                            <!-- <button class="btn module-c style-b type-line normal-01 large-4x attr-minus" type="button"><span class="btn-text">삭제</span></button> -->
+                                                                                        </div>
+                                                                                        <div class="form-area">
+                                                                                            <span class="form url-mo module-b style-b type-line normal-01 large-4x flex">
+                                                                                                <input class="form-elem" type="url" placeholder="https://m."
+                                                                                                       id="targetUrlM" name="targetUrlM" data-bui-form-cancel="true" />
+                                                                                                <span class="form-func"></span>
+                                                                                            </span>
+                                                                                            <!-- <button class="btn module-c style-b type-line normal-01 large-4x attr-minus" type="button"><span class="btn-text">삭제</span></button> -->
+                                                                                        </div>
+                                                                                        <p class="form-noti">입력한 값을 포함한 모든 URL로 설정 됩니다</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- //submit-form -->
+                                                                </div>
+                                                                </th:block>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <!-- //submit-form -->
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- //subsection -->
+                            <!-- subsection -->
+                            <div class="subsection module-c style-a type-a" data-bui-expand="subsection">
+                                <div class="subsection-wrap">
+                                    <div class="subsection-head">
+                                        <h5 class="subsection-subject"><span class="subsection-counter">2</span> <span class="subsection-name">타겟 설정</span></h5>
+                                    </div>
+                                    <form class="subsection-body">
+                                        <!-- submit-form -->
+                                        <fieldset class="submit-form module-b style-a type-c large-4x">
+                                            <legend>타겟 선택 서식</legend>
+                                            <div class="form-list">
+                                                <div class="form-item checked-within">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">1차 타겟</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="option-list module-b style-a type-a">
+                                                                <th:block th:each="codeTarget1, status : ${@commCodeUtils.getCodeList('CAM_TARGET1')}">
+                                                                <div class="option-item">
+                                                                    <label class="form radio module-b style-b type-a large-4x accent-01 attr-check">
+                                                                        <input type="radio" class="form-elem" id="tgType1" name="tgType1"
+                                                                               th:checked="${#strings.equals(codeTarget1.dcode, 'ALL')}"
+                                                                               th:value="${codeTarget1.dcode}"/>
+                                                                        <span class="form-text" th:text="${codeTarget1.dcodeNm}">전체 고객</span>
+                                                                        <div class="tooltip module-b style-a type-c" th:if="${#strings.equals(codeTarget1.dcode, 'SEARCH')}">
+                                                                            <div class="tooltip-wrap">
+                                                                                <div class="tooltip-head">
+                                                                                    <p class="tooltip-summary">동일한 세션 안에 페이지 뷰가 4회 이상인 고객을 의미합니다.</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                                </th:block>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-side" style="display: none;" id="target1View">
+                                                            <!-- 재방문 고객 -->
+                                                            <div class="submit-form" id="returnView">
+                                                                <div class="form-list">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-body">
+                                                                                <div class="option-list module-a style-b type-a">
+                                                                                    <th:block th:each="codeReturn, status : ${@commCodeUtils.getCodeList('TAR1_RETURN')}">
+                                                                                    <div class="option-item">
+                                                                                        <label class="form radio module-a style-c accent-01 small-2x">
+                                                                                            <input type="radio" class="form-elem" id="targetReturn" name="targetReturn"
+                                                                                                   onchange="checkedWithin(this, '.option-item');" th:value="${codeReturn.dcode}"
+                                                                                                   th:checked="${#strings.equals(codeReturn.dcode, 'TAR1_ALL')}" />
+                                                                                            <span class="form-text" th:text="${codeReturn.dcodeNm}">재방문한 전체 고객</span>
+                                                                                        </label>
+                                                                                        <!-- submit-form -->
+                                                                                        <div class="submit-form module-b style-d large-4x" th:if="${#strings.equals(codeReturn.dcode, 'TAR1_FIXED')}">
+                                                                                            <div class="form-list">
+                                                                                                <div class="form-item">
+                                                                                                    <div class="form-wrap">
+                                                                                                        <div class="form-head">
+                                                                                                            <p class="form-subject"><span class="form-name">특정 페이지 URL 입력 서식</span></p>
+                                                                                                        </div>
+                                                                                                        <div class="form-body">
+                                                                                                            <div class="form-area">
+                                                                                                                <span class="form url-pc module-b style-b type-line normal-01 large-4x flex">
+                                                                                                                    <input class="form-elem" type="url" placeholder="https://www."
+                                                                                                                           id="revisitUrlP" name="revisitUrlP" data-bui-form-cancel="true" />
+                                                                                                                    <span class="form-func"></span>
+                                                                                                                </span>
+                                                                                                                <!-- <button class="btn module-c style-b type-line normal-01 large-4x attr-minus" type="button"><span class="btn-text">삭제</span></button> -->
+                                                                                                            </div>
+                                                                                                            <div class="form-area">
+                                                                                                                <span class="form url-mo module-b style-b type-line normal-01 large-4x flex">
+                                                                                                                    <input class="form-elem" type="url" placeholder="https://m."
+                                                                                                                           id="revisitUrlM" name="revisitUrlM" data-bui-form-cancel="true" />
+                                                                                                                    <span class="form-func"></span>
+                                                                                                                </span>
+                                                                                                                <!-- <button class="btn module-c style-b type-line normal-01 large-4x attr-minus" type="button"><span class="btn-text">삭제</span></button> -->
+                                                                                                            </div>
+                                                                                                            <p class="form-noti">입력한 값을 포함한 모든 URL로 설정 됩니다</p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!-- //submit-form -->
+                                                                                    </div>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- //재방문 고객 -->
+
+                                                            <!-- 특정 경로로 유입한 고객 -->
+                                                            <div class="submit-form" id="fixedView">
+                                                                <div class="form-list">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-body">
+                                                                                <div class="option-list module-a style-b type-a">
+                                                                                    <th:block th:each="codeTarget2, status : ${@commCodeUtils.getCodeList('CAM_TARGET2')}">
+                                                                                    <div class="option-item"th:classappend="${#strings.equals(codeTarget2.dcode, 'OUTLINK')? 'checked-within':''}">
+                                                                                        <label class="form radio module-a style-c accent-01 small-2x">
+                                                                                            <input type="radio" class="form-elem" id="targetFixed" name="targetFixed"
+                                                                                                   th:checked="${#strings.equals(codeTarget2.dcode, 'OUTLINK')}"
+                                                                                                   th:value="${codeTarget2.dcode}" onchange="checkedWithin(this, '.option-item');" />
+                                                                                            <span class="form-text" th:text="${codeTarget2.dcodeNm}">외부 링크를 통해 유입한 고객</span>
+                                                                                        </label>
+                                                                                        <!-- 외부 링크 유입 submit-form -->
+                                                                                        <div class="submit-form module-b style-d large-4x" th:if="${#strings.equals(codeTarget2.dcode, 'OUTLINK')}">
+                                                                                            <div class="form-list">
+                                                                                                <div class="form-item">
+                                                                                                    <div class="form-wrap">
+                                                                                                        <div class="form-head">
+                                                                                                            <p class="form-subject"><span class="form-name">외부 링크 URL 입력 서식</span></p>
+                                                                                                        </div>
+                                                                                                        <div class="form-body">
+                                                                                                            <div class="form-area">
+                                                                                                                <span class="form url-pc module-b style-b type-line normal-01 large-4x flex">
+                                                                                                                    <input class="form-elem" type="url" placeholder="https://www."
+                                                                                                                           id="tg1SpecUrlP" name="tg1SpecUrlP" data-bui-form-cancel="true" />
+                                                                                                                    <span class="form-func"></span>
+                                                                                                                </span>
+                                                                                                                <button class="btn module-c style-b type-line normal-01 large-4x attr-plus"
+                                                                                                                        id="btnTg1SpecUrlP" name="btnTg1SpecUrlP" type="button">
+                                                                                                                    <span class="btn-text">추가</span>
+                                                                                                                </button>
+                                                                                                            </div>
+                                                                                                            <p class="form-noti">입력한 값을 포함한 모든 URL로 설정 됩니다</p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="form-item">
+                                                                                                    <div class="form-wrap">
+                                                                                                        <div class="form-head">
+                                                                                                            <p class="form-subject"><span class="form-name">외부 링크 URL 입력 서식</span></p>
+                                                                                                        </div>
+                                                                                                        <div class="form-body" id="divTg1SpecUrlM">
+                                                                                                            <div class="form-area">
+                                                                                                                <span class="form url-mo module-b style-b type-line normal-01 large-4x flex">
+                                                                                                                    <input class="form-elem" type="url" placeholder="https://m."
+                                                                                                                           id="tg1SpecUrlM" name="tg1SpecUrlM" data-bui-form-cancel="true" />
+                                                                                                                    <span class="form-func"></span>
+                                                                                                                </span>
+                                                                                                                <button class="btn module-c style-b type-line normal-01 large-4x attr-plus"
+                                                                                                                        id="btnTg1SpecUrlM" name="btnTg1SpecUrlM" type="button">
+                                                                                                                    <span class="btn-text">추가</span>
+                                                                                                                </button>
+                                                                                                            </div>
+                                                                                                            <p class="form-noti">입력한 값을 포함한 모든 URL로 설정 됩니다</p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!-- //submit-form -->
+
+                                                                                        <!-- 특정 검색어 submit-form -->
+                                                                                        <div class="submit-form module-b style-a large-4x" th:unless="${#strings.equals(codeTarget2.dcode, 'OUTLINK')}">
+                                                                                            <div class="form-list">
+                                                                                                <div class="form-item">
+                                                                                                    <div class="form-wrap">
+                                                                                                        <div class="form-head">
+                                                                                                            <p class="form-subject"><span class="form-name">특정 검색어 입력 서식</span></p>
+                                                                                                        </div>
+                                                                                                        <div class="form-body">
+                                                                                                            <div class="form-area">
+                                                                                                                <span class="form textfield module-b style-b type-line normal-01 large-4x flex" style="max-width:800rem">
+                                                                                                                    <input type="text" class="form-elem" placeholder="ex) 인터넷, SK브로드밴드"
+                                                                                                                           id="tg1FixedWord" name="tg1FixedWord" data-bui-form-cancel="true" style="padding-right: 32rem;">
+                                                                                                                    <span class="form-func"></span>
+                                                                                                                </span>
+                                                                                                            </div>
+                                                                                                            <p class="form-noti">띄어쓰기는 인식 되지 않으며, 콤마(,)를 통해 여러 검색어를 등록할 수 있고, 5개까지 등록 가능합니다.</p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!-- //submit-form -->
+                                                                                    </div>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- //특정 경로로 유입한 고객 -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">2차 타겟</span>
+                                                                <label class="form module-a style-a switch">
+                                                                    <input class="form-elem" type="checkbox" id="chkTarget2" name="chkTarget2"
+                                                                           onchange="checkedWithin(this, '.form-item');">
+                                                                </label>
+                                                            </p>
+                                                        </div>
+                                                        <div class="form-side">
+                                                            <div class="option-list module-b style-a type-a" style="display: none;" id="target1Fixed">
+                                                                <th:block th:each="codeTarget1, status : ${@commCodeUtils.getCodeList('CAM_TARGET1')}">
+                                                                    <th:block th:if="${#strings.equals(codeTarget1.dcodeExtValue2, 'Y')}">
+                                                                    <div class="option-item">
+                                                                        <label class="form radio module-b style-b type-a large-4x accent-01 attr-check">
+                                                                            <input type="radio" class="form-elem" id="tgType2Fixed" name="tgType2Fixed"
+                                                                                   th:checked="${#strings.equals(codeTarget1.dcode, 'ALL')}"
+                                                                                   th:value="${codeTarget1.dcode}"/>
+                                                                            <span class="form-text" th:text="${codeTarget1.dcodeNm}">전체 고객</span>
+                                                                            <div class="tooltip module-b style-a type-c" th:if="${#strings.equals(codeTarget1.dcode, 'SEARCH')}">
+                                                                                <div class="tooltip-wrap">
+                                                                                    <div class="tooltip-head">
+                                                                                        <p class="tooltip-summary">동일한 세션 안에 페이지 뷰가 4회 이상인 고객을 의미합니다.</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </label>
+                                                                    </div>
+                                                                    </th:block>
+                                                                </th:block>
+                                                            </div>
+                                                            <!-- 재방문 고객 -->
+                                                            <div class="submit-form" style="display: none;" id="tg2ReturnView">
+                                                                <div class="form-list">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-body">
+                                                                                <div class="option-list module-a style-b type-a">
+                                                                                    <th:block th:each="tg2CodeReturn, status : ${@commCodeUtils.getCodeList('TAR1_RETURN')}">
+                                                                                        <div class="option-item">
+                                                                                            <label class="form radio module-a style-c accent-01 small-2x">
+                                                                                                <input type="radio" class="form-elem" id="tg2TargetReturn" name="tg2TargetReturn"
+                                                                                                       onchange="checkedWithin(this, '.option-item');" th:value="${tg2CodeReturn.dcode}"
+                                                                                                       th:checked="${#strings.equals(tg2CodeReturn.dcode, 'TAR1_ALL')}" />
+                                                                                                <span class="form-text" th:text="${tg2CodeReturn.dcodeNm}">재방문한 전체 고객</span>
+                                                                                            </label>
+                                                                                            <!-- submit-form -->
+                                                                                            <div class="submit-form module-b style-d large-4x" th:if="${#strings.equals(tg2CodeReturn.dcode, 'TAR1_FIXED')}">
+                                                                                                <div class="form-list">
+                                                                                                    <div class="form-item">
+                                                                                                        <div class="form-wrap">
+                                                                                                            <div class="form-head">
+                                                                                                                <p class="form-subject"><span class="form-name">특정 페이지 URL 입력 서식</span></p>
+                                                                                                            </div>
+                                                                                                            <div class="form-body">
+                                                                                                                <div class="form-area">
+                                                                                                                <span class="form url-pc module-b style-b type-line normal-01 large-4x flex">
+                                                                                                                    <input class="form-elem" type="url" placeholder="https://www."
+                                                                                                                           id="tg2RevisitUrlP" name="tg2RevisitUrlP" data-bui-form-cancel="true" />
+                                                                                                                    <span class="form-func"></span>
+                                                                                                                </span>
+                                                                                                                    <!-- <button class="btn module-c style-b type-line normal-01 large-4x attr-minus" type="button"><span class="btn-text">삭제</span></button> -->
+                                                                                                                </div>
+                                                                                                                <div class="form-area">
+                                                                                                                <span class="form url-mo module-b style-b type-line normal-01 large-4x flex">
+                                                                                                                    <input class="form-elem" type="url" placeholder="https://m."
+                                                                                                                           id="tg2RevisitUrlM" name="tg2RevisitUrlM" data-bui-form-cancel="true" />
+                                                                                                                    <span class="form-func"></span>
+                                                                                                                </span>
+                                                                                                                    <!-- <button class="btn module-c style-b type-line normal-01 large-4x attr-minus" type="button"><span class="btn-text">삭제</span></button> -->
+                                                                                                                </div>
+                                                                                                                <p class="form-noti">입력한 값을 포함한 모든 URL로 설정 됩니다</p>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- //submit-form -->
+                                                                                        </div>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 재방문 고객 -->
+                                                            <!-- 특정 경로로 유입한 고객 -->
+                                                            <div class="submit-form" id="target1Other">
+                                                                <div class="form-list">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-body">
+                                                                                <div class="option-list module-a style-b type-a">
+                                                                                    <th:block th:each="codeTarget2, status : ${@commCodeUtils.getCodeList('CAM_TARGET2')}">
+                                                                                    <div class="option-item"th:classappend="${#strings.equals(codeTarget2.dcode, 'OUTLINK')? 'checked-within':''}">
+                                                                                        <label class="form radio module-a style-c accent-01 small-2x">
+                                                                                            <input type="radio" class="form-elem" id="tgType2Other" name="tgType2Other"
+                                                                                                   th:checked="${#strings.equals(codeTarget2.dcode, 'OUTLINK')}"
+                                                                                                   th:value="${codeTarget2.dcode}" onchange="checkedWithin(this, '.option-item');" />
+                                                                                            <span class="form-text" th:text="${codeTarget2.dcodeNm}">외부 링크를 통해 유입한 고객</span>
+                                                                                        </label>
+                                                                                        <!-- 외부 링크 유입 submit-form -->
+                                                                                        <div class="submit-form module-b style-d large-4x" th:if="${#strings.equals(codeTarget2.dcode, 'OUTLINK')}">
+                                                                                            <div class="form-list">
+                                                                                                <div class="form-item">
+                                                                                                    <div class="form-wrap">
+                                                                                                        <div class="form-head">
+                                                                                                            <p class="form-subject"><span class="form-name">외부 링크 URL 입력 서식</span></p>
+                                                                                                        </div>
+                                                                                                        <div class="form-body">
+                                                                                                            <div class="form-area">
+                                                                                                                <span class="form url-pc module-b style-b type-line normal-01 large-4x flex">
+                                                                                                                    <input class="form-elem" type="url" placeholder="https://www."
+                                                                                                                           id="tg2SpecUrlP" name="tg2SpecUrlP" data-bui-form-cancel="true" />
+                                                                                                                    <span class="form-func"></span>
+                                                                                                                </span>
+                                                                                                                <button class="btn module-c style-b type-line normal-01 large-4x attr-plus"
+                                                                                                                        id="btnTg2SpecUrlP" name="btnTg2SpecUrlP" type="button">
+                                                                                                                    <span class="btn-text">추가</span>
+                                                                                                                </button>
+                                                                                                            </div>
+                                                                                                            <p class="form-noti">입력한 값을 포함한 모든 URL로 설정 됩니다</p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="form-item">
+                                                                                                    <div class="form-wrap">
+                                                                                                        <div class="form-head">
+                                                                                                            <p class="form-subject"><span class="form-name">외부 링크 URL 입력 서식</span></p>
+                                                                                                        </div>
+                                                                                                        <div class="form-body">
+                                                                                                            <div class="form-area">
+                                                                                                                <span class="form url-mo module-b style-b type-line normal-01 large-4x flex">
+                                                                                                                    <input class="form-elem" type="url" placeholder="https://m."
+                                                                                                                           id="tg2SpecUrlM" name="tg2SpecUrlM" data-bui-form-cancel="true" />
+                                                                                                                    <span class="form-func"></span>
+                                                                                                                </span>
+                                                                                                                <button class="btn module-c style-b type-line normal-01 large-4x attr-plus"
+                                                                                                                        id="btnTg2SpecUrlM" name="btnTg2SpecUrlM" type="button">
+                                                                                                                    <span class="btn-text">추가</span>
+                                                                                                                </button>
+                                                                                                            </div>
+                                                                                                            <p class="form-noti">입력한 값을 포함한 모든 URL로 설정 됩니다</p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!-- //submit-form -->
+
+                                                                                        <!-- 특정 검색어 submit-form -->
+                                                                                        <div class="submit-form module-b style-a large-4x" th:unless="${#strings.equals(codeTarget2.dcode, 'OUTLINK')}">
+                                                                                            <div class="form-list">
+                                                                                                <div class="form-item">
+                                                                                                    <div class="form-wrap">
+                                                                                                        <div class="form-head">
+                                                                                                            <p class="form-subject"><span class="form-name">특정 검색어 입력 서식</span></p>
+                                                                                                        </div>
+                                                                                                        <div class="form-body">
+                                                                                                            <div class="form-area">
+                                                                                                                <span class="form textfield module-b style-b type-line normal-01 large-4x flex" style="max-width:800rem">
+                                                                                                                    <input type="text" class="form-elem" placeholder="ex) 인터넷, SK브로드밴드"
+                                                                                                                           id="tg2FixedWord" name="tg2FixedWord" data-bui-form-cancel="true" style="padding-right: 32rem;">
+                                                                                                                    <span class="form-func"></span>
+                                                                                                                </span>
+                                                                                                            </div>
+                                                                                                            <p class="form-noti">띄어쓰기는 인식 되지 않으며, 콤마(,)를 통해 여러 검색어를 등록할 수 있고, 5개까지 등록 가능합니다.</p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!-- //submit-form -->
+                                                                                    </div>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- //특정 경로로 유입한 고객 -->
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <!-- //submit-form -->
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- //subsection -->
+                            <!-- subsection -->
+                            <div class="subsection module-c style-a type-a" data-bui-expand="subsection">
+                                <div class="subsection-wrap">
+                                    <div class="subsection-head">
+                                        <h5 class="subsection-subject"><span class="subsection-counter">3</span> <span class="subsection-name">옵션 설정</span></h5>
+                                    </div>
+                                    <form class="subsection-body">
+                                        <!-- submit-form -->
+                                        <fieldset class="submit-form module-b style-a type-c large-4x">
+                                            <legend>옵션 선택 서식</legend>
+                                            <div class="form-list">
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">메시지 노출 요일</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="option-list module-b style-a type-a">
+                                                                <th:block th:each="codeWeek, status : ${@commCodeUtils.getCodeList('CAM_WEEK')}">
+                                                                <span class="option-item">
+                                                                    <label class="form checkbox module-b style-b accent-01 large-4x attr-check">
+                                                                        <input type="checkbox" class="form-elem" checked
+                                                                               id="caWeek" name="caWeek" th:value="${codeWeek.dcode}" />
+                                                                        <span class="form-text" th:text="${codeWeek.dcodeNm}">월</span>
+                                                                    </label>
+                                                                </span>
+                                                                </th:block>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item checked-within">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">메시지 노출 시간</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="option-list module-b style-a type-a">
+                                                                <th:block th:each="codeTime, status : ${@commCodeUtils.getCodeList('CAM_EXPO_TIME')}">
+                                                                <div class="option-item">
+                                                                    <label class="form radio module-b style-b type-a large-4x accent-01 attr-check">
+                                                                        <input type="radio" class="form-elem" id="caTime" name="caTime" th:value="${codeTime.dcode}"
+                                                                               th:data="${codeTime.dcodeExtValue1 + ':' + codeTime.dcodeExtValue2}"
+                                                                               th:checked="${#strings.equals(codeTime.dcode, 'ALL_TIME')}" />
+                                                                        <span class="form-text" th:text="${codeTime.dcodeNm}">All Day</span>
+                                                                    </label>
+                                                                </div>
+                                                                </th:block>
+                                                            </div>
+                                                        </div>
+                                                        <div id="timeDetailView" class="form-side" style="display: none;">
+                                                            <!-- 상세 설정 선택 시 -->
+                                                            <!-- submit-form -->
+                                                            <div class="submit-form module-b style-d large-4x">
+                                                                <div class="form-list time">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><span class="form-name">상세 노출 시간 선택 서식</span></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <!-- option-list -->
+                                                                                <div class="option-list">
+                                                                                    <th:block th:each="codeTimeSub, status : ${@commCodeUtils.getCodeList('TIME_SUB')}">
+                                                                                    <div class="option-item">
+                                                                                        <label class="form checkbox module-b style-b large-2x accent-01">
+                                                                                            <input type="checkbox" class="form-elem" id="caTimeSub" name="caTimeSub" checked
+                                                                                                   th:value="${codeTimeSub.dcodeExtValue1 + ':' + codeTimeSub.dcodeExtValue2}" />
+                                                                                            <span class="form-text" th:text="${codeTimeSub.dcodeNm}">12AM - 1AM</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                                <!-- //option-list -->
+                                                                                <!-- button-display -->
+                                                                                <div class="button-display module-a style-a type-c">
+                                                                                    <div class="button-area">
+                                                                                        <button type="button" id="btnTimeInit" name="btnTimeInit" class="btn module-b style-a type-none normal-02 large-4x symbol-rtl-reset flex">
+                                                                                            <span class="btn-text">초기화</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- //button-display -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- //submit-form -->
+                                                            <!-- //상세 설정 선택 시 -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item checked-within">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">메시지 노출 위치</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="option-list module-b style-a type-a large-4x">
+                                                                <th:block th:each="codePlace, status : ${@commCodeUtils.getCodeList('CAM_PLACE')}">
+                                                                <div class="option-item">
+                                                                    <label class="form radio module-b style-b type-a large-4x accent-01 attr-check">
+                                                                        <input type="radio" class="form-elem" id="caPlace" name="caPlace"
+                                                                               th:value="${codePlace.dcode}" th:checked="${#strings.equals(codePlace.dcode, 'ALL_PAGE')}" />
+                                                                        <span class="form-text" th:text="${codePlace.dcodeNm}">All Page</span>
+                                                                    </label>
+                                                                </div>
+                                                                </th:block>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-side">
+                                                            <div class="option-list module-a style-a type-a">
+                                                                <div class="option-item" id="divCaPlaceFixed">
+                                                                    <label class="form module-a style-a switch">
+                                                                        <input class="form-elem" type="checkbox"
+                                                                               id="chkCaPlaceFixed" name="chkCaPlaceFixed" />
+                                                                        <span class="form-text">특정 페이지 제외</span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- submit-form -->
+                                                            <div class="submit-form module-b style-d large-4x">
+                                                                <div class="form-list">
+                                                                    <!-- 특정 페이지 제외 설정을 on 설정한 경우 -->
+                                                                    <div class="form-item" id="divFixedPageExceptP" style="display: none;">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><span class="form-name">특정 페이지 URL 입력 서식</span></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form url-pc module-b style-b type-line normal-01 large-4x flex">
+                                                                                        <input class="form-elem" type="url" placeholder="https://www."
+                                                                                               id="caExposureUrlP" name="caExposureUrlP" data-bui-form-cancel="true" />
+                                                                                        <span class="form-func"></span>
+                                                                                    </span>
+                                                                                    <button class="btn module-c style-b type-line normal-01 large-4x attr-plus"
+                                                                                            id="btnCaExposureUrlP" name="btnCaExposureUrlP" type="button">
+                                                                                        <span class="btn-text">추가</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <p class="form-noti">입력한 값을 포함한 모든 URL로 설정 됩니다</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-item" id="divFixedPageExceptM" style="display: none;">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><span class="form-name">특정 페이지 URL 입력 서식</span></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form url-mo module-b style-b type-line normal-01 large-4x flex">
+                                                                                        <input class="form-elem" type="url" placeholder="https://m."
+                                                                                               id="caExposureUrlM" name="caExposureUrlM" data-bui-form-cancel="true" />
+                                                                                        <span class="form-func"></span>
+                                                                                    </span>
+                                                                                    <button class="btn module-c style-b type-line normal-01 large-4x attr-plus"
+                                                                                            id="btnCaExposureUrlM" name="btnCaExposureUrlM" type="button">
+                                                                                        <span class="btn-text">추가</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <p class="form-noti">입력한 값을 포함한 모든 URL로 설정 됩니다</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- //특정 페이지 제외 설정을 on 설정한 경우 -->
+
+                                                                    <!-- 특정 페이지 제외 설정을 on 설정한 경우 -->
+                                                                    <div class="form-item" id="divFixedPageAppointP" style="display: none;">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><span class="form-name">특정 페이지 URL 입력 서식</span></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form select module-b style-b type-line normal-01 large-4x" style="width: 100rem">
+                                                                                        <select id="includeYnP" name="includeYnP" class="form-elem">
+                                                                                            <option value="Y">포함</option>
+                                                                                            <option value="N">제외</option>
+                                                                                        </select>
+                                                                                    </span>
+                                                                                    <span class="form url-pc module-b style-b type-line normal-01 large-4x flex">
+                                                                                        <input class="form-elem" type="url" placeholder="https://www."
+                                                                                               id="caExposureAppointUrlP" name="caExposureAppointUrlP" data-bui-form-cancel="true" />
+                                                                                        <span class="form-func"></span>
+                                                                                    </span>
+                                                                                    <button class="btn module-c style-b type-line normal-01 large-4x attr-plus"
+                                                                                            id="btnCaExposureAppointUrlP" name="btnCaExposureAppointUrlP" type="button">
+                                                                                        <span class="btn-text">추가</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <p class="form-noti">입력한 값을 포함한 모든 URL로 설정 됩니다</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-item" id="divFixedPageAppointM" style="display: none;">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-head">
+                                                                                <p class="form-subject"><span class="form-name">특정 페이지 URL 입력 서식</span></p>
+                                                                            </div>
+                                                                            <div class="form-body">
+                                                                                <div class="form-area">
+                                                                                    <span class="form select module-b style-b type-line normal-01 large-4x" style="width: 100rem">
+                                                                                        <select id="includeYnM" name="includeYnM" class="form-elem">
+                                                                                            <option value="Y">포함</option>
+                                                                                            <option value="N">제외</option>
+                                                                                        </select>
+                                                                                    </span>
+                                                                                    <span class="form url-mo module-b style-b type-line normal-01 large-4x flex">
+                                                                                        <input class="form-elem" type="url" placeholder="https://m."
+                                                                                               id="caExposureAppointUrlM" name="caExposureAppointUrlM" data-bui-form-cancel="true" />
+                                                                                        <span class="form-func"></span>
+                                                                                    </span>
+                                                                                    <button class="btn module-c style-b type-line normal-01 large-4x attr-plus"
+                                                                                            id="btnCaExposureAppointUrlM" name="btnCaExposureAppointUrlM" type="button">
+                                                                                        <span class="btn-text">삭제</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <p class="form-noti">입력한 값을 포함한 모든 URL로 설정 됩니다</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- //특정 페이지 제외 설정을 on 설정한 경우 -->
+                                                                </div>
+                                                            </div>
+                                                            <!-- //submit-form -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item checked-within">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">메시지 노출 시점</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="option-list module-b style-a type-a">
+                                                                <th:block th:each="codeViewPoint, status : ${@commCodeUtils.getCodeList('CAM_VIEW_POINT')}">
+                                                                <div class="option-item">
+                                                                    <label class="form radio module-b style-b type-a large-4x accent-01 attr-check">
+                                                                        <input type="radio" class="form-elem" id="caViewPoint" name="caViewPoint"
+                                                                               th:value="${codeViewPoint.dcode}" th:checked="${#strings.equals(codeViewPoint.dcode, 'AT_ONCE')}" />
+                                                                        <span class="form-text" th:text="${codeViewPoint.dcodeNm}">즉시</span>
+                                                                    </label>
+                                                                </div>
+                                                                </th:block>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-side">
+                                                            <!-- 노출 페이지에서 N% 스크롤 시-->
+                                                            <div class="submit-form" id="divCaViewPointPercent" style="display: none;">
+                                                                <div class="form-list">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-body">
+                                                                                <div class="option-list module-a style-b type-a">
+                                                                                    <th:block th:each="codeViewPercent, status : ${@commCodeUtils.getCodeList('VIEW_PERCENT')}">
+                                                                                    <span class="option-item">
+                                                                                        <label class="form radio module-a style-c accent-01 small-2x">
+                                                                                            <input type="radio" class="form-elem" id="caViewSubPercent" name="caViewSubPercent"
+                                                                                                   th:value="${codeViewPercent.dcode}"
+                                                                                                   th:checked="${#strings.equals(codeViewPercent.dcode, '50')}" />
+                                                                                            <span class="form-text" th:text="${codeViewPercent.dcodeNm}">50%</span>
+                                                                                        </label>
+                                                                                    </span>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- //노출 페이지에서 N% 스크롤 시 -->
+
+                                                            <!-- 노출 페이지 로딩 N초 후, 노출 페이지에서 N초 동안 동작이 없을 때 -->
+                                                            <div class="submit-form" id="divCaViewPointSecond" style="display: none;">
+                                                                <div class="form-list">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-body">
+                                                                                <div class="option-list module-a style-b type-a">
+                                                                                    <th:block th:each="codeViewSecond, status : ${@commCodeUtils.getCodeList('VIEW_SECOND')}">
+                                                                                    <span class="option-item">
+                                                                                        <label class="form radio module-a style-c accent-01 small-2x">
+                                                                                            <input type="radio" class="form-elem" id="caViewSubSecond" name="caViewSubSecond"
+                                                                                                   th:value="${codeViewSecond.dcode}"
+                                                                                                   th:checked="${#strings.equals(codeViewSecond.dcode, '1')}" />
+                                                                                            <span class="form-text" th:text="${codeViewSecond.dcodeNm}">1초</span>
+                                                                                        </label>
+                                                                                    </span>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- //노출 페이지 로딩 N초 후, 노출 페이지에서 N초 동안 동작이 없을 때 -->
+
+                                                            <!-- 노출 페이지에서 이탈 직전에 -->
+                                                            <div class="submit-form" id="divCaViewPointOut" style="display: none;">
+                                                                <div class="form-list">
+                                                                    <div class="form-item">
+                                                                        <div class="form-wrap">
+                                                                            <div class="form-body">
+                                                                                <div class="option-list module-a style-b type-a">
+                                                                                    <th:block th:each="codeViewOut, status : ${@commCodeUtils.getCodeList('VIEW_OUT')}">
+                                                                                    <span class="option-item">
+                                                                                        <label class="form radio module-a style-c accent-01 small-2x">
+                                                                                            <input type="radio" class="form-elem" id="caViewSubOut" name="caViewSubOut"
+                                                                                                   th:value="${codeViewOut.dcode}"
+                                                                                                   th:checked="${#strings.equals(codeViewOut.dcode, 'OTHER_PAGE')}" />
+                                                                                            <span class="form-text" th:text="${codeViewOut.dcodeNm}">사이트 내 다른 메뉴(페이지)로 이동 시</span>
+                                                                                        </label>
+                                                                                    </span>
+                                                                                    </th:block>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- //노출 페이지에서 이탈 직전에 -->
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="form-wrap">
+                                                        <div class="form-head">
+                                                            <p class="form-subject"><span class="form-name">메시지 노출 빈도</span></p>
+                                                        </div>
+                                                        <div class="form-body">
+                                                            <div class="option-list module-b style-a type-a">
+                                                                <th:block th:each="codeUsing, status : ${@commCodeUtils.getCodeList('CAM_USING')}">
+                                                                <div class="option-item">
+                                                                    <label class="form radio module-b style-b type-a large-4x accent-01 attr-check">
+                                                                        <input type="radio" class="form-elem" id="exposureLimitCnt" name="exposureLimitCnt"
+                                                                               th:value="${codeUsing.dcode}" th:checked="${#strings.equals(codeUsing.dcode, '1')}" />
+                                                                        <span class="form-text" th:text="${codeUsing.dcodeNm}">1회</span>
+                                                                    </label>
+                                                                </div>
+                                                                </th:block>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <!-- //submit-form -->
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- //subsection -->
+                            <!-- subsection -->
+                            <div class="subsection module-c style-a type-a" data-bui-expand="subsection">
+                                <div class="subsection-wrap">
+                                    <div class="subsection-head">
+                                        <h5 class="subsection-subject"><span class="subsection-counter">4</span> <span class="subsection-name">메시지 유형 선택</span></h5>
+                                    </div>
+                                    <div class="subsection-body">
+                                        <!-- info-board -->
+                                        <div class="info-board module-a style-b type-a">
+                                            <div class="board-wrap">
+                                                <div class="board-head">
+                                                    <p class="board-summary">
+                                                        <span class="wbr">모든 메시지 유형은 PC와 Mobile Web에서 동시에 노출됩니다.</span>
+                                                        <span class="wbr">캠페인 성격에 맞는 메시지 유형을 선택 후 편집 할 수 있습니다.</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- //info-board -->
+                                        <!-- option-display -->
+                                        <fieldset class="option-display module-b style-a type-a">
+                                            <legend>메시지 유형 선택 서식</legend>
+                                            <div class="option-list">
+                                                <th:block th:each="baseType, status : ${@commCodeUtils.getCampaignBaseList()}">
+                                                <div th:classappend="${((baseType.baseOrder == 1)? 'checked-within ' : '') + baseType.cssName}" class="option-item">
+                                                    <div class="option-wrap">
+                                                        <div class="option-head">
+                                                            <p class="option-subject">
+                                                                <span class="option-name">
+                                                                    <label class="form">
+                                                                        <input class="form-elem" type="radio" id="caMsgType" name="caMsgType"
+                                                                               th:checked="${baseType.baseOrder == 1}" th:value="${baseType.baseNo}"
+                                                                               onchange="checkedWithin(this, '.option-item');" />
+                                                                        <span class="form-text" th:text="${baseType.title}">세로 팝업</span>
+                                                                    </label>
+                                                                </span>
+                                                            </p>
+                                                            <p class="option-summary" th:text="${baseType.content}">일반적으로 자주 사용되는 세로형 팝업 타입 입니다. 방문자에게 이미지+텍스트 형태의 팝업을 띄워 정보를 제공하고, 특정 페이지로 이동하도록 유도합니다.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </th:block>
+                                            </div>
+                                        </fieldset>
+                                        <!-- //option-display -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //subsection -->
+                        </div>
+                    </div>
+                </div>
+                <!-- //section -->
+
+                <!-- button-display -->
+                <div class="button-display module-a style-a type-c">
+                    <span class="button-area">
+                        <a th:href="@{/campaign/list/list.do?acl=C0001}" sec:authorize="hasPermission('C0001', 'read')"
+                           class="btn module-b style-b type-line normal-02 large-6x flex">목록으로 돌아가기</a>
+                        <button type="button" id="btnSave" name="btnSave" sec:authorize="hasPermission('', 'write')"
+                                class="btn module-b style-b type-fill accent-01 large-6x flex">저장하고 계속하기</button>
+                    </span>
+                </div>
+                <!-- //button-display -->
+
+            </div>
+            <!-- //content-body -->
+        </div>
+        <!-- //content -->
+    </div>
+    <!-- //local-body -->
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/campaign/campaign.base.create.js}"></script>
+    </th:block>
+</body>
+</html>

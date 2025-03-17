@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/login_off_layout.html}">
+
+<head>
+    <meta charset="utf-8" />
+    <title>SKB DOMS</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <!-- content -->
+    <div class="page-body page-login">
+        <!-- local -->
+        <div id="local">
+            <!-- local-head -->
+            <div class="local-head">
+                <h2 class="local-subject" id="localSubject"><span class="local-name">로그인</span></h2>
+            </div>
+            <!-- //local-head -->
+            <!-- local-body -->
+            <div class="local-body">
+                <!-- content -->
+                <div id="content">
+                    <!-- content-head -->
+                    <div class="content-head">
+                        <h3 class="content-subject" id="contentSubject"><span class="content-name">계정신청</span></h3>
+                    </div>
+                    <!-- //content-head -->
+                    <!-- content-body -->
+                    <form class="content-body" id="frm" name="frm" th:object="${user}" method="post" th:action="@{/signup}" onsubmit="return false">
+                        <!-- submit-form -->
+                        <fieldset class="submit-form module-b style-a type-c large-6x">
+                            <legend>로그인정보 입력 서식</legend>
+                            <div class="form-list">
+                                <div class="form-item">
+                                    <div class="form-wrap">
+                                        <div class="form-head">
+                                            <p class="form-subject"><label for="admId" class="form-name">아이디</label></p>
+                                        </div>
+                                        <div class="form-body">
+                                            <div class="form-area">
+                                                <span class="form textfield module-b style-b type-fill normal-01 large-6x flex valid">
+                                                    <input type="text" class="form-elem" id="admId" name="admId" maxlength="20" th:field="*{admId}" placeholder="4~20자리의 영문, 숫자만 사용 가능" data-bui-form-cancel="true" />
+                                                </span>
+                                            </div>
+                                            <p id="msgAdmId" class="form-noti invalid">
+                                                <th:block th:errors="*{admId}"></th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="form-wrap">
+                                        <div class="form-head">
+                                            <p class="form-subject"><label for="passwd" class="form-name">비밀번호</label></p>
+                                        </div>
+                                        <div class="form-body">
+                                            <div class="form-area">
+                                                <span class="form textfield module-b style-b type-fill normal-01 large-6x flex">
+                                                    <input type="password" class="form-elem" id="passwd" name="passwd" maxlength="16" th:field="*{passwd}" placeholder="8~16자리의 영문, 숫자, 특수문자 조합 가능" data-bui-form-cancel="true" />
+                                                </span>
+                                            </div>
+                                            <p id="msgPasswd" class="form-noti invalid">
+                                                <th:block th:errors="*{passwd}"></th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="form-wrap">
+                                        <div class="form-head">
+                                            <p class="form-subject"><label for="admName" class="form-name">이름</label></p>
+                                        </div>
+                                        <div class="form-body">
+                                            <div class="form-area">
+                                                <span class="form textfield module-b style-b type-fill normal-01 large-6x flex">
+                                                    <input type="text" class="form-elem" id="admName" name="admName" maxlength="20" th:field="*{admName}" placeholder="이름 입력" data-bui-form-cancel="true" />
+                                                </span>
+                                            </div>
+                                            <p id="msgAdmName" class="form-noti invalid">
+                                                <th:block th:errors="*{admName}"></th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="form-wrap">
+                                        <div class="form-head">
+                                            <p class="form-subject"><label for="dept" class="form-name">부서</label></p>
+                                        </div>
+                                        <div class="form-body">
+                                            <div class="form-area">
+                                                <span class="form textfield module-b style-b type-fill normal-01 large-6x flex">
+                                                    <input type="text" class="form-elem" id="dept" name="dept" maxlength="20" th:field="*{dept}" placeholder="소속/부서 입력" data-bui-form-cancel="true" />
+                                                </span>
+                                            </div>
+                                            <p id="msgDept" class="form-noti invalid">
+                                                <th:block th:errors="*{dept}"></th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="form-wrap">
+                                        <div class="form-head">
+                                            <p class="form-subject"><label for="admHphone" class="form-name">휴대폰 번호</label></p>
+                                        </div>
+                                        <div class="form-body">
+                                            <div class="form-area">
+                                                <span class="form textfield module-b style-b type-fill normal-01 large-6x flex">
+                                                    <input type="tel" class="form-elem" id="admHphone" name="admHphone" maxlength="11" th:field="*{admHphone}" placeholder="‘-’ 빼고 입력" data-bui-form-cancel="true" />
+                                                </span>
+                                            </div>
+                                            <p id="msgAdmHphone" class="form-noti invalid">
+                                                <th:block th:errors="*{admHphone}"></th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="form-wrap">
+                                        <div class="form-head">
+                                            <p class="form-subject"><label for="admEmail" class="form-name">이메일 주소</label></p>
+                                        </div>
+                                        <div class="form-body">
+                                            <div class="form-area">
+                                                <span class="form textfield module-b style-b type-fill normal-01 large-6x flex">
+<!--                                                    <span class="form textfield module-b style-b type-fill normal-01 large-6x flex invalid">-->
+                                                    <input type="email" class="form-elem" id="admEmail" name="admEmail" maxlength="50" th:field="*{admEmail}" placeholder="이메일 주소 입력" data-bui-form-cancel="true" />
+                                                </span>
+                                            </div>
+                                            <p id="msgAdmEmail" class="form-noti invalid">
+                                                <th:block th:errors="*{admEmail}"></th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="form-wrap">
+                                        <div class="form-head">
+                                            <p class="form-subject"><label for="memo" class="form-name">메모</label></p>
+                                        </div>
+                                        <div class="form-body">
+                                            <div class="form-area"><span class="form textarea module-b style-b type-fill normal-01 large-6x flex">
+                                                <textarea id="memo" name="memo" class="form-elem" maxlength="250" cols="30" rows="8" th:field="*{memo}" placeholder="별도 요청사항 입력"></textarea>
+                                            </span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- button-display -->
+                            <div class="button-display module-a style-b type-a">
+									<span class="button-area">
+										<button type="button" id="btnSave" class="btn module-b style-b type-fill accent-01 large-6x flex disabled">계정신청</button>
+									</span>
+                            </div>
+                            <!-- //button-display -->
+                        </fieldset>
+                        <!-- //submit-form -->
+                    </form>
+                    <!-- //content-body -->
+                </div>
+                <!-- //content -->
+            </div>
+            <!-- //local-body -->
+        </div>
+        <!-- //local -->
+    </div>
+</div>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/signup/signup.js}"></script>
+</th:block>
+</body>
+</html>

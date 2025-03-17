@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:cu="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>SKB DOMS</title>
+</head>
+<body>
+<!-- content-popup -->
+<div class="content-popup module-a style-a medium" data-bui-toggle="postsReadPopup" id="postsReadPopupCampaign">
+    <div class="popup-page-body">
+        <!-- popup-local -->
+        <div class="popup-local">
+            <!-- popup-local-head -->
+            <div class="popup-local-head">
+                <h2 class="popup-local-subject"><span class="popup-local-name">캠페인 상세보기</span></h2>
+            </div>
+            <!-- //popup-local-head -->
+            <!-- popup-local-body -->
+
+            <div class="popup-local-body">
+                <div class="popup-content">
+
+                    <!-- popup-content-body -->
+                    <div class="popup-content-body" th:each="campaign, status : ${campaign}">
+
+                        <!-- posts-read -->
+                        <div class="posts-read module-a style-b type-a">
+                            <div class="posts-wrap">
+                                <div class="posts-inform">
+                                    <div class="posts-prop">
+                                        <p class="data-list">
+											<span class="data-item">
+												<span class="head">노출유형</span>
+												<span class="body" th:switch="${campaign.caStateNm}">
+													<span class="mark module-a style-b type-line accent-01 small-1x"><span class="mark-text" th:text="${campaign.caMsgTypeNm}">세로팝업</span></span>
+<!--													<span class="mark module-a style-b type-line accent-05 small-1x">-->
+<!--                                                        <span class="mark-text">진행중</span>-->
+<!--                                                    </span>-->
+                                                    <span th:case='s0001' class="mark module-a style-b type-line accent-02 small-1x">
+                                                        <span class="mark-text">진행예정</span>
+                                                    </span>
+                                                    <span th:case='s0002' class="mark module-a style-b type-line accent-05 small-1x">
+                                                        <span class="mark-text">진행중</span>
+                                                    </span>
+                                                    <span th:case='s0003' class="mark module-a style-b type-line accent-04 small-1x">
+                                                        <span class="mark-text">일시정지</span>
+                                                    </span>
+                                                    <span th:case='s0004' class="mark module-a style-b type-line accent-03 small-1x">
+                                                        <span class="mark-text">종료</span>
+                                                    </span>
+
+												</span>
+											</span>
+                                        </p>
+                                    </div>
+                                    <div class="posts-info">
+                                        <p class="data-list">
+											<span class="data-item period">
+												<span class="head">노출기간</span>
+												<span class="body">
+                                                    <span th:if="${#strings.isEmpty(campaign.caStartHour)}" th:text="${#strings.defaultString(#dates.format(campaign.caStartDate, 'yyyy-MM-dd'), '-')}">2022-11-30</span>
+                                                    <span th:unless="${#strings.isEmpty(campaign.caStartHour)}" th:text="|${#dates.format(campaign.caStartDate, 'yyyy-MM-dd')} ${campaign.caStartHour}:${campaign.caStartMin}|">2022-11-21 16:27:00</span>
+                                                    ~
+                                                    <sapn th:if="${#strings.isEmpty(campaign.caEndHour)}" th:text="${#strings.defaultString(#dates.format(campaign.caEndDate, 'yyyy-MM-dd'), '-')}">2022-12-30</sapn>
+                                                    <sapn th:unless="${#strings.isEmpty(campaign.caEndHour)}"  th:text="|${#dates.format(campaign.caEndDate, 'yyyy-MM-dd')} ${campaign.caEndHour}:${campaign.caEndMin}|">2022-11-21 16:27:00</sapn>
+                                                </span>
+											</span>
+                                        </p>
+                                    </div>
+                                    <div class="posts-head">
+                                        <p class="posts-subject">
+                                            <span class="posts-name" th:text="${campaign.caName}">요즘가족결합 프로모션 팝업</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="posts-util">
+								<span class="button-area">
+									<a class="btn module-b style-b type-line normal-01 large-4x symbol-ltr-monitor flex"
+                                       th:href="@{(${pcPreviewUrl})}" target="_blank" sec:authorize="hasPermission('C0001', 'read')">
+                                        <span class="btn-text">미리보기</span>
+                                    </a>
+                                    <a class="btn module-b style-b type-line normal-01 large-4x symbol-ltr-mobile flex"
+                                       th:value="${moPreviewUrl}" href="#"
+                                       th:onclick="Preview.info(this.getAttribute('value'))" sec:authorize="hasPermission('C0001', 'read')">
+                                        <span class="btn-text">미리보기</span>
+                                    </a>
+                                    <button class="btn module-c style-b type-line normal-01 large-4x" id="btnModify" th:value="${campaign.id}"
+                                        sec:authorize="hasPermission('', 'update')">
+                                        <span class="btn-text">편집</span>
+                                    </button>
+<!--                                    <a class="btn module-c style-b type-line normal-01 large-4x" cu:href="@{__/campaign/base/modify.view__(acl=${acl},id=${caNo})}"><span class="btn-text">편집</span></a>-->
+								</span>
+                            </div>
+                        </div>
+                        <!-- //posts-read -->
+
+                        <!-- data-display -->
+                        <div class="data-display module-c style-b type-a">
+                            <p class="data-caption">캠페인 요약 상세</p>
+                            <!-- data-list -->
+                            <ul class="data-list">
+                                <li class="data-item">
+                                    <div class="data-wrap">
+                                        <div class="data-head">
+                                            <p class="data-subject"><span class="data-name">타겟</span></p>
+                                        </div>
+                                        <div class="data-body">
+                                            <p class="para">
+<!--                                                <th:block th:each="codeTgType1, status : ${@commCodeUtils.getCodeList('CAM_TARGET1')}">-->
+<!--                                                <span th:text="${#strings.equals(codeTgType1.dcode,campaign.tgType01)?codeTgType1.dcodeNm:''}">신규방문 고객</span>-->
+<!--                                                </th:block>-->
+<!--                                                <sapn th:if="${#strings.isEmpty(campaign.tgType02)}" th:text="''"></sapn>-->
+<!--                                                <sapn th:unless="${#strings.isEmpty(campaign.tgType02)}" th:text="', '"></sapn>-->
+<!--                                                <th:block th:each="codeTgType2, status : ${@commCodeUtils.getCodeList('CAM_TARGET2')}">-->
+<!--                                                <span th:text="${#strings.equals(codeTgType2.dcode,campaign.tgType02)? codeTgType2.dcodeNm:''}">외부 링크를 통해 유입한 고객</span>-->
+<!--                                                </th:block>-->
+                                                <th:block th:switch="${campaign.tgType01}">
+                                                    <span th:case="RETURN" th:text="${@commCodeUtils.getCodeInfo('TAR1_RETURN', campaign.tg1Sub).dcodeNm}"></span>
+                                                    <span th:case="FIXED" th:text="${@commCodeUtils.getCodeInfo('CAM_TARGET2', campaign.tg1Sub).dcodeNm}"></span>
+                                                    <span th:case="*" th:text="${@commCodeUtils.getCodeInfo('CAM_TARGET1', campaign.tgType01).dcodeNm}"></span>
+                                                </th:block>
+                                                <th:block th:if="${#strings.equals(campaign.tgType02Yn, 'Y')}">
+                                                    <span>,&nbsp;</span>
+                                                    <th:block th:if="${#strings.equals(campaign.tgType01, 'FIXED')}">
+                                                        <th:block th:switch="${campaign.tgType02}">
+                                                            <span th:case="RETURN" th:text="${@commCodeUtils.getCodeInfo('TAR1_RETURN', campaign.tg2Sub).dcodeNm}">특정 검색어를 통해 유입한 고객</span>
+                                                            <span th:case="*" th:text="${@commCodeUtils.getCodeInfo('CAM_TARGET1', campaign.tgType02).dcodeNm}">특정 검색어를 통해 유입한 고객</span>
+                                                        </th:block>
+                                                    </th:block>
+                                                    <th:block th:unless="${#strings.equals(campaign.tgType01, 'FIXED')}">
+                                                        <span th:text="${@commCodeUtils.getCodeInfo('CAM_TARGET2', campaign.tg2Sub).dcodeNm}">특정 검색어를 통해 유입한 고객</span>
+                                                    </th:block>
+                                                </th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="data-item">
+                                    <div class="data-wrap">
+                                        <div class="data-head">
+                                            <p class="data-subject"><span class="data-name">노출 요일</span></p>
+                                        </div>
+                                        <div class="data-body">
+                                            <p class="para">
+                                                <th:block th:each="data, index : ${#strings.arraySplit(campaign.caWeek, ',')}" th:if="${#strings.arraySplit(campaign.caWeek, ',') != null} or ${#strings.setSplit(campaign.caWeek, ',').size() != 0}">
+                                                    <th:block th:each="codeCamWeek, status : ${@commCodeUtils.getCodeList('CAM_WEEK')}">
+                                                        <block th:if="${#strings.equals(codeCamWeek.dcode,data)}">
+                                                            <span th:text="|${codeCamWeek.dcodeNm+(index.last?'':', ')}|"></span>
+                                                        </block>
+                                                    </th:block>
+                                                </th:block>
+                                                <th:block th:unless="${#strings.length(campaign.caWeek).equals(1)}">
+                                                    <th:block th:each="codeCamWeek, status : ${@commCodeUtils.getCodeList('CAM_WEEK')}">
+                                                        <th:block th:if="${#strings.equals(codeCamWeek.dcode,data)}">
+                                                            <span th:text="${codeCamWeek.dcodeNm}"></span>
+                                                        </th:block>
+                                                    </th:block>
+                                                </th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="data-item">
+                                    <div class="data-wrap">
+                                        <div class="data-head">
+                                            <p class="data-subject"><span class="data-name">노출 시간</span></p>
+                                        </div>
+                                        <div class="data-body">
+                                            <p class="para">
+                                            <th:block th:each="codeCamExpoTime, status : ${@commCodeUtils.getCodeList('CAM_EXPO_TIME')}">
+                                                <span th:text="${#strings.equals(codeCamExpoTime.dcode,campaign.caTime)?codeCamExpoTime.dcodeNm:''}">상세설정</span>
+                                            </th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="data-item">
+                                    <div class="data-wrap">
+                                        <div class="data-head">
+                                            <p class="data-subject"><span class="data-name">노출 위치</span></p>
+                                        </div>
+                                        <div class="data-body">
+                                            <p class="para">
+                                                <th:block th:each="codeCamPlace, status : ${@commCodeUtils.getCodeList('CAM_PLACE')}">
+                                                    <span th:text="${#strings.equals(codeCamPlace.dcode,campaign.caPlace)?codeCamPlace.dcodeNm:''}">특정 페이지 지점</span>
+                                                </th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="data-item">
+                                    <div class="data-wrap">
+                                        <div class="data-head">
+                                            <p class="data-subject"><span class="data-name">노출 시점</span></p>
+                                        </div>
+                                        <div class="data-body">
+                                            <p class="para">
+                                                <th:block th:each="codeCamViewPoint, status : ${@commCodeUtils.getCodeList('CAM_VIEW_POINT')}">
+                                                    <span th:text="${#strings.equals(codeCamViewPoint.dcode,campaign.caViewPoint)?codeCamViewPoint.dcodeNm:''}">노출 페이지에서 50% 스크롤 시</span>
+                                                </th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="data-item">
+                                    <div class="data-wrap">
+                                        <div class="data-head">
+                                            <p class="data-subject"><span class="data-name">노출 빈도</span></p>
+                                        </div>
+                                        <div class="data-body">
+                                            <p class="para">
+                                                <th:block th:each="codeCamUsing, status : ${@commCodeUtils.getCodeList('CAM_USING')}">
+                                                    <span th:text="${#strings.equals(codeCamUsing.dcode,campaign.exposureLimitCnt)?codeCamUsing.dcodeNm:''}">노출 페이지에서 50% 스크롤 시</span>
+                                                </th:block>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- //data-list -->
+                            <!-- data-util -->
+                            <div class="data-util">
+								<span class="button-area">
+									<button id="btnDetail" class="btn module-c style-b type-line normal-01 flex medium" th:value="${campaign.id}">캠페인 상세 정보 보러 가기</button>
+								</span>
+                            </div>
+                            <!-- //data-util -->
+                        </div>
+                        <!-- //data-display -->
+
+                        <!-- data-display -->
+                        <div class="data-display module-c style-b type-c">
+                            <p class="data-caption">캠페인 요약 상세</p>
+                            <!-- data-list -->
+                            <ul class="data-list">
+                                <li class="data-item">
+                                    <div class="data-wrap">
+                                        <div class="data-head">
+                                            <p class="data-subject"><span class="data-name">CTR</span></p>
+                                        </div>
+                                        <div class="data-body">
+                                            <!-- data-display -->
+                                            <div class="data-display module-d style-a type-a">
+                                                <ul class="data-list">
+                                                    <li class="data-item">
+                                                        <div class="data-wrap">
+                                                            <span class="data-head">
+                                                                <span class="data-subject">
+                                                                    <span class="data-name">총 클릭수</span>
+                                                                </span>
+                                                            </span>
+<!--                                                            <span class="data-body" th:text="${campaign.clickCnt}">802</span>-->
+                                                            <span class="data-body" th:text="${#numbers.formatInteger(campaign.visibleCnt + campaign.visibleMoCnt, 1, 'COMMA')}">802</span>
+
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-wrap">
+                                                            <span class="data-head">
+                                                                <span class="data-subject">
+                                                                    <span class="data-name">총 클릭률</span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="data-body" th:text="${(campaign.visibleCnt + campaign.visibleMoCnt == 0)? '0' :
+                                                 #strings.replace(#numbers.formatDecimal((campaign.clickCnt + campaign.phoneCnt + campaign.leaveCnt +
+                                                 campaign.registCnt + campaign.clickMoCnt + campaign.leaveMoCnt + campaign.registMoCnt) /
+                                                 ((campaign.visibleCnt + campaign.visibleMoCnt) * 1.0) * 100, 1, 'COMMA', 2, 'POINT'), '.00', '')} + '%'">13.00%</span></div></li>
+                                                </ul>
+                                            </div>
+                                            <!-- //data-display -->
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="data-item">
+                                    <div class="data-wrap">
+                                        <div class="data-head">
+                                            <p class="data-subject"><span class="data-name">CVR</span></p>
+                                        </div>
+                                        <div class="data-body">
+<!--                                            <p class="para">온라인 상담 가입상담 신청 완료</p>-->
+                                            <th:block th:if="${!#strings.isEmpty(campaign.caPurpose)}" th:each="codeCaPurpose, status : ${@commCodeUtils.getCodeList('CAM_PURPOSE')}">
+                                                <th:block th:if="${#strings.equals(codeCaPurpose.dcode,campaign.caPurpose)}">
+                                                    <p class="para" th:text="${codeCaPurpose.dcodeNm}">온라인 상담 가입상담 신청 완료 (PC/Mobile)</p>
+                                                </th:block>
+                                            </th:block>
+                                            <!-- data-display -->
+                                            <div class="data-display module-d style-a type-a">
+                                                <ul class="data-list">
+                                                    <li class="data-item">
+                                                        <div class="data-wrap">
+                                                            <span class="data-head">
+                                                                <span class="data-subject">
+                                                                    <span class="data-name">총 전환수</span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="data-body"  th:text="${#numbers.formatInteger(campaign.targetVisitCnt + campaign.targetVisitMoCnt, 1, 'COMMA')}">251</span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-wrap">
+                                                            <span class="data-head">
+                                                                <span class="data-subject">
+                                                                    <span class="data-name">총 전환율</span>
+                                                                </span>
+                                                            </span>
+                                                            <span class="data-body" th:text="${(campaign.visibleCnt + campaign.visibleMoCnt == 0)? '0' :
+                                                 #strings.replace(#numbers.formatDecimal((campaign.targetVisitCnt + campaign.targetVisitMoCnt) /
+                                                 ((campaign.visibleCnt + campaign.visibleMoCnt) * 1.0) * 100, 1
+                                                 , 'COMMA', 2, 'POINT'), '.00', '')} + '%'">31.90%</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- //data-display -->
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- //data-list -->
+                        </div>
+                        <!-- //data-display -->
+
+                    </div>
+                    <!-- //popup-content-body -->
+
+                </div>
+
+            </div>
+            <!-- //popup-local-body -->
+        </div>
+        <!-- //popup-local -->
+    </div>
+</div>
+
+<!-- //content-popup -->
+<script th:src="@{/js/campaign/popup/campaign.base.popup.js}"></script>
+<!-- //content-popup -->
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:fragment="info_popup">
+<!-- info-popup -->
+<div class="info-popup module-b style-a type-a small" data-bui-toggle="infoPopup" id="alert" style="z-index: 100">
+    <div class="popup-page-body">
+        <!-- popup-local -->
+        <div class="popup-local">
+            <!-- popup-local-body -->
+            <div class="popup-local-body">
+                <div class="popup-content">
+                    <!-- popup-content-body -->
+                    <div class="popup-content-body">
+                        <!-- info-board -->
+                        <div class="info-board module-a type-c">
+                            <div class="board-wrap">
+                                <div class="board-head">
+                                    <p class="board-summary"><span class="wbr" id="alert.message">아이디가 정지 or 5회 비밀번호가  잘못 입력 되어 접속이 불가능합니다.  관리자에게 문의해 주세요.</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //info-board -->
+                    </div>
+                    <!-- //popup-content-body -->
+                </div>
+            </div>
+            <!-- //popup-local-body -->
+            <!-- popup-local-util -->
+            <div class="popup-local-util">
+                <!-- button-display -->
+                <div class="button-display">
+                    <span class="button-area">
+                        <button id="alert.btnOk" class="btn module-b style-a type-fill accent-01 large-4x flex" type="button"><span class="btn-text">확인</span></button>
+                    </span>
+                </div>
+                <!-- //button-display -->
+            </div>
+            <!-- //popup-local-util -->
+        </div>
+        <!-- //popup-local -->
+    </div>
+</div>
+<!-- //info-popup -->
+<!-- info-popup -->
+<div class="info-popup module-b style-a type-a small" data-bui-toggle="infoPopup" id="confirm" style="z-index: 100">
+    <div class="popup-page-body">
+        <!-- popup-local -->
+        <div class="popup-local">
+            <!-- popup-local-body -->
+            <div class="popup-local-body">
+                <div class="popup-content">
+                    <!-- popup-content-body -->
+                    <div class="popup-content-body">
+                        <!-- info-board -->
+                        <div class="info-board module-a type-c">
+                            <div class="board-wrap">
+                                <div class="board-head">
+                                    <p class="board-summary"><span class="wbr" id="confirm.message">로그아웃 하시겠습니까?</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //info-board -->
+                    </div>
+                    <!-- //popup-content-body -->
+                </div>
+            </div>
+            <!-- //popup-local-body -->
+            <!-- popup-local-util -->
+            <div class="popup-local-util">
+                <!-- button-display -->
+                <div class="button-display">
+                <span class="button-area">
+                    <button class="btn module-c style-a type-fill normal-01 large-4x flex" type="button" id="confirm.btnCancel"><span class="btn-text">취소</span></button>
+                    <button class="btn module-b style-a type-fill accent-01 large-4x flex" type="button" id="confirm.btnOk"><span class="btn-text">확인</span></button>
+                </span>
+                </div>
+                <!-- //button-display -->
+            </div>
+            <!-- //popup-local-util -->
+        </div>
+        <!-- //popup-local -->
+    </div>
+</div>
+<!-- //info-popup -->
+</th:block>
+</body>
+</html>

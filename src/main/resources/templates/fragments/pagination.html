@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{fragments/settings_layout.html}">
+<head/>
+<body>
+<div class="pagination module-a style-a type-c" th:fragment="pagination(pages)">
+    <span class="pagination-util"
+          th:with="
+                pageNumber = ${pages.number},
+                pageSize = 10,
+                totalPages = ${pages.totalPages},
+                startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+                tempEndPage = ${startPage + pageSize - 1},
+                endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
+    >
+        <span class="button-area">
+            <a th:classappend="${pageNumber < pageSize} ? 'disabled'" cu:href="@{__${#httpServletRequest.requestURI}__(page=${0})}" class="btn first">
+                <span class="btn-text">처음</span>
+            </a>
+            <a th:classappend="${pages.first} ? 'disabled'" cu:href="@{__${#httpServletRequest.requestURI}__(page=${pageNumber-1})}" class="btn prev">
+                <span class="btn-text">이전</span>
+            </a>
+            <span th:each="page:${#numbers.sequence(startPage, endPage)}" class="pagination-list" >
+                <a th:classappend="${page == pageNumber + 1} ? 'current'" cu:href="@{__${#httpServletRequest.requestURI}__(page=${page - 1})}" class="pagination-item" th:text="${page}">
+                    <span class="btn-text">현재</span>
+                </a>
+            </span>
+            <a th:classappend="${pages.last} ? 'disabled'" cu:href="@{__${#httpServletRequest.requestURI}__(page=${pageNumber + 1})}" class="btn next">
+                <span class="btn-text">다음</span>
+            </a>
+            <a th:classappend=" ${T(java.lang.Math).floor(totalPages / pageSize) * pageSize - 1 <= startPage} ? 'disabled'" cu:href="@{__${#httpServletRequest.requestURI}__(page=${totalPages - 1})}" class="btn last">
+                <span class="btn-text">마지막</span>
+            </a>
+        </span>
+    </span>
+</div>
+
+</body>
+</html>

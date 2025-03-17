@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{fragments/settings_layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>SKB DOMS</title>
+</head>
+<body>
+    <div class="local-body" layout:fragment="content">
+            <!-- content -->
+        <div id="content">
+            <!-- content-body -->
+            <div class="content-head">
+                <h3 class="content-subject" id="contentSubject"><span class="content-name">접근 IP 관리</span></h3>
+            </div>
+            <!-- //content-body -->
+
+            <!-- content-path -->
+            <div class="content-path">
+                <!-- section-->
+                <div class="section breadcrumb">
+                    <div class="section-wrap">
+                        <div class="section-head">
+                            <p class="section-subject"><strong class="section-name">위치정보</strong></p>
+                        </div>
+                        <div class="section-body">
+                            <!-- data-display -->
+                            <div class="data-display">
+                                <div class="data-list">
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">홈</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="javascript:void(0)">설정</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-wrap">
+                                            <div class="data-head"><a class="data-name" href="">접근 IP 관리</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //data-display -->
+                        </div>
+                    </div>
+                </div>
+                <!-- section-->
+            </div>
+            <!-- //content-path -->
+
+            <!-- content-body -->
+            <div class="content-body">
+                <!-- posts-display -->
+                <div class="posts-display module-a style-a type-a">
+                    <form id="frm" name="frm" th:object="${accepts}" th:action="@{/settings/accept/list}" onsubmit="return false">
+                        <input type="hidden" name="size" id="size" th:value="${accepts.pageable.pageSize}" />
+                        <input type="hidden" id="acl" name="acl" th:value="${param.acl}" />
+                    <!-- data-uploader -->
+                    <div class="data-uploader module-a style-b type-d">
+                        <div class="data-form">
+                            <!-- submit-form -->
+                            <fieldset class="submit-form module-b style-c type-a large-4x direct-column">
+                                <legend>전송 서식</legend>
+                                <div class="form-list">
+                                    <div class="form-item flex">
+                                        <div class="form-wrap">
+                                            <div class="form-head"><p class="form-subject"><span class="form-name">접속 아이피</span></p></div>
+                                            <div class="form-body">
+                                                <div class="form-area">
+                                                    <span class="form textfield module-b style-b type-line normal-03 large-4x flex">
+                                                        <input class="form-elem" type="text" name="acceptIp" id="acceptIp" value="" data-bui-form-cancel="true" />
+                                                    </span>
+                                                </div>
+                                                <p id="msgAcceptIp" class="form-noti"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-util">
+                                    <div class="button-display">
+                                        <span class="button-area">
+                                            <button id="btnSave" class="btn module-b style-b type-fill accent-01 large-4x flex" type="submit" sec:authorize="hasPermission('', 'write')"><span class="btn-text">등록</span></button>
+                                            <button id="btnCancel"  class="btn module-c style-b type-line normal-01 large-4x flex" type="submit"><span class="btn-text">취소</span></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <!-- //submit-form -->
+                        </div>
+                    </div>
+                    <!-- //data-uploader -->
+                    </form>
+                    <!-- data-table -->
+                    <!-- data-table -->
+                    <div th:if="${accepts.content.size() == 0}" class="info-board module-a type-c attr-nodata">
+                        <div class="board-wrap">
+                            <div class="board-head">
+                                <p class="board-summary" >검색 결과가 없습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:unless="${accepts.content.size() == 0}" class="data-table module-c style-a type-c">
+                        <table>
+                            <caption>접속 아이피 목록</caption>
+                            <colgroup>
+                                <col style="width: 64rem" />
+                                <col />
+                                <col style="width: 19%" />
+                                <col style="width: 19%" />
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>접속 아이피</th>
+                                <th>등록일</th>
+                                <th>관리</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="accept, statat : ${accepts}">
+                                <td th:text="${accepts.totalElements - statat.count + 1 - (accepts.pageable.pageSize * accepts.pageable.pageNumber)}">1</td>
+                                <td th:text="${@viewCommonUtils.getMaskIp(accept.acceptIp) }">124.52.44.114</td>
+                                <td th:text="${#strings.defaultString(#dates.format(accept.regDate, 'yyyy-MM-dd HH:mm:ss'), '-')}">2022-11-21 16:27:00</td>
+                                <td>
+                                    <span class="button-area">
+                                        <button id="seqNo" class="btn module-b style-b type-fill accent-01 medium" type="button"
+                                                sec:authorize="hasPermission('', 'delete')"
+                                                th:value="${accept.seqNo}" th:onclick="acceptList.delete(this.getAttribute('value'))">
+                                            <span class="btn-text">삭제</span></button>
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- //data-table -->
+                    <th:block th:unless="${accepts.content.size() == 0}">
+                        <!-- pagination -->
+                        <nav th:replace="~{fragments/pagination :: pagination(${accepts})}"></nav>
+                        <!-- //pagination -->
+                    </th:block>
+                </div>
+                <!-- //posts-display -->
+            </div>
+            <!-- //content-body -->
+        </div>
+        <!-- //local-body -->
+    </div>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/settings/accept.list.js}"></script>
+    </th:block>
+</body>
+</html>

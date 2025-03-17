@@ -1,0 +1,104 @@
+server:
+  error:
+    include-exception: false
+    include-stacktrace: never
+    whitelabel:
+      enabled: false
+    path: /error
+  etc-info:
+    address: http://doms.skbroadband.com
+    bd-pc-address: https://www.bdirectshop.com/doms2/skb.campaign.do?CA_NO=
+    bd-mo-address: https://m.bdirectshop.com/doms2/skb.campaign.do?CA_NO=
+    tb-pc-address: https://btvcable.shop/doms2/skb.campaign.do?CA_NO=
+    tb-mo-address: https://m.btvcable.shop/doms2/skb.campaign.do?CA_NO=
+    bw-pc-address: https://wwwstg.bworld.co.kr/shop/doms/doms-preview.do?CA_NO=
+    bw-mo-address: https://wwwstg.bworld.co.kr/shop/doms/doms-preview.do?CA_NO=
+    rending-url: "#rendingUrl"
+    direct-url: "#directUrl"
+    leave-url: "#leaveUrl"
+    calling-num: "#callingNum"
+  port: 80
+
+application:
+  crypto:
+    password: da989ac0-32d1-4723-b55e-0fcba57879e9
+  jwt:
+    app-name: doms
+    token-name: __ACT
+    expires-in: 30
+    secret-key: 4K3ms526N5GZjXSPE3pbmDZua4vhT8DGv9SK6EBq4EjM8fB6
+  upload:
+    path:
+      menu-icon: /app/tcserver-9.0.71/data/menu_icon
+      campaign: /app/tcserver-9.0.71/data/campaign
+      capture: /app/tcserver-9.0.71/data/capture
+    image-type: png,jpg,jpeg,gif
+  api:
+    cors-allowed-origins:
+      - http://m.bdirectshop.com
+      - http://www.bdirectshop.com
+      - http://bdirectshop.com
+      - http://btvcable.shop
+      - http://m.btvcable.shop
+      - https://m.bdirectshop.com
+      - https://www.bdirectshop.com
+      - https://bdirectshop.com
+      - https://btvcable.shop
+      - https://m.btvcable.shop
+      - https://wwwstg.bworld.co.kr
+    access-key:
+      bdirectshop: P3QerWZfzEZoK66PesI072xbuQGYoKWi
+      btvcable: V898EYrDhuDti8yfGUCiKkZPREXy1mR1
+      bworld: BoXYeCb4EueDKLTZYy6pzr1yK5GsifS9
+
+spring:
+  devtools:
+    livereload:
+      enabled: false
+    restart:
+      enabled: false
+
+  thymeleaf:
+    cache: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    open-in-view: false
+    properties:
+      hibernate:
+        default_batch_fetch_size: 500
+        show_sql: false
+        format_sql: false
+
+datasource:
+  web:
+    url: jdbc:mariadb://12.4.140.52:27208/domsdb
+    username: webuser
+    password: SKB@dmin_2016
+    driver-class-name: org.mariadb.jdbc.Driver
+    maximum-pool-size: 10
+    minimum-idle: 10
+    max-lifetime: 1800000
+    idle-timeout: 600000
+  api:
+    url: jdbc:mariadb://12.4.140.52:27208/domsdb
+    username: webuser
+    password: SKB@dmin_2016
+    driver-class-name: org.mariadb.jdbc.Driver
+    maximum-pool-size: 10
+    minimum-idle: 10
+    max-lifetime: 1800000
+    idle-timeout: 600000
+
+logging:
+  config:
+    path: /app/tcserver-9.0.71/logs
+    filename: app-doms
+    maxHistory: 7 # 7일
+    totalSizeCap: 10MB # 로그 파일 사이즈
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true

@@ -1,0 +1,37 @@
+package com.skbroadband.doms.global.utils;
+
+import java.util.function.Consumer;
+
+/**
+ * @author : 안진갑
+ * @Project : SKB_WEB
+ * @Package : com.skbroadband.doms.global.util
+ * @File : ThrowingConsumer
+ * @Program :
+ * @Date : 2022-11-25
+ * @Comment :
+ */
+@FunctionalInterface
+public interface ThrowingConsumer<T, E extends Throwable> {
+    void accept(T t) throws E;
+
+    static <T, E extends Throwable> Consumer<T> unchecked(ThrowingConsumer<T, E> f) {
+        return t -> {
+            try {
+                f.accept(t);
+            } catch (Throwable e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    static <T, E extends Throwable> Consumer<T> unchecked(ThrowingConsumer<T, E> f, Consumer<Throwable> c) {
+        return t -> {
+            try {
+                f.accept(t);
+            } catch (Throwable e) {
+                c.accept(e);
+            }
+        };
+    }
+}

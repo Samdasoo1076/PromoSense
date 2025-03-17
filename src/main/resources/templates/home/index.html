@@ -1,0 +1,697 @@
+<?php
+if ($_SERVER['HTTP_HOST'] != 'learningstone.co.kr' && $_SERVER['HTTP_HOST'] != 'www.learningstone.co.kr') {
+	header("Location:https://learningstone.co.kr");
+}
+?>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>러닝스톤 | LEARNING STONE</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="./resources/images/favicon.svg">
+    <link rel="stylesheet" href="./resources/css/reset.css">
+    <link rel="stylesheet" href="./resources/css/swiper.css">
+    <script src="./resources/js/jquery-1.11.2.min.js"></script>
+    <script src="./resources/js/modernizr.custom.js"></script>
+    <script src="./resources/js/swiper-bundle.min.js"></script>
+    <script src="./resources/js/gsap.min.js"></script>
+    <script src="./resources/js/gsap.scroll.min.js"></script>
+    <script src="./resources/js/gsap.scroll.min.js"></script>
+</head>
+
+<body class="main">
+
+<div id="wrap">
+
+    <div class="header">
+        <div class="header-inner">
+            <div class="logo"><a href="index.html">LEARNING STONE</a></div>
+            <ul class="topmenu">
+                <li><a href="javascript: menuMove('req-learningstone')">러닝스톤</a></li>
+                <li><a href="javascript: menuMove('our-function')">기능소개</a></li>
+                <li><a href="javascript: menuMove('realtime-edu')">화상솔루션</a></li>
+                <li><a href="javascript: menuMove('strength')">장점</a></li>
+            </ul>
+            <div class="btnset">
+                <button type="button" class="btn-download" onclick="window.open('resources/brosure.pdf')">소개서 다운로드</button>
+                <button type="button" class="btn-inquiry" onclick="window.open('mailto:kjh0510@ucomp.co.kr')">도입문의</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="contents">
+        <div class="maincontents">
+            <div class="section mainvod">
+                <div class="videobox">
+                    <video muted autoplay loop playsline id="myVideo">
+                        <source src="./resources/images//mainvisual_1.mp4" type="video/mp4">
+                        <strong>Your browser does not support the video tag.</strong>
+                    </video>
+                </div>
+                <div class="quickbox">
+                    <button type="button" class="btn-holder" onclick="quickToggle()">click</button>
+                    <div><a href="#" onclick="window.open('resources/brosure.pdf')">소개서 다운로드</a><a href="#" onclick="window.open('mailto:kjh0510@ucomp.co.kr')">도입문의</a></div>
+                </div>
+            </div>
+            <div class="section req-learningstone">
+                <div class="innerbox">
+                    <h1><strong>러닝스톤에서<br class="mobile-only">시작 하세요</strong><span>체계적인 교육 플랫폼 구축을 위한​ <br class="mobile-only">SaaS 기반 통합 ​교육 생태계​</span></h1>
+                    <div class="leargingstone-circle-outer">
+                        <div class="leargingstone-circle">
+                            <ul class="pc-only">
+                                <li class="trs"></li>
+                                <li class="trs"></li>
+                                <li class="trs"></li>
+                                <li class="item stone-1 on">전문교육기관</li>
+                                <li class="item stone-2">교육솔루션 업체</li>
+                                <li class="item stone-3">교육전문가</li>
+                                <li class="item stone-4">학습자</li>
+                                <li class="trs"></li>
+                                <li class="trs"></li>
+                                <li class="trs"></li>
+                                <li class="trs"></li>
+                                <li class="trs"></li>
+                            </ul>
+                            <ul class="mobile-only">
+                                <li class="item stone-1 on">전문교육기관</li>
+                                <li class="item stone-2">교육솔루션 업체</li>
+                                <li class="item stone-3">교육전문가</li>
+                                <li class="item stone-4">학습자</li>
+                            </ul>
+                            <div class="circle-hiddencontents">
+                                <ul>
+                                    <li class="stone-1 on"><strong>전문교육기관</strong><p>합리적인 비용으로 <br>교육 브랜드 공간 개설 <br><span>(LMS, CMS, 화상 포함)</span></p></li>
+                                    <li class="stone-2"><strong>교육솔루션 업체</strong><p>다양한 교육서비스에 맞는 <br>솔루션 홍보 및 판매</p></li>
+                                    <li class="stone-3"><strong>교육전문가</strong><p>교육 커리어, 콘텐츠 유형 등을 살린 <br>교육 제작 지원, 교육 브랜드 매칭</p></li>
+                                    <li class="stone-4"><strong>학습자</strong><p>다양한 교육 브랜드 및 콘텐츠 탐색 <br>맞춤형 교육 콘텐츠 소비</p></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h2><strong>Global Running Open Platform &nbsp; Global Running Open Platform</strong></h2>
+            </div>
+            <div class="section video-meeting">
+                <div class="display-board">
+                    <div class="board-item" style="background-image: url(./resources/images/img_solution_pr.jpg);">
+                        <div class="board-wrap">
+                            <div class="board-head"><p class="board-subject">다양한 기능과 모듈을 조합한 <br>우리만의 교육 플랫폼 구축​</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section our-function">
+                <h1><strong>우리 교육 서비스를 특별하게 <br class="mobile-only">만드는 차별화된 기능 제공​</strong><span>* 이 외 상세 기능은 도입 문의 상담을 통해 확인하세요.</span></h1>
+                <div class="slider_wrap">
+                    <div class="brand_slider slide1 swiper-container">
+                        <ul class="swiper-wrapper">
+                            <li class="brand_item swiper-slide" data-idx="1">
+                                <p class="pic" style="background:url('./resources/images/img_function_01.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">부정 행위 방지</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="2">
+                                <p class="pic" style="background:url('./resources/images/img_function_02.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">콘텐츠 개발 관리</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="3">
+                                <p class="pic" style="background:url('./resources/images/img_function_03.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">문자/이메일 연동</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="4">
+                                <p class="pic" style="background:url('./resources/images/img_function_04.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">모사 방지</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="5">
+                                <p class="pic" style="background:url('./resources/images/img_function_05.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">본인/공동인증 모드</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="6">
+                                <p class="pic" style="background:url('./resources/images/img_function_06.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">학습 메모</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="7">
+                                <p class="pic" style="background:url('./resources/images/img_function_07.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">학습 이력 관리</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="8">
+                                <p class="pic" style="background:url('./resources/images/img_function_08.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">수강신청</strong>
+                            </li>
+                        </ul>
+                    </div>
+                    <div dir="rtl" class="brand_slider slide2 swiper-container">
+                        <ul class="swiper-wrapper">
+                            <li class="brand_item swiper-slide" data-idx="9">
+                                <p class="pic" style="background:url('./resources/images/img_function_09.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">모바일 앱 개발</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="10">
+                                <p class="pic" style="background:url('./resources/images/img_function_10.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">성적 조회</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="11">
+                                <p class="pic" style="background:url('./resources/images/img_function_11.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">교재 신청</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="12">
+                                <p class="pic" style="background:url('./resources/images/img_function_12.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">학기 관리</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="13">
+                                <p class="pic" style="background:url('./resources/images/img_function_13.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">패키지 과정 관리</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="14">
+                                <p class="pic" style="background:url('./resources/images/img_function_14.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">수료증 발급</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="15">
+                                <p class="pic" style="background:url('./resources/images/img_function_15.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">실시간 절대 평가 <br>성적 산출</strong>
+                            </li>
+                            <li class="brand_item swiper-slide" data-idx="16">
+                                <p class="pic" style="background:url('./resources/images/img_function_16.png') no-repeat center / cover"></p>
+                                <strong class="hover-txt">평가 항목 출제</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="section realtime-edu">
+                <div class="innerbox">
+                    <h1><strong>실시간 화상 교육 <br class="mobile-only">폴라린</strong><span>서비스 커스터마이징이 가능한 화상 커뮤니케이션 솔루션</span></h1>
+                    <div class="realtime-slider swiper-container">
+                        <ul class="swiper-wrapper">
+                            <li class="realtime-con1 swiper-slide">
+                                <dl>
+                                    <dt>
+                                        <strong>automatic recording</strong>
+                                        <span>자동 녹취</span>
+                                        <p>학습 참여자들의 대화를 실시간 자막으로 제공 나의 강의실을 통해 녹취 파일 다운로드 가능</p>
+                                    </dt>
+                                    <dd>
+                                        <p class="pc-only"><img src="./resources/images/img_function_slide_01.png" alt=""></p>
+                                        <p class="mobile-only"><img src="./resources/images/img_function_slide_01_m.png" alt=""></p>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li class="realtime-con2 swiper-slide">
+                                <dl>
+                                    <dt>
+                                        <strong>real-time recording</strong>
+                                        <span>실시간 녹화</span>
+                                        <p>설정 한번으로 간편하게 강의 전체 녹화 가능 복습을 위한 강의 전체 영상 다운로드 가능</p>
+                                    </dt>
+                                    <dd>
+                                        <p class="pc-only"><img src="./resources/images/img_function_slide_02.png" alt=""></p>
+                                        <p class="mobile-only"><img src="./resources/images/img_function_slide_02_m.png" alt=""></p>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li class="realtime-con3 swiper-slide">
+                                <dl>
+                                    <dt>
+                                        <strong>Automatic image quality control</strong>
+                                        <span>자동 화질 제어</span>
+                                        <p>Amazon Voice Focus 기반 머신러닝을 적용한 에코, 배경 소음제거 네트워크 속도 자동 제어를 통해 끊김 없는 실시간 글로벌 화상교육 지원 (별도 세팅 없이도 AI로 화상 수업 영상 품질 컨트롤)</p>
+                                    </dt>
+                                    <dd>
+                                        <p><img src="./resources/images/img_function_slide_03.png" alt=""></p>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li class="realtime-con4 swiper-slide">
+                                <dl>
+                                    <dt>
+                                        <strong>Learning Content Sharing</strong>
+                                        <span>선명한 학습 콘텐츠 공유</span>
+                                        <p>화면을 단순 고유하는 것이 아닌 Embed 형식으로 공유하여 또렷하게 학습자료 이용 가능</p>
+                                    </dt>
+                                    <dd>
+                                        <p><img src="./resources/images/img_function_slide_04.png" alt=""></p>
+                                    </dd>
+                                </dl>
+                            </li>
+                        </ul>
+                        <div class="swiper-pagination-m"></div>
+                        <div class="swiper-pagination-cnt"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="section strength">
+                <div class="innerbox">
+                    <h1><strong>불편했던 모든 것을 러닝스톤에서 해결</strong><span>러닝스톤으로 모든 문제를 해결합니다.</span></h1>
+                    <div class="strength-tabslider">
+                        <ul class="left-tab">
+                            <li class="tab1">
+                                <strong>언제까지 비싼 LMS를 사용해야 할까?</strong>
+                                <p>적은 초기 투자 비용으로 손쉽게 누구나 교육 브랜드 공간 개설이 가능합니다.​</p>
+                                <span class="pic"><img src="./resources/images/img_strength_01.png" alt=""></span>
+                            </li>
+                            <li class="tab2">
+                                <strong>글로벌 진출이 하고 싶어요</strong>
+                                <p>영어, 일어, 중국어 등 다국어 지원을 통해 글로벌 서비스가 가능합니다.​</p>
+                                <span class="pic"><img src="./resources/images/img_strength_02.png" alt=""></span>
+                            </li>
+                            <li class="tab3">
+                                <strong>우리들만의 학습 시스템 구축이 필요해</strong>
+                                <p>학습 시스템, 개인화, 개별 학습 목표에 부합하는 다양한 학습 시스템을 구성할 수 있습니다.​</p>
+                                <span class="pic"><img src="./resources/images/img_strength_03.png" alt=""></span>
+                            </li>
+                            <li class="tab4">
+                                <strong>필요한 기능만 골라 사용할 순 없을까?</strong>
+                                <p>다양한 기능과 모듈 조합으로 트렌디한 화면 구성이 가능합니다.​</p>
+                                <span class="pic"><img src="./resources/images/img_strength_04.png" alt=""></span>
+                            </li>
+                        </ul>
+                        <ul class="strength-tabimg">
+                            <li class="tab1"><img src="./resources/images/img_strength_01.png" alt=""></li>
+                            <li class="tab2"><img src="./resources/images/img_strength_02.png" alt=""></li>
+                            <li class="tab3"><img src="./resources/images/img_strength_03.png" alt=""></li>
+                            <li class="tab4"><img src="./resources/images/img_strength_04.png" alt=""></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="innerbox">
+            <div class="ucom-logo"><img src="./resources/images/logo_ucom.png" alt="U:COMPANION"></div>
+            <div class="copyrights">
+                <address>Samseong-ro, Gangnam-gu, Seoul, <br>Republic of Korea 119-gil 37-9</address>
+                <ul>
+                    <li><label>TEL</label><p>070-5030-5830</p></li>
+                    <li><label>FAX</label><p>070-7545-1710</p></li>
+                    <li><label>MAIL</label><p>ucomp_contact@ucomp.co.kr</p></li>
+                </ul>
+                <p>Copyright ⓒ Ucomp. All Right Reserved.</p>
+            </div>
+            <button type="button" class="btn-gotop" onclick="goTop()" title="GO TOP">GO TOP</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="./resources/js/front_ui.js"></script>
+<script>
+    $(".header").addClass("opacityShow");
+    let vid = document.getElementById("myVideo");
+    vid.volume = 0.8;
+
+
+    menuMove();
+    stoneRollingLoad();
+    stoneCircleLoad();
+    vmScrollLoad();
+    brandSlideLoad();
+    polarinLoad();
+    stgLoad();
+    scrollMenuActive();
+    $(window).scroll(function(){
+        scrollMenuActive();
+    });
+
+
+    function goTop(){
+        $("html, body").animate({scrollTop: "0"}, 1000);
+    }
+
+    function quickToggle(){
+        if (!$(".quickbox").is(".open")){
+            $(".quickbox").addClass("open");
+        }else{
+            $(".quickbox").removeClass("open");
+        }
+    }
+
+    function menuMove(menuName){
+        var tmEl = $("ul.topmenu");
+        tmEl.find("li").removeClass("on");
+        if ($(window).width() > 1024){
+            if (menuName === "req-learningstone"){
+                $("html, body").animate({scrollTop: ($(".req-learningstone").offset().top + 100)+"px"}, 500);
+                tmEl.find("li:nth-child(1)").addClass("on");
+            }else if (menuName === "our-function"){
+                $("html, body").animate({scrollTop: ($(".our-function").offset().top + 100)+"px"}, 500);
+                tmEl.find("li:nth-child(2)").addClass("on");
+            }else if (menuName === "realtime-edu"){
+                $("html, body").animate({scrollTop: $(".realtime-edu").offset().top+"px"}, 500);
+                tmEl.find("li:nth-child(3)").addClass("on");
+            }else if (menuName === "strength"){
+                $("html, body").animate({scrollTop: $(".strength").offset().top+"px"}, 500);
+                tmEl.find("li:nth-child(4)").addClass("on");
+            }
+        }else{
+            if (menuName === "req-learningstone"){
+                $("html, body").animate({scrollTop: ($(".req-learningstone").offset().top - 90)+"px"}, 500);
+                tmEl.find("li:nth-child(1)").addClass("on");
+            }else if (menuName === "our-function"){
+                $("html, body").animate({scrollTop: ($(".our-function").offset().top - 60)+"px"}, 500);
+                tmEl.find("li:nth-child(2)").addClass("on");
+            }else if (menuName === "realtime-edu"){
+                $("html, body").animate({scrollTop: ($(".realtime-edu").offset().top - 100)+"px"}, 500);
+                tmEl.find("li:nth-child(3)").addClass("on");
+            }else if (menuName === "strength"){
+                $("html, body").animate({scrollTop: ($(".strength").offset().top - 100)+"px"}, 500);
+                tmEl.find("li:nth-child(4)").addClass("on");
+            }
+        }
+    }
+
+    function scrollMenuActive(){
+        var tmEl = $("ul.topmenu");
+        if ($(window).scrollTop() > $(".req-learningstone").offset().top){
+            tmEl.find("li").removeClass("on");
+            tmEl.find("li:nth-child(1)").addClass("on");
+        }
+        if ($(window).scrollTop() > $(".our-function").offset().top - 100){
+            tmEl.find("li").removeClass("on");
+            tmEl.find("li:nth-child(2)").addClass("on");
+        }
+        if ($(window).scrollTop() > ($(".realtime-edu").offset().top - 150)){
+            tmEl.find("li").removeClass("on");
+            tmEl.find("li:nth-child(3)").addClass("on");
+        }
+        if ($(window).scrollTop() > $(".strength").offset().top - 100){
+            tmEl.find("li").removeClass("on");
+            tmEl.find("li:nth-child(4)").addClass("on");
+        }
+    }
+
+    function stoneRollingLoad(){
+        var radius = 383;
+        var container = $('.leargingstone-circle > ul.pc-only');
+        var fields = container.find('li');
+        var width = container.width();
+        var height = container.height();
+        var angle = 0;
+        var step = (2 * Math.PI) / fields.length;
+        fields.each(function() {
+          var x = Math.round(width / 2 + radius * Math.cos(angle) - $(this).width() / 2);
+          var y = Math.round(height / 2 + radius * Math.sin(angle) - $(this).height() / 2);
+          if (window.console) {
+            console.log($(this).text(), x, y);
+          }
+          $(this).css({right: x + 'px', bottom: y + 'px'});
+          angle += step;
+        });
+    }
+
+    function stoneCircleLoad(){
+        if ($(window).width() > 1024){
+            var liEl = $(".leargingstone-circle > ul.pc-only");
+            var tabEl = $(".circle-hiddencontents > ul");
+            var lsList = liEl.find("li.item").length-1;
+            var lsIdx = 0;
+            var scNext = function(){
+                if(lsIdx < lsList){lsIdx++}else{lsIdx = 0}
+                liEl.find("li.item").removeClass("on");
+                liEl.find("li.item:eq("+lsIdx+")").addClass("on");
+                tabEl.find("li").removeClass("on");
+                tabEl.find("li:eq("+lsIdx+")").addClass("on");
+            }
+            learningCircleAni = setInterval(scNext, 5000);
+
+            liEl.find("li.item").hover(function(){
+                clearInterval(learningCircleAni)
+            },function(){
+                learningCircleAni = setInterval(scNext, 5000);
+            });
+
+            liEl.find("li.item").mouseover(function(){
+                var tabClass = $(this).attr("class").split(" ")[1];
+                liEl.find("li.item").removeClass("on");
+                $(this).addClass("on");
+                tabEl.find("li").removeClass("on");
+                tabEl.find("li."+tabClass).addClass("on");
+            });
+        }else{
+            var liEl = $(".leargingstone-circle > ul.mobile-only");
+            var tabEl = $(".circle-hiddencontents > ul");
+            var lsList = liEl.find("li.item").length-1;
+            var lsIdx = 0;
+            var scNext = function(){
+                if(lsIdx < lsList){lsIdx++}else{lsIdx = 0}
+                liEl.find("li.item").removeClass("on");
+                liEl.find("li.item:eq("+lsIdx+")").addClass("on");
+                tabEl.find("li").removeClass("on");
+                tabEl.find("li:eq("+lsIdx+")").addClass("on");
+            }
+            learningCircleAni = setInterval(scNext, 5000);
+
+            liEl.find("li.item").hover(function(){
+                clearInterval(learningCircleAni)
+            },function(){
+                learningCircleAni = setInterval(scNext, 5000);
+            });
+
+            liEl.find("li.item").mouseover(function(){
+                var tabClass = $(this).attr("class").split(" ")[1];
+                //console.log(tabClass)
+                liEl.find("li.item").removeClass("on");
+                $(this).addClass("on");
+                tabEl.find("li").removeClass("on");
+                tabEl.find("li."+tabClass).addClass("on");
+            });
+        }
+    }
+
+    function vmScrollLoad(){
+        var vmTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.video-meeting .display-board',
+                start: 'top 80%',
+                end: '+=1000',
+                toggleActions: 'restart pause reverse pause',
+                scrub: 1.5,
+                markers: false,
+            },
+        });
+        vmTimeline.set('.video-meeting .display-board', {
+            width: '138rem',
+        }).to('.video-meeting .display-board', {
+            width: '192rem',
+        });
+        ScrollTrigger.matchMedia({
+            "(max-width: 768px)": function() {
+                vmTimeline.scrollTrigger.disable();
+            },
+            "(min-width: 1024px)": function() {
+                vmTimeline.scrollTrigger.enable();
+            },
+        });
+    }
+
+    function brandSlideLoad(){
+        var brandSwiper1 = new Swiper(".brand_slider.slide1", {
+            speed:8000,
+            slidesPerView:"auto",
+            observer:true,
+            observeParents:true,
+            loop:true,
+            freeMode:true,
+            autoplay:{
+                delay:1,
+                disableOnInteraction:false
+            }
+        });
+
+        var brandSwiper2 = new Swiper(".brand_slider.slide2", {
+            speed:8000,
+            slidesPerView:"auto",
+            observer:true,
+            observeParents:true,
+            loop:true,
+            freeMode:true,
+            autoplay:{
+                delay:1,
+                disableOnInteraction:false
+            }
+        });
+    }
+
+    function polarinLoad(){
+        if ($(window).width() > 1024){
+            var swiperPolarin1 = new Swiper(".realtime-slider", {
+                speed:1500,
+                loop:true,
+                autoplay: {
+                    delay:7000,
+                    disableOnInteraction: false,
+                },
+                mousewheel: true,
+                pagination: {
+                    el: ".swiper-pagination-cnt",
+                    type: 'fraction'
+                }
+            });
+        }else{
+            var swiperPolarin2 = new Swiper(".realtime-slider", {
+                speed:1000,
+                loop:true,
+                autoplay: {
+                    delay:7000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: ".swiper-pagination-m",
+                    clickable: true
+                }
+            });
+        }
+    }
+
+    function stgLoad() {
+        var leftTabEl = $(".strength-tabslider > ul.left-tab");
+        var imgTabEl = $(".strength-tabslider > ul.strength-tabimg");
+        var stgList = leftTabEl.find("li").length-1;
+        var stgIdx = 0;
+        var stgTabNext = function(){
+            if(stgIdx < stgList){stgIdx++}else{stgIdx = 0}
+            leftTabEl.find("li").removeClass("on");
+            leftTabEl.find("li:eq("+stgIdx+")").addClass("on");
+            imgTabEl.find("li").removeClass("on").fadeOut();
+            imgTabEl.find("li:eq("+stgIdx+")").addClass("on").fadeIn();
+        }
+
+        //stbTabAni = setInterval(stgTabNext, 5000);
+        leftTabEl.find("li").hover(function(){
+            leftTabEl.find("li").removeClass("on");
+            imgTabEl.find("li").removeClass("on").fadeOut();
+            clearInterval(stbTabAni);
+            $(this).addClass("on");
+            imgTabEl.find("li:eq("+$(this).index()+")").addClass("on").fadeIn();
+            stgIdx = $(this).index();
+        }, function(){
+            stbTabAni = setInterval(stgTabNext, 5000);
+        });
+
+        var stgTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.strength .strength-tabslider',
+                start: 'top 80%',
+                toggleActions: 'restart pause',
+                scrub: 1.5,
+                markers: false,
+            },
+        });
+        ScrollTrigger.matchMedia({
+            "(max-width: 1023px)": function() {
+                stgTimeline.scrollTrigger.disable();
+                leftTabEl.find("li:eq("+stgIdx+")").addClass("on");
+                imgTabEl.find("li:eq("+stgIdx+")").addClass("on").fadeIn();
+                stbTabAni = setInterval(stgTabNext, 5000);
+            },
+            "(min-width: 1024px)": function() {
+                stgTimeline.scrollTrigger.enable();
+                leftTabEl.find("li:eq("+stgIdx+")").addClass("on");
+                imgTabEl.find("li:eq("+stgIdx+")").addClass("on").fadeIn();
+                stbTabAni = setInterval(stgTabNext, 5000);
+            }
+        });
+    }
+</script>
+
+
+<link rel="stylesheet" type="text/css" href="./domsjs/module.campaign.css" />
+<script src="./domsjs/campaign.js"></script>
+<script src="./domsjs/campaign.template.js" defer></script>
+<script>
+    // Doms 세션 셋팅
+
+    /*<![CDATA[*/
+    let doms_ca_no = "";
+    /*]]>  */
+
+    /*<![CDATA[*/
+    let session_id = "662992ee-f434-49b6-a24c-d486cdeb0611";
+    /*]]>  */
+    //let doms_domain = "www.bdirectshop.com";
+
+    /*<![CDATA[*/
+    let doms_domain = "http://doms.ucom.kr/";
+    /*]]>  */
+
+    /*<![CDATA[*/
+    let doms_referer = "http://127.0.0.1:5500/";
+    /*]]>  */
+
+    /*<![CDATA[*/
+    let doms_remote_ip = "52.79.74.190";
+    /*]]>  */
+
+    //let doms_securekey = "P3QerWZfzEZoK66PesI072xbuQGYoKWi";
+    //let doms_securekey = "BoXYeCb4EueDKLTZYy6pzr1yK5GsifS9";  // stg사용
+    /*<![CDATA[*/
+    let doms_securekey = "P3QerWZfzEZoK66PesI072xbuQGYoKWi"; // 운영사용
+    /*]]>  */
+
+    // skb custom 사용
+    /*<![CDATA[*/
+    let skb_ca_menu_no = "D02030100";
+    /*]]>  */
+
+    /*<![CDATA[*/
+    let skb_ca_c_code = "42474916";
+    /*]]>  */
+
+    /*<![CDATA[*/
+    let skb_tel_num = "1600-0106";
+    /*]]>  */
+
+    let skb_baro_url =
+      "/shop/product/join/gateway.do?keepOn=Y&entryCd=01&referCd=02&utm_source=bshop_pc&utm_medium=menu_btn&utm_campaign=main_sticky&utm_content=direct&utm_term=none";
+
+    /*<![CDATA[*/
+    let skb_chkMoblieCall = "Y";
+    /*]]>  */
+
+    // skb ga4 setting
+    /*<![CDATA[*/
+    let skb_data_ga4id_popup = "D02030100--e86";
+    /*]]>  */
+    let skb_data_ga4desc_popup = "btn--doms--popup--자세히보기";
+
+    /*<![CDATA[*/
+    let skb_data_ga4id_scroll = "D02030100--948";
+    /*]]>  */
+    let skb_data_ga4desc_scroll = "btn--doms--scroll--자세히보기";
+
+    /*<![CDATA[*/
+    let skb_data_ga4id_floating = "D02030100--99d";
+    /*]]>  */
+    let skb_data_ga4desc_floating = "btn--doms--floating--자세히보기";
+
+    /*<![CDATA[*/
+    let skb_data_ga4id_lead = "D02030100--bfd";
+    /*]]>  */
+    let skb_data_ga4desc_lead = "btn--doms--lead--자세히보기";
+
+    /*<![CDATA[*/
+    let skb_data_ga4id_popup_close = "D02030100--a98";
+    /*]]>  */
+    let skb_data_ga4desc_popup_close = "btn--doms--popup--닫기";
+
+    /*<![CDATA[*/
+    let skb_data_ga4id_scroll_close = "D02030100--2cf";
+    /*]]>  */
+    let skb_data_ga4desc_scroll_close = "btn--doms--scroll--닫기";
+
+    /*<![CDATA[*/
+    let skb_data_ga4id_floating_close = "D02030100--644";
+    /*]]>  */
+    let skb_data_ga4desc_floating_close = "btn--doms--floating--닫기";
+
+    /*<![CDATA[*/
+    let skb_data_ga4id_lead_close = "D02030100--b62";
+    /*]]>  */
+    let skb_data_ga4desc_lead_close = "btn--doms--lead--닫기";
+</script>
+<script src="./domsjs/doms.js" defer></script>
+
+
+</body>
+</html>
