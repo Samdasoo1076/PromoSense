@@ -5,9 +5,10 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - "7080:80"
+      - "7080:82"
     environment:
       - SPRING_PROFILES_ACTIVE=local
+      - JAVA_TOOL_OPTIONS=-Xmx1024m
 
 
 
