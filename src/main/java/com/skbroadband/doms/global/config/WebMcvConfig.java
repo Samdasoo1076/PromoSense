@@ -52,8 +52,8 @@ public class WebMcvConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedOrigins(corsAllowedOrigins.toArray(new String[0]))
-                .allowedMethods("GET")
-                .allowedMethods("POST")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST")
                 .maxAge(3000);
     }
 
