@@ -18,6 +18,9 @@ server:
     leave-url: "#leaveUrl"
     calling-num: "#callingNum"
   port: 82
+  servlet:
+    session:
+      timeout: 30m
 
 application:
   crypto:
@@ -47,6 +50,7 @@ application:
       - https://m.btvcable.shop
       - https://wwwstg.bworld.co.kr
       - https://learningstone.co.kr
+      - http://144.24.85.101
     access-key:
       bdirectshop: P3QerWZfzEZoK66PesI072xbuQGYoKWi
       btvcable: V898EYrDhuDti8yfGUCiKkZPREXy1mR1
@@ -82,18 +86,18 @@ spring:
 
 datasource:
   web:
-    url: jdbc:mariadb://52.79.74.190:57083/domsdb
-    username: root
-    password: dwUJBhz2KdB#8L
+    url: jdbc:mariadb://158.179.168.106:3306/domsdb
+    username: admin
+    password: 2134
     driver-class-name: org.mariadb.jdbc.Driver
     maximum-pool-size: 10
     minimum-idle: 10
     max-lifetime: 1800000
     idle-timeout: 600000
   api:
-    url: jdbc:mariadb://52.79.74.190:57083/domsdb
-    username: root
-    password: dwUJBhz2KdB#8L
+    url: jdbc:mariadb://158.179.168.106:3306/domsdb
+    username: admin
+    password: 2134
     driver-class-name: org.mariadb.jdbc.Driver
     maximum-pool-size: 10
     minimum-idle: 10
