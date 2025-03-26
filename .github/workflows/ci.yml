@@ -1,0 +1,39 @@
+name: CI-CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) 저장소 체크아웃
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # 2) 서버로 파일 복사 (SCP)
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.6
+        with:
+          host: ${{ secrets.OCI_HOST }}       # 예: 144.24.85.101
+          username: ubuntu                    # 서버 접속 유저명
+          key: ${{ secrets.OCI_SSH_KEY }}     # 서버 SSH 개인키 (GitHub Secrets)
+          source: "."                         # 로컬(워크플로우)에서 복사할 경로 (현재 폴더)
+          target: "/home/PromoSense"          # 서버에서 저장할 경로
+          overwrite: true                     # 덮어쓰기
+
+      # 3) 서버에서 docker-compose 빌드 & 재시작
+      - name: SSH and deploy
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.OCI_HOST }}
+          username: ubuntu
+          key: ${{ secrets.OCI_SSH_KEY }}
+          script: |
+            cd /home/PromoSense
+            docker-compose down
+            docker-compose up -d --build
