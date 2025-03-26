@@ -33,6 +33,7 @@ jobs:
           host: ${{ secrets.OCI_HOST }}
           username: ubuntu
           key: ${{ secrets.OCI_SSH_KEY }}
+          command_timeout: 1200    # 초 단위 (예: 20분)
           script: |
             cd /home/PromoSense
             docker-compose down
