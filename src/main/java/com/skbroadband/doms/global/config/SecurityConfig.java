@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
@@ -98,8 +99,11 @@ public class SecurityConfig  extends GlobalMethodSecurityConfiguration {
 
         httpSecurity
                 .antMatcher("/api/**")
+                .cors()  // ← CORS 활성화!
+                .and()
                 .authorizeRequests()
-                .anyRequest().hasAnyRole("API_BDIRECTSHOP", "API_BTVCABLE", "API_BWORLD")
+                .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
+                .anyRequest().hasAnyRole("API_BDIRECTSHOP", "API_BTVCABLE", "API_BWORLD", "API_TEST")
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationApiEntryPoint())

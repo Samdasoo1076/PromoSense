@@ -12,7 +12,8 @@ package com.skbroadband.doms.global.constant;
 public enum CustomerType {
     BDIRECTSHOP("BD"),
     BTVCABLE("TB"),
-    BWORLD("BW");
+    BWORLD("BW"),
+    TEST("TEST");
 
     final String code;
 

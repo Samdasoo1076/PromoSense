@@ -51,11 +51,14 @@ application:
       - https://wwwstg.bworld.co.kr
       - https://learningstone.co.kr
       - http://144.24.85.101
+      - http://144.24.85.101:7080
+      - http://localhost:82
+      - http://localhost
     access-key:
       bdirectshop: P3QerWZfzEZoK66PesI072xbuQGYoKWi
       btvcable: V898EYrDhuDti8yfGUCiKkZPREXy1mR1
       bworld: BoXYeCb4EueDKLTZYy6pzr1yK5GsifS9
-
+      test: testtest2134
 spring:
   cors:
     # 글로벌 CORS 설정

@@ -1,4 +1,4 @@
-let doms_url = "doms.ucom.kr";
+let doms_url = "144.24.85.101:7080";
 
 // 스테이징
 if (location.host && location.host === "wwwstg.bworld.co.kr") {
@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
     EXCEPT_CA_NO: "",
   };
   doms_ca_no = "";
-  doms_url = "doms.ucom.kr";
+  doms_url = "144.24.85.101:7080";
   if (doms_ca_no !== "") {
     if (doms_url === "localhost") {
       previewDomsPopup2(doms_ca_no);
@@ -548,7 +548,7 @@ const previewDomsPopup = (doms_ca_no) => {
   formData.append("DOMS_KEY", doms_securekey);
   formData.append("CA_NO", "1");
 
-  fetch(`https://${doms_url}/api/v1/preview`, {
+  fetch(`http://${doms_url}/api/v1/preview`, {
     method: "POST",
 	headers: {
         'Accept': 'application/json',
@@ -684,7 +684,7 @@ const matchDomsPopup = (doms_condition) => {
   console.log(doms_condition);
   console.log(formData);
 
-  fetch(`https://${doms_url}/api/v1/campaign`, {
+  fetch(`http://${doms_url}/api/v1/campaign`, {
     method: "POST",
 	headers: {
         'Origin': 'bdirectshop'
@@ -900,7 +900,7 @@ const matchDomsPopup = (doms_condition) => {
 
   // var request = $.ajax({
     // //url: `//${doms_url}/api/v1/campaign`,
-	// url: `https://${doms_url}/api/v1/campaign`,
+	// url: `http://${doms_url}/api/v1/campaign`,
     // type: "POST",
     // data: {
       // DOMS_KEY: doms_condition.DOMS_KEY,
@@ -1187,7 +1187,7 @@ const saveDomsLog = (
   formData.append("CA_C_CODE", skb_ca_c_code); // 캠페인 코드
   formData.append("MULTI_NO", multi_no); // 멀티 슬라이드 번호 (캐러셀용)
 
-  fetch(`https://${doms_url}/api/v1/log`, {
+  fetch(`http://${doms_url}/api/v1/log`, {
     method: "POST",
     body: formData,
   })

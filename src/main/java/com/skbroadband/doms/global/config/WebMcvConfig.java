@@ -51,9 +51,11 @@ public class WebMcvConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins(corsAllowedOrigins.toArray(new String[0]))
                 .allowedOrigins("*")
-                .allowedMethods("GET", "POST")
+                .allowedMethods("*")  // GET, POST, PUT, DELETE, OPTIONS 등 모두
+                .allowedHeaders("*")
+                .allowCredentials(false)
+                .exposedHeaders("Authorization","Content-Disposition")
                 .maxAge(3000);
     }
 

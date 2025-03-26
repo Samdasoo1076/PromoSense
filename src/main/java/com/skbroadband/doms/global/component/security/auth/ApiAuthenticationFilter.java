@@ -44,6 +44,9 @@ public class ApiAuthenticationFilter extends OncePerRequestFilter {
         final String bworldAccessKey = Objects.requireNonNull(RequestContextUtils.findWebApplicationContext(request))
                 .getEnvironment().getProperty("application.api.access-key.bworld");
 
+        final String testAccessKey = Objects.requireNonNull(RequestContextUtils.findWebApplicationContext(request))
+                .getEnvironment().getProperty("application.api.access-key.test");
+
 
         Authentication authentication = null;
         if(origin.contains("bdirectshop") && directAccessKey.equals(accessKey)) {
@@ -58,6 +61,10 @@ public class ApiAuthenticationFilter extends OncePerRequestFilter {
             authentication = new UsernamePasswordAuthenticationToken(CustomerType.BWORLD,
                     null,
                     Collections.singletonList(new SimpleGrantedAuthority("ROLE_API_BWORLD")));
+        } else if(origin.contains("test") && testAccessKey.equals(accessKey)) {
+            authentication = new UsernamePasswordAuthenticationToken(CustomerType.TEST,
+                    null,
+                    Collections.singletonList(new SimpleGrantedAuthority("ROLE_API_TEST")));
         }
 
         if(!Objects.isNull(authentication)) {
