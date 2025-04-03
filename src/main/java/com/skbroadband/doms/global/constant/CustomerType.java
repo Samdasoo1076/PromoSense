@@ -17,6 +17,7 @@ public enum CustomerType {
 
     final String code;
 
+
     CustomerType(String code) {
         this.code = code;
     }

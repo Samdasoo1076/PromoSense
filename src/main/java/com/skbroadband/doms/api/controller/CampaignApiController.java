@@ -49,7 +49,10 @@ public class CampaignApiController {
     public ResponseEntity<?> campaign(@Valid CampaignApiRequest campaignRequest, @Customer CustomerType customer) {
         LocalDateTime now = LocalDateTime.now();
         int week = (now.getDayOfWeek().getValue());
-
+        if (customer == null) {
+            // 기본값 할당 혹은 적절한 예외 처리를 합니다.
+            customer = CustomerType.BTVCABLE;
+        }
         campaignRequest.setCamGubun(customer.getCode());
         campaignRequest.setNow(now);
         campaignRequest.setDayOfWeek(String.valueOf(week));

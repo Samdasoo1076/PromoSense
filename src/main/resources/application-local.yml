@@ -6,13 +6,13 @@ server:
       enabled: false
     path: /error
   etc-info:
-    address: http://doms.ucom.kr
-    bd-pc-address: https://doms.ucom.kr/home/index
-    bd-mo-address: https://doms.ucom.kr/home/index
-    tb-pc-address: https://doms.ucom.kr/home/index
-    tb-mo-address: https://doms.ucom.kr/home/index
-    bw-pc-address: https://doms.ucom.kr/home/index
-    bw-mo-address: https://doms.ucom.kr/home/index
+    address: http://dasoo.hopto.org:7080/
+    bd-pc-address: http://dasoo.hopto.org:7080/home/index
+    bd-mo-address: http://dasoo.hopto.org:7080/home/index
+    tb-pc-address: http://dasoo.hopto.org:7080/home/index
+    tb-mo-address: http://dasoo.hopto.org:7080/home/index
+    bw-pc-address: http://dasoo.hopto.org:7080/home/index
+    bw-mo-address: http://dasoo.hopto.org:7080/home/index
     rending-url: "#rendingUrl"
     direct-url: "#directUrl"
     leave-url: "#leaveUrl"
@@ -38,17 +38,8 @@ application:
     image-type: png,jpg,jpeg,gif
   api:
     cors-allowed-origins:
-      - http://m.bdirectshop.com
-      - http://www.bdirectshop.com
-      - http://bdirectshop.com
-      - http://btvcable.shop
-      - http://m.btvcable.shop
-      - https://m.bdirectshop.com
-      - https://www.bdirectshop.com
-      - https://bdirectshop.com
-      - https://btvcable.shop
-      - https://m.btvcable.shop
-      - https://wwwstg.bworld.co.kr
+      - http://dasoo.hopto.org
+      - http://dasoo.hopto.org:7080
       - https://learningstone.co.kr
       - http://144.24.85.101
       - http://144.24.85.101:7080

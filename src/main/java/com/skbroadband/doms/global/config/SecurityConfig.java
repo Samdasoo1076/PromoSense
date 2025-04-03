@@ -102,6 +102,7 @@ public class SecurityConfig  extends GlobalMethodSecurityConfiguration {
                 .cors()  // ← CORS 활성화!
                 .and()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
                 .anyRequest().hasAnyRole("API_BDIRECTSHOP", "API_BTVCABLE", "API_BWORLD", "API_TEST")
                 .and()
