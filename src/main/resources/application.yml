@@ -6,9 +6,9 @@ server:
 
 spring:
   application:
-    title: 다이렉트샵 온라인 마케팅 시스템
+    title: 프로모센스 온라인 마케팅 시스템
   mail:
-    host: 114.204.245.94
+    host: 144.24.85.101
     port: 25
     properties:
       mail:
@@ -16,7 +16,7 @@ spring:
           auth: false
           starttls:
             enable: false
-    sender: admop@skbroadband.com
+    sender: admop@dasoo.com
 
     multipart:
       enabled: true

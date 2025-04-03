@@ -20,6 +20,8 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface AdminInfoMapper {
     @Mapping(source = "admNo", target = "id")
+    @Mapping(target = "groupNo", expression = "java(convertGroup(adminInfoDto.getGroupNo()))")
+    @Mapping(target = "admFlag", constant = "1")
     AdminInfo toEntity(AdminInfoDto adminInfoDto);
 
     @Mapping(source = "id", target = "admNo")
@@ -33,7 +35,24 @@ public interface AdminInfoMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void mergeToEntity(AdminInfoDto adminInfoDto, @MappingTarget AdminInfo adminInfo);
 
-//    @Mapping(source = "id", target = "admNo")
+
+
+    default com.skbroadband.doms.web.entity.AdminGroup convertGroup(com.skbroadband.doms.web.dto.AdminGroupDto groupDto) {
+        if (groupDto == null) {
+            // 기본 그룹으로 id가 1인 AdminGroup을 생성
+            return com.skbroadband.doms.web.entity.AdminGroup.builder()
+                    .id(1L)
+                    .build();
+        } else {
+            return com.skbroadband.doms.web.entity.AdminGroup.builder()
+                    .id(groupDto.getGroupNo())
+                    .groupName(groupDto.getGroupName())
+                    .build();
+        }
+    }
+
+
+    //    @Mapping(source = "id", target = "admNo")
 //    @Mapping(source = "groupNo.id", target = "groupNo.groupNo")
 //    @Mapping(target = "admHphoneHash", ignore = true)
 //    @Mapping(target = "admEmailHash", ignore = true)
