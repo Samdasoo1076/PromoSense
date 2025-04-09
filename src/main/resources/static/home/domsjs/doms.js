@@ -249,13 +249,13 @@ document.addEventListener("DOMContentLoaded", function () {
   doms_url = "144.24.85.101:7080";
   if (doms_ca_no !== "") {
     if (doms_url === "localhost") {
-      previewDomsPopup2(doms_ca_no);
+      previewDomsPopup(doms_ca_no);
     } else {
       previewDomsPopup(doms_ca_no);
     }
   } else {
     if (doms_url === "localhost") {
-      matchDomsPopup2(doms_condition);
+      matchDomsPopup(doms_condition);
     } else {
       matchDomsPopup(doms_condition);
     }
