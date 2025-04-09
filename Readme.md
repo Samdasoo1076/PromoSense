@@ -16,3 +16,11 @@
 ```dockerfile
 docker-compose down && docker-compose up -d --build
 ```
+
+```xml
+<svg width="200" height="70" xmlns="http://www.w3.org/2000/svg">
+                    <text x="10" y="40" font-family="Arial, sans-serif" font-size="30" fill="#333">
+                        PromoSense
+                    </text>
+                </svg>
+```
