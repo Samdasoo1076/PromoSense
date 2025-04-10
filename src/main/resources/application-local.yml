@@ -6,7 +6,7 @@ server:
       enabled: false
     path: /error
   etc-info:
-    address: http://dasoo.hopto.org:7080/
+    address: http://localhost:82
     bd-pc-address: http://dasoo.hopto.org:7080/home/index
     bd-mo-address: http://dasoo.hopto.org:7080/home/index
     tb-pc-address: http://dasoo.hopto.org:7080/home/index
