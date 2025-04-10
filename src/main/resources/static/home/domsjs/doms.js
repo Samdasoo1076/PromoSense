@@ -249,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
   doms_url = "144.24.85.101:7080";
   if (doms_ca_no !== "") {
     if (doms_url === "localhost") {
-      previewDomsPopup(doms_ca_no);
+      previewDomsPopup2(doms_ca_no);
     } else {
       previewDomsPopup(doms_ca_no);
     }

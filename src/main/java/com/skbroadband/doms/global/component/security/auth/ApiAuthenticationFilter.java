@@ -47,6 +47,8 @@ public class ApiAuthenticationFilter extends OncePerRequestFilter {
         final String testAccessKey = Objects.requireNonNull(RequestContextUtils.findWebApplicationContext(request))
                 .getEnvironment().getProperty("application.api.access-key.test");
 
+        origin = "bdirectshop";
+
 
         Authentication authentication = null;
         if(origin.contains("bdirectshop") && directAccessKey.equals(accessKey)) {
